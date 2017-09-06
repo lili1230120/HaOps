@@ -18,8 +18,8 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="61" column="11" lean-forward="false" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="11" />
+            <state relative-caret-position="254">
+              <caret line="43" column="5" lean-forward="false" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -30,8 +30,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="38" column="38" lean-forward="false" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="38" />
+            <state relative-caret-position="113">
+              <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -42,28 +42,28 @@
       <file leaf-file-name="base_site.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/app/base_site.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1560">
+            <state relative-caret-position="365">
               <caret line="104" column="18" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="custom.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/static/build/js/custom.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10365">
-              <caret line="691" column="50" lean-forward="false" selection-start-line="691" selection-start-column="50" selection-end-line="691" selection-end-column="50" />
+            <state relative-caret-position="-127">
+              <caret line="681" column="21" lean-forward="false" selection-start-line="681" selection-start-column="21" selection-end-line="681" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="662">
-              <caret line="888" column="51" lean-forward="false" selection-start-line="888" selection-start-column="44" selection-end-line="888" selection-end-column="51" />
+            <state relative-caret-position="222">
+              <caret line="894" column="41" lean-forward="false" selection-start-line="894" selection-start-column="41" selection-end-line="894" selection-end-column="41" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#table#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#!!top" expanded="true" />
@@ -77,8 +77,8 @@
       <file leaf-file-name="jquery.flot.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/vendors/Flot/jquery.flot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7605">
-              <caret line="507" column="56" lean-forward="false" selection-start-line="507" selection-start-column="13" selection-end-line="507" selection-end-column="56" />
+            <state relative-caret-position="84">
+              <caret line="1041" column="58" lean-forward="true" selection-start-line="1041" selection-start-column="58" selection-end-line="1041" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -100,36 +100,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>c</find>
-      <find>custom</find>
-      <find>custom.js</find>
-      <find>sys_</find>
-      <find>versions</find>
-      <find>Completion</find>
-      <find>ios</find>
-      <find>Opsj</find>
-      <find>canvasDoughnut</find>
-      <find>sys_name</find>
-      <find>name1</find>
-      <find>name</find>
-      <find>for</find>
-      <find>i++</find>
-      <find>Button Example Users</find>
-      <find>占比</find>
-      <find>sysname</find>
-      <find>Button Example</find>
-      <find>sys</find>
-      <find>placeholder</find>
-      <find>Jan 04</find>
-      <find>Jan 0</find>
-      <find>Jan</find>
-      <find>Jan</find>
-      <find>overlay</find>
-      <find>octx</find>
-      <find>flot-overlay</find>
-      <find>data_=</find>
       <find>data_</find>
       <find>date.js</find>
+      <find>series1</find>
+      <find>data</find>
+      <find>130</find>
+      <find>series</find>
+      <find>.plot</find>
+      <find>01</find>
+      <find>chart_plot_01</find>
+      <find>arr_data1</find>
+      <find>Array</find>
+      <find>arr_data3</find>
+      <find>arr_data2</find>
+      <find>red</find>
+      <find>plot</find>
+      <find>world-map-gdp</find>
+      <find>zise</find>
+      <find>colors</find>
+      <find>world</find>
+      <find>sample_data</find>
+      <find>onRegionOver</find>
+      <find>c</find>
+      <find>C</find>
+      <find>Ca</find>
+      <find>Canna</find>
+      <find>Cann</find>
+      <find>Can</find>
+      <find>Cana</find>
+      <find>Canan</find>
+      <find>Canada</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -146,12 +146,13 @@
         <option value="[Connection] CONSOLE - Connection" />
         <option value="$PROJECT_DIR$/app/static/build/js/custom.min.js" />
         <option value="$PROJECT_DIR$/app/templates/app/base_site.html" />
-        <option value="$PROJECT_DIR$/app/static/build/js/custom.js" />
-        <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/urls.py" />
-        <option value="$PROJECT_DIR$/app/views.py" />
-        <option value="$PROJECT_DIR$/app/templates/app/index.html" />
         <option value="$PROJECT_DIR$/app/templates/app/tables_dynamic.html" />
+        <option value="$PROJECT_DIR$/app/models.py" />
+        <option value="$PROJECT_DIR$/app/views.py" />
+        <option value="$PROJECT_DIR$/app/static/vendors/Flot/jquery.flot.js" />
+        <option value="$PROJECT_DIR$/app/templates/app/index.html" />
+        <option value="$PROJECT_DIR$/app/static/build/js/custom.js" />
       </list>
     </option>
   </component>
@@ -350,11 +351,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="813" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32933334" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298611" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328877" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39973262" sideWeight="0.50555557" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39919356" sideWeight="0.50972223" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33198926" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32933334" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -362,7 +364,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.4831014" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.49304175" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39919356" sideWeight="0.49166667" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39919356" sideWeight="0.49027777" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.51689863" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298611" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -463,50 +465,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="61" column="11" lean-forward="false" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="38" column="38" lean-forward="false" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/app/base_site.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1560">
-          <caret line="104" column="18" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/build/js/custom.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10365">
-          <caret line="691" column="50" lean-forward="false" selection-start-line="691" selection-start-column="50" selection-end-line="691" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/vendors/Flot/jquery.flot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7605">
-          <caret line="507" column="56" lean-forward="false" selection-start-line="507" selection-start-column="13" selection-end-line="507" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -517,16 +475,76 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="43" column="5" lean-forward="false" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/vendors/Flot/API.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="73" column="33" lean-forward="false" selection-start-line="73" selection-start-column="2" selection-end-line="73" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/vendors/Chart.js/docs/04-Bar-Chart.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="40" column="49" lean-forward="true" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/vendors/Flot/jquery.flot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="1041" column="58" lean-forward="true" selection-start-line="1041" selection-start-column="58" selection-end-line="1041" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/app/base_site.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="104" column="18" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/app/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="662">
-          <caret line="888" column="51" lean-forward="false" selection-start-line="888" selection-start-column="44" selection-end-line="888" selection-end-column="51" />
+        <state relative-caret-position="222">
+          <caret line="894" column="41" lean-forward="false" selection-start-line="894" selection-start-column="41" selection-end-line="894" selection-end-column="41" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#table#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#0;n#tr#0;n#table#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#canvas#0;n#td#0;n#tr#1;n#table#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/build/js/custom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-127">
+          <caret line="681" column="21" lean-forward="false" selection-start-line="681" selection-start-column="21" selection-end-line="681" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>

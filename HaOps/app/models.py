@@ -41,7 +41,7 @@ class OpsJira(models.Model):
     sys_name = models.CharField(max_length=45, blank=True, null=True)
     num = models.IntegerField(blank=True, null=True)
     percent = models.FloatField(blank=True, null=True)
-    date = models.DateTimeField(blank=True, null=True)
+    d_date = models.DateTimeField(blank=True, null=True)
     color = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):

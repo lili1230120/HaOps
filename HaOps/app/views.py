@@ -5,13 +5,14 @@ import json
 from django.core import serializers
 #from todos.models import Todo
 from app.models import Todo,OpsCal,OpsJira,OpsExamine
+from datetime import datetime
 
 def index(request):
     todo = Todo.objects.get(id='2')
     opsCal = OpsCal.objects.all
 
     #jira分布情况
-    opsJira = OpsJira.objects.order_by('-num')[:5]
+    opsJira = OpsJira.objects.filter(d_date=datetime(2017, 9, 4)).order_by('-num')[:5]
     json_opsJira = serializers.serialize("json", opsJira)
 
     #机构考核数据

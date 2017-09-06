@@ -6,6 +6,7 @@
  *     // code here
  * });
  */
+
 (function($, sr) {
     // debouncing function from John Hann
     // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
@@ -331,31 +332,47 @@ function gd(year, month, day) {
 }
 
 function init_flot_chart() {
-
+var opsJira = js_opsJira;
+ var arr_data1 = new Array();
     if (typeof($.plot) === 'undefined') {
         return;
     }
 
     console.log('init_flot_chart');
 
-    var arr_data1 = [
-        [gd(2012, 1, 1), 17],
-        [gd(2012, 1, 2), 74],
-        [gd(2012, 1, 3), 6],
-        [gd(2012, 1, 4), 39],
-        [gd(2012, 1, 5), 20],
-        [gd(2012, 1, 6), 85],
-        [gd(2012, 1, 7), 7]
-    ];
+//    var arr_data1 = [
+//        [gd(2012, 1, 1), 30],
+//        [gd(2012, 1, 2), 30],
+//        [gd(2012, 1, 3), 30],
+//        [gd(2012, 1, 4), 30],
+//        [gd(2012, 1, 5), 30],
+//        [gd(2012, 1, 6), 30],
+//        [gd(2012, 1, 7), 30]
+//    ];
+
+
+    for(var i=0;i<opsJira.length;i++){
+    arr_data1[i]= [gd(2012, 1, i+1), opsJira[i].fields.num] ;
+    }
 
     var arr_data2 = [
-        [gd(2012, 1, 1), 82],
-        [gd(2012, 1, 2), 23],
-        [gd(2012, 1, 3), 66],
-        [gd(2012, 1, 4), 9],
-        [gd(2012, 1, 5), 119],
-        [gd(2012, 1, 6), 6],
-        [gd(2012, 1, 7), 9]
+        [gd(2012, 1, 1), 280],
+        [gd(2012, 1, 2), 356],
+        [gd(2012, 1, 3), 159],
+        [gd(2012, 1, 4), 278],
+        [gd(2012, 1, 5), 189],
+        [gd(2012, 1, 6), 299],
+        [gd(2012, 1, 7), 234]
+    ];
+
+    var arr_data_3 = [
+        [gd(2012, 1, 1), 140],
+        [gd(2012, 1, 2), 350],
+        [gd(2012, 1, 3), 150],
+        [gd(2012, 1, 4), 370],
+        [gd(2012, 1, 5), 280],
+        [gd(2012, 1, 6), 160],
+        [gd(2012, 1, 7), 240]
     ];
 
     var arr_data3 = [
@@ -547,7 +564,7 @@ function init_flot_chart() {
 
         // console.log()
 
-        $.plot($("#chart_plot_01"), [arr_data1, arr_data2], chart_plot_01_settings);
+        $.plot($("#chart_plot_01"), [arr_data1, arr_data2,arr_data_3], chart_plot_01_settings);
     }
 
 
@@ -626,6 +643,7 @@ function init_JQVmap() {
 
         $('#world-map-gdp').vectorMap({
             map: 'world_en',
+            //map: 'cn_mill',
             backgroundColor: null,
             color: '#ffffff',
             hoverOpacity: 0.7,

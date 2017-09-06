@@ -3,6 +3,7 @@
 Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
 
+
 */
 
 // first an inline dependency, jquery.colorhelpers.js, we inline it here
@@ -573,7 +574,7 @@ Licensed under the MIT license.
                         fillColor: null,
                         steps: false
                         // Omit 'zero', so we can later default its value to
-                        // match that of the 'fill' option.
+//                        // match that of the 'fill' option.
                     },
                     bars: {
                         show: false,
