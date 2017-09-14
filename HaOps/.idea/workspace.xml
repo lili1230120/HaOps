@@ -27,10 +27,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
+            <state relative-caret-position="270">
               <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
@@ -49,36 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/static/build/js/custom.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-127">
-              <caret line="681" column="21" lean-forward="false" selection-start-line="681" selection-start-column="21" selection-end-line="681" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/app/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="894" column="41" lean-forward="false" selection-start-line="894" selection-start-column="41" selection-end-line="894" selection-end-column="41" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#table#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#th#0;n#tr#0;n#table#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#canvas#0;n#td#0;n#tr#1;n#table#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="jquery.flot.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/vendors/Flot/jquery.flot.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="84">
-              <caret line="1041" column="58" lean-forward="true" selection-start-line="1041" selection-start-column="58" selection-end-line="1041" selection-end-column="58" />
+              <caret line="1041" column="58" lean-forward="false" selection-start-line="1041" selection-start-column="58" selection-end-line="1041" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -118,9 +93,7 @@
       <find>world-map-gdp</find>
       <find>zise</find>
       <find>colors</find>
-      <find>world</find>
       <find>sample_data</find>
-      <find>onRegionOver</find>
       <find>c</find>
       <find>C</find>
       <find>Ca</find>
@@ -130,6 +103,8 @@
       <find>Cana</find>
       <find>Canan</find>
       <find>Canada</find>
+      <find>onRegionOver</find>
+      <find>world</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -493,16 +468,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/vendors/Chart.js/docs/04-Bar-Chart.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -514,15 +479,15 @@
     <entry file="file://$PROJECT_DIR$/app/static/vendors/Flot/jquery.flot.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
-          <caret line="1041" column="58" lean-forward="true" selection-start-line="1041" selection-start-column="58" selection-end-line="1041" selection-end-column="58" />
+          <caret line="1041" column="58" lean-forward="false" selection-start-line="1041" selection-start-column="58" selection-end-line="1041" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/app/base_site.html">
+    <entry file="file://$PROJECT_DIR$/app/static/build/js/custom.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="104" column="18" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="18" />
+        <state relative-caret-position="10464">
+          <caret line="703" column="0" lean-forward="true" selection-start-line="703" selection-start-column="0" selection-end-line="703" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -540,11 +505,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/build/js/custom.js">
+    <entry file="file://$PROJECT_DIR$/app/templates/app/base_site.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-127">
-          <caret line="681" column="21" lean-forward="false" selection-start-line="681" selection-start-column="21" selection-end-line="681" selection-end-column="21" />
+        <state relative-caret-position="365">
+          <caret line="104" column="18" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="18" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
