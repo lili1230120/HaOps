@@ -69,3 +69,41 @@ class OpsExamine(models.Model):
         managed = False
         db_table = 'Ops_examine'
 
+
+
+class OpsJiraDtl(models.Model):
+    jira_no = models.CharField(max_length=45)
+    sys_type = models.CharField(max_length=45, blank=True, null=True)
+    sourcetype = models.CharField(max_length=45, blank=True, null=True)
+    sys_name = models.CharField(max_length=45, blank=True, null=True)
+    tag_id = models.CharField(max_length=45, blank=True, null=True)
+    tag = models.CharField(max_length=45, blank=True, null=True)
+    area = models.CharField(max_length=45, blank=True, null=True)
+    status = models.CharField(max_length=45, blank=True, null=True)
+    input_date = models.DateTimeField(blank=True, null=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return self.tag
+
+    class Meta:
+        managed = False
+        db_table = 'Ops_jira_dtl'
+        unique_together = (('id', 'jira_no'),)
+
+
+class OpsCapacity(models.Model):
+    prodo = models.CharField(max_length=45, blank=True, null=True)
+    num = models.IntegerField(blank=True, null=True)
+    prem = models.FloatField(blank=True, null=True)
+    amount = models.FloatField(blank=True, null=True)
+    per = models.FloatField(blank=True, null=True)
+    input_date = models.DateTimeField(blank=True, null=True)
+
+
+    def __str__(self):
+        return self.prodo
+
+    class Meta:
+        managed = False
+        db_table = 'Ops_Capacity'

@@ -642,8 +642,8 @@ function init_JQVmap() {
     if ($('#world-map-gdp').length) {
 
         $('#world-map-gdp').vectorMap({
-            map: 'world_en',
-            //map: 'cn_mill',
+            //map: 'world_en',
+            map: 'cn_mill',
             backgroundColor: null,
             color: '#ffffff',
             hoverOpacity: 0.7,

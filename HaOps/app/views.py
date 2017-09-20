@@ -4,8 +4,9 @@ from django.http import HttpResponse
 import json
 from django.core import serializers
 #from todos.models import Todo
-from app.models import Todo,OpsCal,OpsJira,OpsExamine
+from app.models import Todo,OpsCal,OpsJira,OpsExamine,OpsJiraDtl,OpsCapacity
 from datetime import datetime
+from django.db.models import Count
 from django.utils import timezone
 
 
@@ -20,6 +21,15 @@ def index(request):
     #机构考核数据
     opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
 
+    #标签统计
+    JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag')*15).order_by('total')
+
+    #产能统计
+    Capacity = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
+
+    #地区统计
+    JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area')*15).order_by('-total')
+
 
     results = {'name': 123, 'name1': 456, 'sysname': ['单证','理赔'],"items":
         [{"name": "name1", "sector": "sector1"},
@@ -30,7 +40,7 @@ def index(request):
     #context = {'todo': todo}
     iosper = OpsCal.objects.get(id = '2')
     context = {'todo': todo,'opsCal':opsCal,'iosper':iosper,'opsJira':opsJira,'results':results,'json_opsJira':json_opsJira,
-               'opsExamine':opsExamine
+               'opsExamine':opsExamine,'jiraTag':JiraTag,'capacity':Capacity,'jiraArea':JiraArea
                }
     template = loader.get_template('app/index.html')
     return HttpResponse(template.render(context, request))
@@ -38,8 +48,31 @@ def index(request):
 
 def gentella_html(request):
     # 机构考核数据
+    todo = Todo.objects.get(id='2')
+    opsCal = OpsCal.objects.all
+
+    # jira分布情况
+    opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
+    json_opsJira = serializers.serialize("json", opsJira)
+
+    # 机构考核数据
     opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
-    context = {'opsExamine':opsExamine}
+
+    # 标签统计
+    JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
+
+    results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
+        [{"name": "name1", "sector": "sector1"},
+         {"name": "name2", "sector": "sector2"},
+         {"name": "name3", "sector": "sector3"}]}
+
+    # todo = Todo.objects.get
+    # context = {'todo': todo}
+    iosper = OpsCal.objects.get(id='2')
+    context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
+               'json_opsJira': json_opsJira,
+               'opsExamine': opsExamine, 'jiraTag': JiraTag
+               }
     # The template to be loaded as per HaOps.
     # All resource paths for HaOps end in .html.
 
