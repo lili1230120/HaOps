@@ -28,7 +28,6 @@ class IndexView(APIView):
 
     # jira分布情况
         opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
-        #json_opsJira = serializers.serialize("json", opsJira)
         opsJira_ser = OpsJiraSerializer(opsJira,many=True)
         json_opsJira = JSONRenderer().render(opsJira_ser.data)
 
@@ -64,41 +63,56 @@ class IndexView(APIView):
     #
     # return HttpResponse(template.render(context, request))
 
+class HaOpsView(APIView):
+    # template_name = 'app/index.html'
+    # renderer_classes = [TemplateHTMLRenderer]
 
-def gentella_html(request):
-    # 机构考核数据
-    todo = Todo.objects.get(id='2')
-    opsCal = OpsCal.objects.all
+    # renderer_classes = [TemplateHTMLRenderer]
+
+    def get(self,request):
+        load_template = request.path.split('/')[-1]
+        template_name = loader.get_template('app/' + load_template)
+
+        todo = Todo.objects.get(id='2')
+
+        opsCal = OpsCal.objects.all
+        serializers = OpsCalSerializer(opsCal,many=True)
+        form = OpsCalSerializer()
 
     # jira分布情况
-    opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
-    json_opsJira = serializers.serialize("json", opsJira)
+        opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
+        opsJira_ser = OpsJiraSerializer(opsJira,many=True)
+        json_opsJira = JSONRenderer().render(opsJira_ser.data)
 
     # 机构考核数据
-    opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
+        opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
 
     # 标签统计
-    JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
+        JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
 
-    results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
+    # 产能统计
+        Capacity = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
+
+    # 地区统计
+        JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
+
+        results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
         [{"name": "name1", "sector": "sector1"},
          {"name": "name2", "sector": "sector2"},
          {"name": "name3", "sector": "sector3"}]}
 
-    # todo = Todo.objects.get
-    # context = {'todo': todo}
-    iosper = OpsCal.objects.get(id='2')
-    context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
+        iosper = OpsCal.objects.get(id='2')
+        context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
                'json_opsJira': json_opsJira,
-               'opsExamine': opsExamine, 'jiraTag': JiraTag
+               'opsExamine': opsExamine, 'jiraTag': JiraTag, 'capacity': Capacity, 'jiraArea': JiraArea
                }
     # The template to be loaded as per HaOps.
     # All resource paths for HaOps end in .html.
 
+
     # Pick out the html file name from the url. And load that template.
-    load_template = request.path.split('/')[-1]
-    template = loader.get_template('app/' + load_template)
-    return HttpResponse(template.render(context, request))
+        #return Response(context)
+        return HttpResponse(template_name.render(context, request))
 
 
 
