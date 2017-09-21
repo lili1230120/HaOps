@@ -1,7 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from django.template import loader
 from django.http import HttpResponse,HttpResponseRedirect
-import json
 from django.core import serializers
 from app.models import *
 from datetime import datetime
