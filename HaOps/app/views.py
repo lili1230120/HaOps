@@ -1,49 +1,64 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 import json
 from django.core import serializers
-#from todos.models import Todo
 from app.models import *
 from datetime import datetime
 from django.db.models import Count
 from django.utils import timezone
 
+# rest风格
+from rest_framework.views import APIView
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.response import Response
+from app.serializers import *
 
-def index(request):
-    todo = Todo.objects.get(id='2')
-    opsCal = OpsCal.objects.all
 
-    # jira分布情况
-    opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
-    json_opsJira = serializers.serialize("json", opsJira)
+class IndexView(APIView):
+    template_name = 'app/index.html'
+    renderer_classes = [TemplateHTMLRenderer]
 
-    # 机构考核数据
-    opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
+    def get(self,request):
+    #todo = Todo.objects.get(id='2')
 
-    # 标签统计
-    JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
+        opsCal = OpsCal.objects.all
+        serializers = OpsCalSerializer(opsCal,many=True)
+        form = OpsCalSerializer()
 
-    # 产能统计
-    Capacity = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
+        return Response({'opsJira': opsCal,'form':form})
 
-    # 地区统计
-    JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
-
-    results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
-        [{"name": "name1", "sector": "sector1"},
-         {"name": "name2", "sector": "sector2"},
-         {"name": "name3", "sector": "sector3"}]}
-
-    # todo = Todo.objects.get
-    # context = {'todo': todo}
-    iosper = OpsCal.objects.get(id='2')
-    context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
-                    'json_opsJira': json_opsJira,
-                    'opsExamine': opsExamine, 'jiraTag': JiraTag, 'capacity': Capacity, 'jiraArea': JiraArea
-                    }
-    template = loader.get_template('app/index.html')
-    return HttpResponse(template.render(context, request))
+    # # jira分布情况
+    # opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
+    # json_opsJira = serializers.serialize("json", opsJira)
+    #
+    # # 机构考核数据
+    # opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
+    #
+    # # 标签统计
+    # JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
+    #
+    # # 产能统计
+    # Capacity = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
+    #
+    # # 地区统计
+    # JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
+    #
+    # results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
+    #     [{"name": "name1", "sector": "sector1"},
+    #      {"name": "name2", "sector": "sector2"},
+    #      {"name": "name3", "sector": "sector3"}]}
+    #
+    # # todo = Todo.objects.get
+    # # context = {'todo': todo}
+    # iosper = OpsCal.objects.get(id='2')
+    # context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
+    #                 'json_opsJira': json_opsJira,
+    #                 'opsExamine': opsExamine, 'jiraTag': JiraTag, 'capacity': Capacity, 'jiraArea': JiraArea
+    #                 }
+    # #template = loader.get_template('app/index.html')
+    #
+    # return HttpResponse(template.render(context, request))
 
 
 def gentella_html(request):

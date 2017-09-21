@@ -9,7 +9,7 @@ class HashTag(models.Model):
     title = models.CharField(max_length=50)
     created_at = models.DateTimeField(default=timezone.now)
 
-
+#OpsCal   OpsJira OpsExamine OpsJiraDtl OpsCapacity
 class Todo(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(null=True)
