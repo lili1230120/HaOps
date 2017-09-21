@@ -4,7 +4,7 @@ from django.http import HttpResponse
 import json
 from django.core import serializers
 #from todos.models import Todo
-from app.models import Todo,OpsCal,OpsJira,OpsExamine,OpsJiraDtl,OpsCapacity
+from app.models import *
 from datetime import datetime
 from django.db.models import Count
 from django.utils import timezone
@@ -14,34 +14,34 @@ def index(request):
     todo = Todo.objects.get(id='2')
     opsCal = OpsCal.objects.all
 
-    #jira分布情况
+    # jira分布情况
     opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
     json_opsJira = serializers.serialize("json", opsJira)
 
-    #机构考核数据
+    # 机构考核数据
     opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
 
-    #标签统计
-    JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag')*15).order_by('total')
+    # 标签统计
+    JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
 
-    #产能统计
+    # 产能统计
     Capacity = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
 
-    #地区统计
-    JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area')*15).order_by('-total')
+    # 地区统计
+    JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
 
-
-    results = {'name': 123, 'name1': 456, 'sysname': ['单证','理赔'],"items":
+    results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
         [{"name": "name1", "sector": "sector1"},
          {"name": "name2", "sector": "sector2"},
          {"name": "name3", "sector": "sector3"}]}
 
-    #todo = Todo.objects.get
-    #context = {'todo': todo}
-    iosper = OpsCal.objects.get(id = '2')
-    context = {'todo': todo,'opsCal':opsCal,'iosper':iosper,'opsJira':opsJira,'results':results,'json_opsJira':json_opsJira,
-               'opsExamine':opsExamine,'jiraTag':JiraTag,'capacity':Capacity,'jiraArea':JiraArea
-               }
+    # todo = Todo.objects.get
+    # context = {'todo': todo}
+    iosper = OpsCal.objects.get(id='2')
+    context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
+                    'json_opsJira': json_opsJira,
+                    'opsExamine': opsExamine, 'jiraTag': JiraTag, 'capacity': Capacity, 'jiraArea': JiraArea
+                    }
     template = loader.get_template('app/index.html')
     return HttpResponse(template.render(context, request))
 
@@ -84,7 +84,40 @@ def gentella_html(request):
 
 
 def get_context_data_all(**kwargs):
-    kwargs['Ops_jira'] = OpsJira.objects.order_by('num')[:5]
+    #kwargs['Ops_jira'] = OpsJira.objects.order_by('num')[:5]
+    todo = Todo.objects.get(id='2')
+    opsCal = OpsCal.objects.all
+
+    # jira分布情况
+    opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
+    json_opsJira = serializers.serialize("json", opsJira)
+
+    # 机构考核数据
+    opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
+
+    # 标签统计
+    JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
+
+    # 产能统计
+    Capacity = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
+
+    # 地区统计
+    JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
+
+    results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
+        [{"name": "name1", "sector": "sector1"},
+         {"name": "name2", "sector": "sector2"},
+         {"name": "name3", "sector": "sector3"}]}
+
+    # todo = Todo.objects.get
+    # context = {'todo': todo}
+    iosper = OpsCal.objects.get(id='2')
+    data_context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
+               'json_opsJira': json_opsJira,
+               'opsExamine': opsExamine, 'jiraTag': JiraTag, 'capacity': Capacity, 'jiraArea': JiraArea
+               }
+    return kwargs
+
     #kwargs['date_archive'] = Article.objects.archive()
     # kwargs['tag_list'] = Tag.objects.all()
     # visitor_ip = VisitorIP.objects.all()[:5]
@@ -104,7 +137,7 @@ def get_context_data_all(**kwargs):
     #     if len(article.title) > LENGTH_IN_RIGHT_INDEX:
     #         article.title = article.title[:LENGTH_IN_RIGHT_INDEX + 1] + '...'
     # kwargs['hot_article'] = hot_article
-    return kwargs
+    return data_context
 
 
 # def CategoryOverview(req):
