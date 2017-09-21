@@ -352,7 +352,7 @@ var opsJira = js_opsJira;
 
 
     for(var i=0;i<opsJira.length;i++){
-    arr_data1[i]= [gd(2012, 1, i+1), opsJira[i].fields.num] ;
+    arr_data1[i]= [gd(2012, 1, i+1), opsJira[i].num] ;
     }
 
     var arr_data2 = [
@@ -642,7 +642,7 @@ function init_JQVmap() {
     if ($('#world-map-gdp').length) {
 
         $('#world-map-gdp').vectorMap({
-            //map: 'world_en',
+            map: 'world_en',
             map: 'cn_mill',
             backgroundColor: null,
             color: '#ffffff',
@@ -719,8 +719,8 @@ function init_chart_doughnut() {
 var sysname =new Array();
 var sys_per = new Array();
 for(var i=0;i<opsJira.length;i++){
-    sysname[i]= opsJira[i].fields.sys_name;
-    sys_per[i]= opsJira[i].fields.percent
+    sysname[i]= opsJira[i].sys_name;
+    sys_per[i]= opsJira[i].percent
 
 }
 
