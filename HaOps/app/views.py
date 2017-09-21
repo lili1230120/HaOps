@@ -67,11 +67,11 @@ class HaOpsView(APIView):
     # template_name = 'app/index.html'
     # renderer_classes = [TemplateHTMLRenderer]
 
-    # renderer_classes = [TemplateHTMLRenderer]
+    renderer_classes = (TemplateHTMLRenderer,)
 
-    def get(self,request):
+    def get(self, request, *args, **kwargs):
         load_template = request.path.split('/')[-1]
-        template_name = loader.get_template('app/' + load_template)
+        template_name = 'app/' + load_template
 
         todo = Todo.objects.get(id='2')
 
@@ -111,8 +111,8 @@ class HaOpsView(APIView):
 
 
     # Pick out the html file name from the url. And load that template.
-        #return Response(context)
-        return HttpResponse(template_name.render(context, request))
+        return Response(context,template_name = template_name)
+        #return HttpResponse(template_name.render(context, request))
 
 
 
