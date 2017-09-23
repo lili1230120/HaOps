@@ -642,17 +642,42 @@ function init_JQVmap() {
     if ($('#world-map-gdp').length) {
 
         $('#world-map-gdp').vectorMap({
-            map: 'world_en',
+            //map: 'world_en',
             map: 'cn_mill',
-            backgroundColor: null,
-            color: '#ffffff',
+            backgroundColor: '#FFF',
+            color: "#13FF60",
             hoverOpacity: 0.7,
+            hoverColor : '#3498DB',//鼠标移入时图块高亮显示的颜色
             selectedColor: '#666666',
             enableZoom: true,
             showTooltip: true,
-            values: sample_data,
+            //values: sample_data,
             scaleColors: ['#E6F2F0', '#149B7E'],
-            normalizeFunction: 'polynomial'
+            normalizeFunction: 'polynomial',
+
+         //<!– 设置地图区域的样式, 共有四种状态, 分别是 initial(初始状态), hover(当鼠标经过时的状态), selected(被选中的状态), selectedHover(当被选中之后鼠标经过的状态) –>
+		        regionStyle: {
+					initial: {
+						fill: '#1ABC9C',
+						"fill-opacity": 0.7,
+						stroke: 'none',
+						"stroke-width": 0,
+						"stroke-opacity": 1
+					},
+					hover: {
+						fill: '#3498DB', //颜色
+						"fill-opacity": 1,//透明度
+						stroke: 'black',//边框颜色
+						"stroke-width": 2,//边框宽度
+						"stroke-opacity": 1
+					},
+					selected: {
+						fill: 'yellow'
+					},
+					selectedHover: {
+					}
+                }
+
         });
 
     }
@@ -670,6 +695,10 @@ function init_JQVmap() {
             values: sample_data,
             scaleColors: ['#E6F2F0', '#149B7E'],
             normalizeFunction: 'polynomial'
+
+
+
+
         });
 
     }
