@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block title %}Add Book{% endblock %}
+
+
+{% block content %}
+  <h1>Submit a book</h1>
+  <h6>Note: book will not appear on website until approved by admin</h6>
+  <form action="#" method="post">
+  {% csrf_token %}
+  {% include 'form_template.html' %}
+
+    <p><button type="submit" class="btn btn-info pull-right">Add a book</button></p>
+  </form>
+
+{% endblock %}

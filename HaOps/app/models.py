@@ -108,3 +108,22 @@ class OpsCapacity(models.Model):
     class Meta:
         managed = False
         db_table = 'Ops_Capacity'
+
+class OpsReview(models.Model):
+    account = models.CharField(max_length=45, blank=True, null=True,default='liuqingixn')
+    user_name = models.CharField(max_length=45, blank=True, null=True,default = 'liuqx')
+    title = models.CharField(max_length=100, blank=True, null=True)
+    comment = models.CharField(max_length=300, blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True,auto_now = True)
+    updated_at = models.DateTimeField(blank=True, null=True,auto_now = True)
+
+    def __str__(self):
+        return self.comment
+
+    class Meta:
+        ordering = ['created_at']
+        managed = False
+        db_table = 'Ops_review'
+
+
+

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1 class="page-header">DatePicker demo</h1>
+
+    <div class="alert alert-info">
+    This is a very primitive demo. Just a show case how to run it.
+    </div>
+
+    <form class="form form-horizontal" method="POST" action="">
+        {% csrf_token %}
+        {{ form.period }}
+        <input type="submit" class="btn btn-primary">
+    </form>
+
+    {{ form.media }}
+
+    {% if period %}
+        <div class="alert alert-success">
+        Congratulations!! Here is selected period: {{ period }}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -15,53 +15,76 @@ from rest_framework.response import Response
 from app.serializers import *
 
 
+from datetime import date, timedelta
+from django.shortcuts import render
+from django import forms
+from django_bootstrap3_daterangepicker.fields import DateRangeField
+
+class TestForm(forms.Form):
+
+    date_start = forms.DateField()
+    date_end = forms.DateField()
+
+
 class IndexView(APIView):
     template_name = 'app/index.html'
     renderer_classes = [TemplateHTMLRenderer]
 
+    period = TestForm(initial={"date_start": (date.today() - timedelta(days=7)), "date_end": date.today()})
+
     def get(self,request):
-        todo = Todo.objects.get(id='2')
+        period = TestForm(initial={"date_start": (date.today() - timedelta(days=7)), "date_end": date.today()})
 
-        opsCal = OpsCal.objects.all
-        serializers = OpsCalSerializer(opsCal,many=True)
-        form = OpsCalSerializer()
-
-    # jira分布情况
-        opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
-        opsJira_ser = OpsJiraSerializer(opsJira,many=True)
-        json_opsJira = JSONRenderer().render(opsJira_ser.data)
-
-    # 机构考核数据
-        opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
-
-    # 标签统计
-        JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
-
-    # 产能统计
-        Capacity = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
-
-    # 地区统计
-        JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
-
-        results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
-        [{"name": "name1", "sector": "sector1"},
-         {"name": "name2", "sector": "sector2"},
-         {"name": "name3", "sector": "sector3"}]}
-
-    # todo = Todo.objects.get
-    # context = {'todo': todo}
-        iosper = OpsCal.objects.get(id='2')
-        context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
-               'json_opsJira': json_opsJira,
-               'opsExamine': opsExamine, 'jiraTag': JiraTag, 'capacity': Capacity, 'jiraArea': JiraArea
-               }
+        # 获取所有运营数据
+        context = get_context_data_all()
 
         return Response(context)
 
+    def post(self, request):
+        period = None
+        Review_form = OpsReviewSerializer(data=request.data)
 
-    # #template = loader.get_template('app/index.html')
+        form = TestForm(request.POST)
+        #period = form.cleaned_data['period']
+
+        if Review_form.is_valid():
+            Review_form.save()
+            return HttpResponseRedirect('/')
+        else:
+            queryset = OpsReview.objects.all()
+            serializer = OpsReviewSerializer(queryset, many=True)
+
+            context = get_context_data_all()
+        return Response(context)
+
+
     #
-    # return HttpResponse(template.render(context, request))
+    # def post(self, request):
+    #     form = SchoolSerializer(data=request.data)
+    #     if form.is_valid():
+    #         form.save()
+    #         return HttpResponseRedirect('/')
+    #     else:
+    #         queryset = School.objects.all()
+    #         serializer = SchoolSerializer(queryset, many=True)
+    #         return Response({'data': serializer.data, 'form': form})
+
+
+
+class ReviewCreate(APIView):
+
+    renderer_classes = [TemplateHTMLRenderer]
+
+
+    def get(self, request, *args, **kwargs):
+        model = OpsReview
+        template_name = "app/review_add.html"
+        fields = ['title', 'comment']
+        context = {
+               '1': 1
+               }
+        return Response(context,template_name=template_name)
+
 
 class HaOpsView(APIView):
     # template_name = 'app/index.html'
@@ -73,104 +96,105 @@ class HaOpsView(APIView):
         load_template = request.path.split('/')[-1]
         template_name = 'app/' + load_template
 
-        todo = Todo.objects.get(id='2')
+    #获取所有运营数据
+        context = get_context_data_all()
 
-        opsCal = OpsCal.objects.all
-        serializers = OpsCalSerializer(opsCal,many=True)
-        form = OpsCalSerializer()
-
-    # jira分布情况
-        opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
-        opsJira_ser = OpsJiraSerializer(opsJira,many=True)
-        json_opsJira = JSONRenderer().render(opsJira_ser.data)
-
-    # 机构考核数据
-        opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
-
-    # 标签统计
-        JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
-
-    # 产能统计
-        Capacity = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
-
-    # 地区统计
-        JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
-
-        results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
-        [{"name": "name1", "sector": "sector1"},
-         {"name": "name2", "sector": "sector2"},
-         {"name": "name3", "sector": "sector3"}]}
-
-        iosper = OpsCal.objects.get(id='2')
-        context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
-               'json_opsJira': json_opsJira,
-               'opsExamine': opsExamine, 'jiraTag': JiraTag, 'capacity': Capacity, 'jiraArea': JiraArea
-               }
     # The template to be loaded as per HaOps.
     # All resource paths for HaOps end in .html.
 
 
     # Pick out the html file name from the url. And load that template.
         return Response(context,template_name = template_name)
+
         #return HttpResponse(template_name.render(context, request))
 
 
 
+
+#
+# class ReviewCreate(CreateView):
+#     model = Review
+#     template_name="books/book/add_review.html"
+#     fields = ['comment']
+#     # success_url="/books/"
+#     # context_object_name = 'books'
+#     def get_context_data(self, **kwargs):
+#         return dict(
+#             super(ReviewCreate,self).get_context_data(**kwargs),
+#             # book_id=self.kwargs.get('pk')
+#             book_info=Book.objects.filter(pk=self.kwargs.get('pk'))
+#         )
+#
+#     def form_valid(self,form):
+#         review = form.save(commit=False)
+#         review_check = Review.objects.filter(user=self.request.user,book=self.kwargs.get('pk'))
+#         if review_check:
+#             form._errors[forms.forms.NON_FIELD_ERRORS]=ErrorList([
+#             u'Review already created'
+#             ])
+#             return self.form_invalid(form)
+#
+#         else:
+#             review.user = self.request.user
+#             review.book_id = self.kwargs.get('pk')
+#             return super(ReviewCreate, self).form_valid(form)
+#     def get_success_url(self,**kwargs):
+#         return reverse('books:book-detail', kwargs={'pk':self.kwargs.get('pk')})
+
+
+
 def get_context_data_all(**kwargs):
-    #kwargs['Ops_jira'] = OpsJira.objects.order_by('num')[:5]
-    todo = Todo.objects.get(id='2')
-    opsCal = OpsCal.objects.all
+    kwargs['todo'] = Todo.objects.get(id='2')
+
+    opsCal  = OpsCal.objects.all
+    #serializers = OpsCalSerializer(opsCal, many=True)
+
 
     # jira分布情况
+
+
+    kwargs['opsJira'] = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
+
     opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
-    json_opsJira = serializers.serialize("json", opsJira)
+    opsJira_ser = OpsJiraSerializer(opsJira, many=True)
+    kwargs['json_opsJira'] = JSONRenderer().render(opsJira_ser.data)
 
     # 机构考核数据
-    opsExamine = OpsExamine.objects.order_by('-d_sum')[:10]
+    kwargs['opsExamine'] = OpsExamine.objects.order_by('-d_sum')[:10]
 
     # 标签统计
-    JiraTag = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
+    kwargs['jiraTag'] = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
 
     # 产能统计
-    Capacity = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
+    kwargs['capacity'] = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
 
     # 地区统计
-    JiraArea = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
+    kwargs['jiraArea'] = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
 
-    results = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
+    #时间筛选
+    kwargs['form'] = TestForm(initial={"period": (date.today() - timedelta(days=7), date.today())})
+
+    #js测试
+    kwargs['results'] = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
         [{"name": "name1", "sector": "sector1"},
          {"name": "name2", "sector": "sector2"},
          {"name": "name3", "sector": "sector3"}]}
 
-    # todo = Todo.objects.get
-    # context = {'todo': todo}
-    iosper = OpsCal.objects.get(id='2')
-    data_context = {'todo': todo, 'opsCal': opsCal, 'iosper': iosper, 'opsJira': opsJira, 'results': results,
-               'json_opsJira': json_opsJira,
-               'opsExamine': opsExamine, 'jiraTag': JiraTag, 'capacity': Capacity, 'jiraArea': JiraArea
-               }
-    return kwargs
+    #test
+    kwargs['iosper'] = OpsCal.objects.get(id='2')
 
-    #kwargs['date_archive'] = Article.objects.archive()
-    # kwargs['tag_list'] = Tag.objects.all()
-    # visitor_ip = VisitorIP.objects.all()[:5]
-    # for visitor in visitor_ip:
-    #     ip_split = visitor.ip.split('.')
-    #     visitor.ip = '%s.*.*.%s' % (ip_split[0], ip_split[3])
-    # kwargs['visitor_ip'] = visitor_ip
-    # kwargs['visitor_num'] = cache.get('visitor_num')
-    # recent_comment = BlogComment.objects.order_by('-created_time')[:5]
-    # for comment in recent_comment:
-    #     if len(comment.body) > LENGTH_IN_RIGHT_INDEX:
-    #         comment.body = comment.body[:LENGTH_IN_RIGHT_INDEX + 1] + '...'
-    # kwargs['recent_comment'] = recent_comment
-    # hot_article = Article.objects.filter(
-    #     status='p').order_by('-weight', '-created_time')[:5]
-    # for article in hot_article:
-    #     if len(article.title) > LENGTH_IN_RIGHT_INDEX:
-    #         article.title = article.title[:LENGTH_IN_RIGHT_INDEX + 1] + '...'
-    # kwargs['hot_article'] = hot_article
-    return data_context
+    #重点反馈
+    kwargs['opsReview'] = OpsReview.objects.all()
+    opsReview = OpsReview.objects.all()
+    kwargs['opsReview_ser'] = OpsReviewSerializer(opsReview, many=True)
+   # kwargs['js_opsReview'] = JSONRenderer().render(opsReview_ser.data)
+    Review_form = OpsReviewSerializer()
+
+    kwargs['Review_form'] = Review_form
+
+    return kwargs
+    # The template to be loaded as per HaOps.
+    # All resource paths for HaOps end in .html.
 
 
 # def CategoryOverview(req):

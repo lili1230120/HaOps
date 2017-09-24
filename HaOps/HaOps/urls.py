@@ -21,7 +21,11 @@ urlpatterns = [
 
     # app/ -> Genetelella UI and resources
     url(r'^app/', include('app.urls')),
-    url(r'^', include('app.urls')),
-   # url(r'^todos/',include('todos.urls'))
 
+    url(r'^add/', include('app.urls')),
+
+    url(r'^', include('app.urls')),
+
+   # url(r'^todos/',include('todos.urls'))
+    url(r'^demo/', include('demo.urls')),
 ]

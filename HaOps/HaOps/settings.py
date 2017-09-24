@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap3_daterangepicker',
     'rest_framework',
-    'app'
+    'app',
+    'demo'
 ]
+
 #
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': [

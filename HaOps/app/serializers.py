@@ -30,3 +30,8 @@ class OpsCapacitySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = OpsCapacity
 		fields = '__all__'
+
+class OpsReviewSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = OpsReview
+		fields = '__all__'

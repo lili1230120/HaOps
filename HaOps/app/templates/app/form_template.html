@@ -1,0 +1,10 @@
+{% load widget_tweaks %}
+{% for field in form %}
+  <div class="form-group row">
+    <label for="id_{{ field.name }}" class="col-md-2 col-form-label">{{field.label}}: </label>
+    <div class="col-md-9 col-md-offset-1">
+      {{field|add_class:"form-control"}}
+      <span class="text-danger small"> {{field.errors}}</span>
+    </div>
+  </div>
+{% endfor %}
