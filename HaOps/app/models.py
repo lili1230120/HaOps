@@ -74,10 +74,10 @@ class OpsExamine(models.Model):
 
 class OpsJiraDtl(models.Model):
     jira_no = models.CharField(max_length=45)
-    sys_type = models.CharField(max_length=45, blank=True, null=True)
+    jira_type = models.CharField(max_length=45, blank=True, null=True)
     sourcetype = models.CharField(max_length=45, blank=True, null=True)
     sys_name = models.CharField(max_length=45, blank=True, null=True)
-    tag_id = models.CharField(max_length=45, blank=True, null=True)
+    title = models.CharField(max_length=45, blank=True, null=True)
     tag = models.CharField(max_length=45, blank=True, null=True)
     area = models.CharField(max_length=45, blank=True, null=True)
     status = models.CharField(max_length=45, blank=True, null=True)
@@ -85,7 +85,7 @@ class OpsJiraDtl(models.Model):
     update_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return self.tag
+        return self.jira_no
 
     class Meta:
         managed = False

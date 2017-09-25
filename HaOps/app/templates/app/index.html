@@ -355,7 +355,7 @@
       <div class="col-md-4 col-sm-4 col-xs-12">
         <div class="x_panel fixed_height_320">
           <div class="x_title">
-            <h2>jira 流程分析 <small>Sessions</small></h2>
+            <h2> 环节分析 <small> 专题优化 </small></h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -376,15 +376,21 @@
           <div class="x_content">
             <div class="dashboard-widget-content">
               <ul class="quick-list">
-                <li><i class="fa fa-line-chart"></i><a href="#">Achievements</a></li>
-                <li><i class="fa fa-thumbs-up"></i><a href="#">Favorites</a></li>
-                <li><i class="fa fa-calendar-o"></i><a href="#">Activities</a></li>
-                <li><i class="fa fa-cog"></i><a href="#">Settings</a></li>
-                <li><i class="fa fa-area-chart"></i><a href="#">Logout</a></li>
+                <!--<li><i class="fa fa-line-chart"></i><a href="#"> 出单时效 </a></li>-->
+                <!--<li><i class="fa fa-thumbs-up"></i><a href="#"> 缴费时效 </a></li>-->
+                <!--<li><i class="fa fa-calendar-o"></i><a href="#"> 理赔查勘派单 </a></li>-->
+                <!--<li><i class="fa fa-cog"></i><a href="#"> 赔付时效 </a></li>-->
+                <!--<li><i class="fa fa-area-chart"></i><a href="#"> 基础信息维护时效 </a></li>-->
+
+                <li><i class="fa fa-line-chart"></i><a href="#"> 出单时效 </a></li>
+                <li><i class="fa fa-line-chart"></i><a href="#"> 缴费时效 </a></li>
+                <li><i class="fa fa-calendar-o"></i><a href="#"> 理赔查勘派单 </a></li>
+                <li><i class="fa fa-calendar-o"></i><a href="#"> 赔付时效 </a></li>
+                <li><i class="fa fa-calendar-o"></i><a href="#"> 基础信息维护时效 </a></li>
               </ul>
 
               <div class="sidebar-widget">
-                <h4>当日解决率</h4>
+                <h4>本周效率</h4>
                 <canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>
                 <div class="goal-wrapper">
                   <span id="gauge-text" class="gauge-value gauge-chart pull-left">0</span>
@@ -551,42 +557,12 @@
 
                 <div class="">
                   <ul class="to_do">
+                    {% for releasePlan in ReleasePlan %}
                     <li>
                       <p>
-                        <input type="checkbox" class="flat"> Schedule meeting with new client </p>
+                        <input type="checkbox" class="flat"> {{releasePlan.jira_no }} | {{ releasePlan.title }} |</p>
                     </li>
-                    <li>
-                      <p>
-                        <input type="checkbox" class="flat"> Create email address for new intern</p>
-                    </li>
-                    <li>
-                      <p>
-                        <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                    </li>
-                    <li>
-                      <p>
-                        <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                    </li>
-                    <li>
-                      <p>
-                        <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                    </li>
-                    <li>
-                      <p>
-                        <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                    </li>
-                    <li>
-                      <p>
-                        <input type="checkbox" class="flat"> Create email address for new intern</p>
-                    </li>
-                    <li>
-                      <p>
-                        <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                    </li>
-                    <li>
-                      <p>
-                        <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                    </li>
+                    {% endfor %}
                   </ul>
                 </div>
               </div>
@@ -605,7 +581,7 @@
               <div class="x_title">
                 <div>
                   <div class="x_title">
-                    <h2>机构IT处理量</h2>
+                    <h2>机构IT考核</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -623,62 +599,22 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
+
                   <ul class="list-unstyled top_profiles scroll-view">
-                    <li class="media event">
-                      <a class="pull-left border-aero profile_thumb">
-                        <i class="fa fa-user aero"></i>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Ms. Mary Jane</a>
-                        <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                        <p> <small>12 Sales Today</small>
-                        </p>
-                      </div>
-                    </li>
-                    <li class="media event">
-                      <a class="pull-left border-green profile_thumb">
-                        <i class="fa fa-user green"></i>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Ms. Mary Jane</a>
-                        <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                        <p> <small>12 Sales Today</small>
-                        </p>
-                      </div>
-                    </li>
+                    <!--color: aero green blue aero gre -->
+                     {% for OpsExamineUser in opsExamineUser %}
                     <li class="media event">
                       <a class="pull-left border-blue profile_thumb">
-                        <i class="fa fa-user blue"></i>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Ms. Mary Jane</a>
-                        <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                        <p> <small>12 Sales Today</small>
-                        </p>
-                      </div>
-                    </li>
-                    <li class="media event">
-                      <a class="pull-left border-aero profile_thumb">
-                        <i class="fa fa-user aero"></i>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Ms. Mary Jane</a>
-                        <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                        <p> <small>12 Sales Today</small>
-                        </p>
-                      </div>
-                    </li>
-                    <li class="media event">
-                      <a class="pull-left border-green profile_thumb">
                         <i class="fa fa-user green"></i>
                       </a>
                       <div class="media-body">
-                        <a class="title" href="#">Ms. Mary Jane</a>
-                        <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                        <p> <small>12 Sales Today</small>
+                        <a class="title" href="#">{{OpsExamineUser.dept}}</a>
+                        <p><strong>考核总分： </strong> {{OpsExamineUser.d_sum}}. </p>
+                        <p> <small> 当前处理量： </small>
                         </p>
                       </div>
                     </li>
+                    {% endfor %}
                   </ul>
 
                   </div>

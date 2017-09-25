@@ -118,7 +118,7 @@ class HaOpsView(APIView):
 def get_context_data_all(**kwargs):
     kwargs['todo'] = Todo.objects.get(id='2')
 
-    opsCal  = OpsCal.objects.all
+    kwargs['opsCal']  = OpsCal.objects.all
     #serializers = OpsCalSerializer(opsCal, many=True)
 
 
@@ -134,14 +134,17 @@ def get_context_data_all(**kwargs):
     # 机构考核数据
     kwargs['opsExamine'] = OpsExamine.objects.order_by('-d_sum')[:10]
 
+    # 机构考核数据
+    kwargs['opsExamineUser'] = OpsExamine.objects.order_by('-d_sum')[:5]
+
     # 标签统计
-    kwargs['jiraTag'] = OpsJiraDtl.objects.all().values('tag').annotate(total=Count('tag') * 15).order_by('total')
+    kwargs['jiraTag'] = OpsJiraDtl.objects.filter(jira_type = 'pr').values('tag').annotate(total=Count('tag') * 15).order_by('total')
 
     # 产能统计
     kwargs['capacity'] = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
 
     # 地区统计
-    kwargs['jiraArea'] = OpsJiraDtl.objects.all().values('area').annotate(total=Count('area') * 15).order_by('-total')
+    kwargs['jiraArea'] = OpsJiraDtl.objects.filter(jira_type = 'pr').values('area').annotate(total=Count('area') * 15).order_by('-total')
 
     #时间筛选
     kwargs['form'] = TestForm(initial={"period": (date.today() - timedelta(days=7), date.today())})
@@ -159,12 +162,13 @@ def get_context_data_all(**kwargs):
     kwargs['opsReview'] = OpsReview.objects.all().order_by('-created_at')
     opsReview = OpsReview.objects.all().order_by('-created_at')
     kwargs['opsReview_ser'] = OpsReviewSerializer(opsReview, many=True)
-   # kwargs['js_opsReview'] = JSONRenderer().render(opsReview_ser.data)
+
     Review_form = OpsReviewSerializer()
 
     kwargs['Review_form'] = Review_form
 
-
+    #生产发布计划
+    kwargs['ReleasePlan'] = OpsJiraDtl.objects.filter(jira_type = 'publish').order_by('update_date')
 
     return kwargs
     # The template to be loaded as per HaOps.
