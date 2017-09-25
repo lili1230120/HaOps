@@ -30,6 +30,8 @@ class IndexView(APIView):
     template_name = 'app/index.html'
     renderer_classes = [TemplateHTMLRenderer]
 
+    style = {'template_pack': 'rest_framework/vertical/'}
+
     period = TestForm(initial={"date_start": (date.today() - timedelta(days=7)), "date_end": date.today()})
 
     def get(self,request):
@@ -37,6 +39,8 @@ class IndexView(APIView):
 
         # 获取所有运营数据
         context = get_context_data_all()
+
+        context['style'] = self.style
 
         return Response(context)
 
@@ -48,7 +52,7 @@ class IndexView(APIView):
         #period = form.cleaned_data['period']
 
         if Review_form.is_valid():
-            Review_form.save()
+            Review_form.save(account='liuqx',user_name='liuqx')
             return HttpResponseRedirect('/')
         else:
             queryset = OpsReview.objects.all()
@@ -111,38 +115,6 @@ class HaOpsView(APIView):
 
 
 
-#
-# class ReviewCreate(CreateView):
-#     model = Review
-#     template_name="books/book/add_review.html"
-#     fields = ['comment']
-#     # success_url="/books/"
-#     # context_object_name = 'books'
-#     def get_context_data(self, **kwargs):
-#         return dict(
-#             super(ReviewCreate,self).get_context_data(**kwargs),
-#             # book_id=self.kwargs.get('pk')
-#             book_info=Book.objects.filter(pk=self.kwargs.get('pk'))
-#         )
-#
-#     def form_valid(self,form):
-#         review = form.save(commit=False)
-#         review_check = Review.objects.filter(user=self.request.user,book=self.kwargs.get('pk'))
-#         if review_check:
-#             form._errors[forms.forms.NON_FIELD_ERRORS]=ErrorList([
-#             u'Review already created'
-#             ])
-#             return self.form_invalid(form)
-#
-#         else:
-#             review.user = self.request.user
-#             review.book_id = self.kwargs.get('pk')
-#             return super(ReviewCreate, self).form_valid(form)
-#     def get_success_url(self,**kwargs):
-#         return reverse('books:book-detail', kwargs={'pk':self.kwargs.get('pk')})
-
-
-
 def get_context_data_all(**kwargs):
     kwargs['todo'] = Todo.objects.get(id='2')
 
@@ -184,51 +156,17 @@ def get_context_data_all(**kwargs):
     kwargs['iosper'] = OpsCal.objects.get(id='2')
 
     #重点反馈
-    kwargs['opsReview'] = OpsReview.objects.all()
-    opsReview = OpsReview.objects.all()
+    kwargs['opsReview'] = OpsReview.objects.all().order_by('-created_at')
+    opsReview = OpsReview.objects.all().order_by('-created_at')
     kwargs['opsReview_ser'] = OpsReviewSerializer(opsReview, many=True)
    # kwargs['js_opsReview'] = JSONRenderer().render(opsReview_ser.data)
     Review_form = OpsReviewSerializer()
 
     kwargs['Review_form'] = Review_form
 
+
+
     return kwargs
     # The template to be loaded as per HaOps.
     # All resource paths for HaOps end in .html.
 
-
-# def CategoryOverview(req):
-#     categories = Category.objects.all()
-#     category_table = dict()
-#     for category in categories:
-#         category_table[category.id] = (category.GetArticleNum(), category.id, category)
-#     order_table = sorted(category_table.items(), key=operator.itemgetter(1, 1), reverse=True)
-#     context = {'categories':categories, 'order_table':order_table}
-#     return render_to_response('blog/category_overview.html', context)
-#
-# class ArticleDetailView(DetailView):
-#     model = Article
-#     template_name = "blog/detail.html"
-#     context_object_name = "article"
-#     pk_url_kwarg = 'article_id'
-#
-#     def get_object(self, queryset=None):
-#         obj = super(ArticleDetailView, self).get_object()
-#         # 未发表文章不能显示
-#         if obj.status == 'd':
-#             raise Http404
-#         add_views_or_likes(target_article=obj, views_or_likes='views')
-#         obj.save()
-#         obj.body = markdown2.markdown(
-#             obj.body, ['codehilite'], extras=['fenced-code-blocks'])
-#         obj.attachment_url = obj.attachment_url.split('/')
-#         client_ip = get_client_ip(self.request)
-#         save_client_ip.delay(client_ip, obj.id)
-#
-#         return obj
-#
-#     def get_context_data(self, **kwargs):
-#         kwargs['comment_list'] = self.object.comment.all()
-#         kwargs['comment_nums'] = self.object.comment.count()
-#         kwargs['form'] = BlogCommentForm()
-#         return super(ArticleDetailView, self).get_context_data(**kwargs)

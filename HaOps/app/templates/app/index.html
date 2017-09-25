@@ -1,6 +1,6 @@
 {% extends "app/base_site.html" %}
 
-{% block title %} Dashboard 1 {% endblock title %}
+{% block title %} 运营看板 {% endblock title %}
 
 {% block stylesheets %}
   {{ block.super }}
@@ -106,7 +106,7 @@
 
           <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
             <div class="x_title">
-              <h2>情况统计</h2>
+              <h2>标签统计</h2>
               <div class="clearfix"></div>
             </div>
 
@@ -432,7 +432,7 @@
                                         <a>{{opsreview.title}}</a>
                                     </h2>
                       <div class="byline">
-                        <span>13 hours ago</span> by <a>Jane Smith</a>
+                        <span>{{opsreview.updated_at}}</span> by <a>{{opsreview.account}}</a>
                       </div>
                       <p class="excerpt">{{opsreview.comment}} <a>Read&nbsp;More</a>
                       </p>
@@ -457,22 +457,22 @@
                 </li>
               </ul>
             </div>
+            <div class="panel-heading">新增跟踪</div>
+
+		    	<form action='' method='post'>
+		    		{% csrf_token %}
+                    {% render_field  Review_form.title   style=style %}
+		    		{% render_field  Review_form.comment style=style %}
+
+		    		<div class='form-grop'>
+		    			<input type='submit' value='发布' class='btn btn-info pull-right'>
+		    		</div>
+		    	</form>
+        </div>
           </div>
         </div>
 
-        <div class="panel-heading">Create</div>
-		    <div class="panel-body">
-		    	<form action='' method='post'>
-		    		{% csrf_token %}
-		    		{% render_form Review_form %}
-		    		<div class='form-grop'>
-		    			<input type='submit' value='Submit' class='btn btn-info pull-right'>
-		    		</div>
-		    	</form>
-		    </div>
 
-
-      </div>
 
       <div class="col-md-8 col-sm-8 col-xs-12">
 
