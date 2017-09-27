@@ -1,25 +1,28 @@
-## [Gentelella Admin Template](https://github.com/puikinsh/gentelella)
+## [运营看板平台](git@github.com:lili1230120/HaOps.git)
 
 #### Steps
-[Optional] [Set up a virtualenv and activate](http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/) 
+[Optional] [建议使用Anocaonda 配置运行环境]
+
+django + mysql+ RESTful
 
 ##### Get the code
-    git clone https://github.com/GiriB/django-gentelella.git
-    cd django-gentelella
+    git clone git@github.com:lili1230120/HaOps.git
+    cd HaOps
 
 ##### Install requirements 
     pip install -r requirements.txt
 
 ##### Run the code
-    cd gentelella
+    cd HaOps
     python manage.py runserver 
     
 ##### Behold!
 Go to http://localhost:8000/
 
 ###### Contributors 
-[@GiriB](https://github.com/GiriB)  
-[@johnnycakes79](https://github.com/johnnycakes79
+[@lili1230120](https://github.com/lili1230120)
+[@UtherLLLLLL](https://github.com/UtherLLLLLL)
 
-@liuqingxin
-UtherLLLLLL)
+待加入人员：傅雷頔
+
+
