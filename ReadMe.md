@@ -1,7 +1,7 @@
-## [运营看板平台](git@github.com:lili1230120/HaOps.git)
+## [鍗庡畨杩愯惀鐪嬫澘骞冲彴](git@github.com:lili1230120/HaOps.git)
 
 #### Steps
-[Optional] [建议使用Anocaonda 配置运行环境]
+[Optional] [寤鸿浣跨敤Anocaonda 閰嶇疆杩愯鐜]
 
 django + mysql+ RESTful
 
@@ -23,6 +23,6 @@ Go to http://localhost:8000/
 [@lili1230120](https://github.com/lili1230120)
 [@UtherLLLLLL](https://github.com/UtherLLLLLL)
 
-待加入人员：傅雷頔
+寰呭姞鍏ヤ汉鍛橈細鍌呴浄闋斻�佸攼搴峰钩
 
 
