@@ -26,5 +26,5 @@ Go to http://localhost:8000/
 待加入人员：傅雷頔、唐康平
 
 展示
-![image](https://github.com/lili1230120/HaOps/HaOps/app/static/images/img.jpg )
+![image](https://github.com/lili1230120/HaOps/blob/master/HaOps/app/static/images/HaOps.jpg)
 
