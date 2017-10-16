@@ -118,9 +118,14 @@ class HaOpsView(APIView):
 def get_context_data_all(**kwargs):
     kwargs['todo'] = Todo.objects.get(id='2')
 
-    kwargs['opsCal']  = OpsCal.objects.all
+    #获取全部OpsCal数据
+    #kwargs['opsCal']  = OpsCal.objects.all
+
     #serializers = OpsCalSerializer(opsCal, many=True)
 
+    #通过sql查询OpsCal数据
+    kwargs['opsCal'] = OpsCal.objects.raw(
+        'SELECT * FROM Ops_cal WHERE id < 7')
 
     # jira分布情况
 
