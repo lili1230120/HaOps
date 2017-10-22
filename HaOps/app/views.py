@@ -27,8 +27,12 @@ class TestForm(forms.Form):
 
 
 class IndexView(APIView):
+
+    #配置主页模板
     template_name = 'app/index.html'
     renderer_classes = [TemplateHTMLRenderer]
+
+    #########
 
     style = {'template_pack': 'rest_framework/vertical/'}
 
@@ -44,34 +48,42 @@ class IndexView(APIView):
 
         return Response(context)
 
-    def post(self, request):
-        period = None
-        Review_form = OpsReviewSerializer(data=request.data)
-
-        form = TestForm(request.POST)
-        #period = form.cleaned_data['period']
-
-        if Review_form.is_valid():
-            Review_form.save(account='liuqx',user_name='liuqx')
-            return HttpResponseRedirect('/')
-        else:
-            queryset = OpsReview.objects.all()
-            serializer = OpsReviewSerializer(queryset, many=True)
-
-            context = get_context_data_all()
-        return Response(context)
-
-
     #
+    # 待结构化调整
     # def post(self, request):
-    #     form = SchoolSerializer(data=request.data)
-    #     if form.is_valid():
-    #         form.save()
+    #     period = None
+    #     Review_form = OpsReviewSerializer(data=request.data)
+    #
+    #     form = TestForm(request.POST)
+    #     #period = form.cleaned_data['period']
+    #
+    #     if Review_form.is_valid():
+    #         Review_form.save(account='liuqx',user_name='liuqx')
     #         return HttpResponseRedirect('/')
     #     else:
-    #         queryset = School.objects.all()
-    #         serializer = SchoolSerializer(queryset, many=True)
-    #         return Response({'data': serializer.data, 'form': form})
+    #         queryset = OpsReview.objects.all()
+    #         serializer = OpsReviewSerializer(queryset, many=True)
+    #
+    #         context = get_context_data_all()
+    #     return Response(context)
+    #
+
+
+
+ #
+ # 序列化示例
+ #    def post(self, request):
+ #        form = SchoolSerializer(data=request.data)
+ #        if form.is_valid():
+ #            form.save()
+ #            return HttpResponseRedirect('/')
+ #        else:
+ #            queryset = School.objects.all()
+ #            serializer = SchoolSerializer(queryset, many=True)
+ #            return Response({'data': serializer.data, 'form': form})
+ #
+
+
 
 
 
@@ -81,7 +93,7 @@ class ReviewCreate(APIView):
 
 
     def get(self, request, *args, **kwargs):
-        model = OpsReview
+        model = Dcitemdata
         template_name = "app/review_add.html"
         fields = ['title', 'comment']
         context = {
@@ -90,9 +102,27 @@ class ReviewCreate(APIView):
         return Response(context,template_name=template_name)
 
 
+
+# ReviewCreate_BACKUP
+#
+# class ReviewCreate(APIView):
+#
+#     renderer_classes = [TemplateHTMLRenderer]
+#
+#
+#     def get(self, request, *args, **kwargs):
+#         model = OpsReview
+#         template_name = "app/review_add.html"
+#         fields = ['title', 'comment']
+#         context = {
+#                '1': 1
+#                }
+#         return Response(context,template_name=template_name)
+
+
+
+
 class HaOpsView(APIView):
-    # template_name = 'app/index.html'
-    # renderer_classes = [TemplateHTMLRenderer]
 
     renderer_classes = (TemplateHTMLRenderer,)
 
@@ -100,11 +130,10 @@ class HaOpsView(APIView):
         load_template = request.path.split('/')[-1]
         template_name = 'app/' + load_template
 
-    #获取所有运营数据
+        #获取所有运营数据
         context = get_context_data_all()
 
     # The template to be loaded as per HaOps.
-    # All resource paths for HaOps end in .html.
 
 
     # Pick out the html file name from the url. And load that template.
@@ -114,22 +143,22 @@ class HaOpsView(APIView):
 
 
 
-
 def get_context_data_all(**kwargs):
-    kwargs['todo'] = Todo.objects.get(id='2')
 
-    #获取全部OpsCal数据
+    # test
+    # kwargs['todo'] = Todo.objects.get(id='2')
+
+    # 获取全部OpsCal（页顶 指标）数据
     #kwargs['opsCal']  = OpsCal.objects.all
-
     #serializers = OpsCalSerializer(opsCal, many=True)
 
-    #通过sql查询OpsCal数据
-    kwargs['opsCal'] = OpsCal.objects.raw(
-        'SELECT * FROM Ops_cal WHERE id < 7')
+    # 通过sql查询OpsCal数据
+    kwargs['opsCal'] = Dcitemdata.objects.raw(
+        'SELECT * FROM Ops_cal WHERE itemno < 7')
 
+
+    ''' 待结构化
     # jira分布情况
-
-
     kwargs['opsJira'] = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
 
     opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
@@ -174,7 +203,7 @@ def get_context_data_all(**kwargs):
 
     #生产发布计划
     kwargs['ReleasePlan'] = OpsJiraDtl.objects.filter(jira_type = 'publish').order_by('update_date')
-
+'''
     return kwargs
     # The template to be loaded as per HaOps.
     # All resource paths for HaOps end in .html.
