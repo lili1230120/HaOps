@@ -145,26 +145,28 @@ class HaOpsView(APIView):
 
 def get_context_data_all(**kwargs):
 
+    # jira分布情况
+    kwargs['opsJira'] = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
+
+    opsJira = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
+    opsJira_ser = DcitemdataSer(opsJira, many=True)
+    kwargs['json_opsJira'] = JSONRenderer().render(opsJira_ser.data)
+
+
+    ''' 待结构化
+    
     # test
     # kwargs['todo'] = Todo.objects.get(id='2')
-
+    
+    
     # 获取全部OpsCal（页顶 指标）数据
     #kwargs['opsCal']  = OpsCal.objects.all
     #serializers = OpsCalSerializer(opsCal, many=True)
 
     # 通过sql查询OpsCal数据
-    kwargs['opsCal'] = Dcitemdata.objects.raw(
-        'SELECT * FROM Ops_cal WHERE itemno < 7')
-
-
-    ''' 待结构化
-    # jira分布情况
-    kwargs['opsJira'] = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
-
-    opsJira = OpsJira.objects.filter(d_date__startswith=datetime(2017, 9, 4)).order_by('-num')[:5]
-    opsJira_ser = OpsJiraSerializer(opsJira, many=True)
-    kwargs['json_opsJira'] = JSONRenderer().render(opsJira_ser.data)
-
+    #kwargs['opsCal'] = Dcitemdata.objects.raw(
+    #    'SELECT * FROM SysCfg_DCItemData WHERE itemno < 7')
+    
     # 机构考核数据
     kwargs['opsExamine'] = OpsExamine.objects.order_by('-d_sum')[:10]
 

@@ -8,19 +8,26 @@ from django.contrib.auth.models import User
 class Dcdataset(models.Model):
     dsid = models.IntegerField(db_column='DSID', primary_key=True)  # Field name made lowercase.
     dsname = models.CharField(db_column='DSName', max_length=45)  # Field name made lowercase.
-    defineno = models.CharField(db_column='DefineNo', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    defineno = models.CharField(db_column='DefineNo', max_length=45, blank=True,
+                                null=True)  # Field name made lowercase.
     funcid = models.CharField(db_column='FuncID', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    chartkind = models.CharField(db_column='ChartKind', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    chartkind = models.CharField(db_column='ChartKind', max_length=45, blank=True,
+                                 null=True)  # Field name made lowercase.
     remark = models.CharField(db_column='Remark', max_length=45, blank=True, null=True)  # Field name made lowercase.
-
     class Meta:
         managed = False
         db_table = 'SysCfg_DCDataSet'
 
 
 class Dcitemdata(models.Model):
-    itemno = models.CharField(db_column='ItemNo', primary_key=True, max_length=100)  # Field name made lowercase.
-    datadate = models.CharField(db_column='DataDate', unique=True, max_length=20)  # Field name made lowercase.
+    itemid = models.AutoField(db_column='ItemID', primary_key=True)  # Field name made lowercase.
+    itemno = models.ForeignKey('Dcitemdefine', models.DO_NOTHING,
+                               db_column='ItemNo')  # Field name made lowercase.
+    typename = models.CharField(db_column='TypeName', max_length=45, blank=True,
+                                null=True)  # Field name made lowercase.
+    datadate = models.CharField(db_column='DataDate', max_length=20)  # Field name made lowercase.
+    itemfunc = models.CharField(db_column='Itemfunc', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    v2name = models.CharField(db_column='V2Name', max_length=45, blank=True, null=True)  # Field name made lowercase.
     itemvalue1 = models.FloatField(db_column='ItemValue1', blank=True, null=True)  # Field name made lowercase.
     itemvalue2 = models.FloatField(db_column='ItemValue2', blank=True, null=True)  # Field name made lowercase.
     itemvalue3 = models.FloatField(db_column='ItemValue3', blank=True, null=True)  # Field name made lowercase.
@@ -35,8 +42,10 @@ class Dcitemdata(models.Model):
 class Dcitemdefine(models.Model):
     itemno = models.CharField(db_column='ItemNo', primary_key=True, max_length=100)  # Field name made lowercase.
     itemname = models.CharField(db_column='ItemName', max_length=100)  # Field name made lowercase.
-    parentno = models.CharField(db_column='ParentNo', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    itemcode = models.CharField(db_column='ItemCode', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    parentno = models.CharField(db_column='ParentNo', max_length=100, blank=True,
+                                null=True)  # Field name made lowercase.
+    itemcode = models.CharField(db_column='ItemCode', max_length=50, blank=True,
+                                null=True)  # Field name made lowercase.
     itemindex = models.IntegerField(db_column='ItemIndex', blank=True, null=True)  # Field name made lowercase.
     itemstate = models.IntegerField(db_column='ItemState')  # Field name made lowercase.
     itemkind = models.IntegerField(db_column='ItemKind')  # Field name made lowercase.

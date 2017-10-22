@@ -748,8 +748,8 @@ function init_chart_doughnut() {
 var sysname =new Array();
 var sys_per = new Array();
 for(var i=0;i<opsJira.length;i++){
-    sysname[i]= opsJira[i].sys_name;
-    sys_per[i]= opsJira[i].percent
+    sysname[i]= opsJira[i].typename;
+    sys_per[i]= opsJira[i].itemvalue2
 
 }
 
