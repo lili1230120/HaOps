@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'HaOps.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'HaOps',    ## 数据库名称
+        'NAME': 'HaOps_Dev',    ## 数据库名称
         'USER': 'root',
         'PASSWORD': '0',    ## 安装 mysql 数据库时，输入的 root 用户的密码
         'HOST': '127.0.0.1',

@@ -1,37 +1,27 @@
 from rest_framework import serializers
 from app.models import *
 
+#序列化 models
 
-##OpsCal   OpsJira OpsExamine OpsJiraDtl OpsCapacity
 
-class OpsCalSerializer(serializers.ModelSerializer):
+class DcdatasetSer(serializers.ModelSerializer):
 	class Meta:
-		model = OpsCal
+		model = Dcdataset
 		fields = '__all__'
 
-class OpsJiraSerializer(serializers.ModelSerializer):
+class DcitemdataSer(serializers.ModelSerializer):
 	class Meta:
-		model = OpsJira
+		model = Dcitemdata
 		fields = '__all__'
 
-class OpsExamineSerializer(serializers.ModelSerializer):
+class DcitemdefineSer(serializers.ModelSerializer):
 	class Meta:
-		model = OpsExamine
-		fields = '__all__'
-
-
-class OpsJiraDtlSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = OpsJiraDtl
+		model = Dcitemdefine
 		fields = '__all__'
 
 
-class OpsCapacitySerializer(serializers.ModelSerializer):
-	class Meta:
-		model = OpsCapacity
-		fields = '__all__'
-
-class OpsReviewSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = OpsReview
-		fields = '__all__'
+# 老版本序列化
+# class OpsReviewSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = OpsReview
+# 		fields = '__all__'
