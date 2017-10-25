@@ -104,6 +104,18 @@ DATABASES = {
     }
 }
 
+# 预备用oracle
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.oracle',
+#         'NAME': 'smstg',
+#         'USER': 'uwdata',
+#         'PASSWORD': 'uwd12ahta',
+#         'HOST': '10.1.100.231',
+#         'PORT': '1521',
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
