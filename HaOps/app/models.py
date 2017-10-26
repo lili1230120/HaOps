@@ -15,7 +15,7 @@ class Dcdataset(models.Model):
                                  null=True)  # Field name made lowercase.
     remark = models.CharField(db_column='Remark', max_length=45, blank=True, null=True)  # Field name made lowercase.
     class Meta:
-        managed = False
+        #managed = False
         db_table = 'SysCfg_DCDataSet'
 
 
@@ -35,7 +35,7 @@ class Dcitemdata(models.Model):
     itemvalue5 = models.FloatField(db_column='ItemValue5', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        #managed = False
         db_table = 'SysCfg_DCItemData'
 
 
@@ -56,7 +56,7 @@ class Dcitemdefine(models.Model):
 
 
     class Meta:
-        managed = False
+        #managed = False
         db_table = 'SysCfg_DCItemDefine'
 
 

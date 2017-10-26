@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import cx_Oracle
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -93,6 +94,8 @@ WSGI_APPLICATION = 'HaOps.wsgi.application'
 #     }
 # }
 
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -104,14 +107,14 @@ DATABASES = {
     }
 }
 
-# 预备用oracle
+#预备用oracle
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.oracle',
-#         'NAME': 'smstg',
+#         'NAME': 'corestg',
 #         'USER': 'uwdata',
 #         'PASSWORD': 'uwd12ahta',
-#         'HOST': '10.1.100.231',
+#         'HOST': '10.1.108.40',
 #         'PORT': '1521',
 #     }
 # }
