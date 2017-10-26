@@ -146,7 +146,7 @@ class HaOpsView(APIView):
 def get_context_data_all(**kwargs):
 
     # jira分布情况
-    kwargs['opsJira'] = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
+    kwargs['opsJira'] = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:7]
 
     opsJira = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
     opsJira_ser = DcitemdataSer(opsJira, many=True)

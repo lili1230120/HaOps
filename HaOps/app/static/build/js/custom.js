@@ -350,9 +350,9 @@ var opsJira = js_opsJira;
 //        [gd(2012, 1, 7), 30]
 //    ];
 
-
+/// 给 arr_data1 赋值
     for(var i=0;i<opsJira.length;i++){
-    arr_data1[i]= [gd(2012, 1, i+1), opsJira[i].num] ;
+    arr_data1[i]= [gd(2012, 1, i+1), opsJira[i].itemvalue1] ;
     }
 
     var arr_data2 = [
@@ -749,7 +749,7 @@ var sysname =new Array();
 var sys_per = new Array();
 for(var i=0;i<opsJira.length;i++){
     sysname[i]= opsJira[i].typename;
-    sys_per[i]= opsJira[i].itemvalue2
+    sys_per[i]= opsJira[i].itemvalue1
 
 }
 
@@ -1696,6 +1696,10 @@ function init_daterangepicker() {
     var cb = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+
+
+
+
     };
 
     var optionSet1 = {
@@ -1747,6 +1751,19 @@ function init_daterangepicker() {
     });
     $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+        //测试 ajax post方法
+        $.ajax({
+        type: 'POST',
+        url: "pass.php",
+        dataType: "json",
+        data: $('#myform').serialize(),
+        success: function(data) {
+            console.log("Done");
+
+        }
+    });
+ return false;
+
     });
     $('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
         console.log("cancel event fired");
