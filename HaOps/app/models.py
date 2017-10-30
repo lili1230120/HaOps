@@ -34,6 +34,9 @@ class Dcitemdata(models.Model):
     itemvalue4 = models.FloatField(db_column='ItemValue4', blank=True, null=True)  # Field name made lowercase.
     itemvalue5 = models.FloatField(db_column='ItemValue5', blank=True, null=True)  # Field name made lowercase.
 
+    def __str__(self):
+        return self.typename
+
     class Meta:
         #managed = False
         db_table = 'SysCfg_DCItemData'
@@ -52,7 +55,7 @@ class Dcitemdefine(models.Model):
     remark = models.CharField(db_column='Remark', max_length=45, blank=True, null=True)  # Field name made lowercase.
 
     def __str__(self):
-        return self.comment
+        return self.itemno
 
 
     class Meta:

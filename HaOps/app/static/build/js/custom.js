@@ -332,6 +332,8 @@ function gd(year, month, day) {
 }
 
 function init_flot_chart() {
+
+//趋势线赋值
 var opsJira = js_opsJira;
  var arr_data1 = new Array();
     if (typeof($.plot) === 'undefined') {
@@ -1695,18 +1697,14 @@ function init_daterangepicker() {
 
     var cb = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-
-
-
-
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
     };
 
     var optionSet1 = {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
-        minDate: '01/01/2012',
-        maxDate: '12/31/2015',
+        minDate: '01/01/2015',
+        maxDate: '12/31/2017',
         dateLimit: {
             days: 60
         },
@@ -1749,19 +1747,27 @@ function init_daterangepicker() {
     $('#reportrange').on('hide.daterangepicker', function() {
         console.log("hide event fired");
     });
-    $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+    $('#reportrange').on('apply.daterangepicker', function(ev,picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
         //测试 ajax post方法
         $.ajax({
         type: 'POST',
-        url: "pass.php",
+        url: "/create/",
         dataType: "json",
-        data: $('#myform').serialize(),
+        data:
+         {
+        'startDate':picker.startDate.format(),
+        'endDate':picker.endDate.format()
+//        'ev':ev
+//        'endDate':picker.endDate.serialize()
+        },
         success: function(data) {
-            console.log("Done");
-
-        }
+                    console.log("Done",data);
+                    //$("#chart_plot_01").html(data);//要刷新的div
+                    init_flot_chart();
+                    }
     });
+
  return false;
 
     });
@@ -1795,8 +1801,8 @@ function init_daterangepicker_right() {
     var optionSet1 = {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
-        minDate: '01/01/2012',
-        maxDate: '12/31/2020',
+        minDate: '01/01/2015',
+        maxDate: '12/31/2017',
         dateLimit: {
             days: 60
         },

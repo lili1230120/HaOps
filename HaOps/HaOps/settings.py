@@ -96,28 +96,28 @@ WSGI_APPLICATION = 'HaOps.wsgi.application'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'HaOps_Dev',    ## 数据库名称
-        'USER': 'root',
-        'PASSWORD': '0',    ## 安装 mysql 数据库时，输入的 root 用户的密码
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
-    }
-}
-
-#预备用oracle
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.oracle',
-#         'NAME': 'corestg',
-#         'USER': 'uwdata',
-#         'PASSWORD': 'uwd12ahta',
-#         'HOST': '10.1.108.40',
-#         'PORT': '1521',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'HaOps_Dev',    ## 数据库名称
+#         'USER': 'root',
+#         'PASSWORD': '0',    ## 安装 mysql 数据库时，输入的 root 用户的密码
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306'
 #     }
 # }
+
+#预备用oracle
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'corestg',
+        'USER': 'uwdata',
+        'PASSWORD': 'uwd12ahta',
+        'HOST': '10.1.108.40',
+        'PORT': '1521',
+    }
+}
 
 
 # Password validation

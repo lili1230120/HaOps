@@ -12,6 +12,41 @@
 {% load rest_framework %}
   <div class="right_col" role="main">
     <!-- top tiles -->
+    <!--<div class="container">-->
+        <!--<br>-->
+        <!--<h1>Demo #1</h1>-->
+        <!--<br>-->
+        <!--<button id="button_json" class="btn btn-primary">Fetch HttpResponse from user_login/all.json</button>-->
+        <!--<button id="button_html" class="btn btn-primary" style="margin-left: 20px;">Fetch HttpResponse from user_login/all.html</button>-->
+        <!--<br>-->
+        <!--<br>-->
+        <!--<div>-->
+            <!--<p id="p1" class="border" style="padding: 10px;">Plaecholder for Ajax content</p>-->
+        <!--</div>-->
+        <!--<br>-->
+        <!--<h1>Demo #2</h1>-->
+        <!--<br>-->
+        <!--<form action="/" method="POST">-->
+        <!--{% csrf_token %}-->
+            <!--<label >First Name starts with:</label>-->
+            <!--<input type="text" id="ajax_starts_with" name="starts_with">-->
+        <!--</form>-->
+        <!--<br>-->
+        <!--<div id="placeholder_2" style="margin-top: 50px; border: 1px solid silver; padding: 10px;">Placeholder 3</div>-->
+        <!--<br>-->
+        <!--<h1>Demo #3</h1>-->
+        <!--<br>-->
+        <!--<form action="/" method="POST" class="ajax_form" id="create_user_ajax_form">-->
+        <!--{% csrf_token %}-->
+            <!--First Name: <input type="text" name="first_name">-->
+            <!--Last Name: <input type="text" name="last_name">-->
+            <!--Email: <input type="text" name="email_address">-->
+            <!--Age: <input type="text" name="age">-->
+            <!--<input type="submit" value="Submit">-->
+        <!--</form>-->
+        <!--<br>-->
+        <!--<div id="placeholder_3" style="margin-top: 50px; border: 1px solid silver; padding: 10px;">Placeholder 3</div>-->
+    <!--</div>-->
 
     <!-- /top tiles -->
     <div class="row">
@@ -26,7 +61,6 @@
               <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                  <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-
                 <!--<form  method="POST" action="/">-->
         <!--{% csrf_token %}-->
         <!--{{ period.as_P }}-->
@@ -423,6 +457,63 @@
 	<link rel="stylesheet" type="text/css" href="/static/vendors/jqvmap/dist/maps/jquery-jvectormap-2.0.3.css">
 	<script type="text/javascript" src="/static/vendors/jqvmap/dist/maps/jquery-jvectormap-2.0.3.min.js"></script>
 	<script type="text/javascript" src="/static/vendors/jqvmap/dist/maps/jquery-jvectormap-cn-mill.js"></script>
+
+ <!--<script>-->
+        <!--$(document).ready(function(){-->
+
+            <!--$('#button_json').click(function(){-->
+                <!--console.log('button_json was clicked!');-->
+                <!--$.ajax({-->
+                    <!--url: 'http://127.0.0.1:8001/create/',-->
+                    <!--success: function(opsJira){-->
+                        <!--&lt;!&ndash;console.log('url: ',url),&ndash;&gt;-->
+                        <!--console.log('success, function opsJira: ', opsJira)-->
+                        <!--$('#p1').html(JSON.stringify(opsJira))-->
+                    <!--}-->
+                <!--});-->
+            <!--});-->
+
+            <!--$('#button_html').click(function(){-->
+                <!--console.log('button_html was clicked!')-->
+                <!--$.ajax({-->
+                    <!--url: '/',-->
+                    <!--success: function(serverResponse){-->
+                        <!--console.log('success, function serverResponse: ', serverResponse)-->
+                        <!--$('#p1').html(serverResponse)-->
+                    <!--}-->
+                <!--});-->
+            <!--});-->
+
+            <!--$('#ajax_starts_with').keyup(function(){-->
+                <!--console.log("starts_with input value entered")-->
+                <!--console.log("parent's serialize() returned: ", $(this).parent().serialize())-->
+                <!--$.ajax({-->
+                    <!--url: "/",-->
+                    <!--method: "POST",-->
+                    <!--data: $(this).parent().serialize(),-->
+                    <!--success: function(serverResponse){-->
+                        <!--console.log("success", serverResponse)-->
+                        <!--$('#placeholder_2').html(serverResponse)-->
+                    <!--}-->
+                <!--})-->
+            <!--})-->
+
+            <!--$('#create_user_ajax_form').submit(function(e){-->
+                <!--console.log("create_user_ajax_form was clicked!")-->
+                <!--e.preventDefault()-->
+                <!--$.ajax({-->
+                    <!--url: "/create/",-->
+                    <!--method: 'POST',-->
+                    <!--data: $(this).serialize(),-->
+                    <!--success: function(serverResponse){-->
+                        <!--console.log("success", serverResponse)-->
+                        <!--&lt;!&ndash;$('#placeholder_3').html(JSON.stringify(serverResponse))&ndash;&gt;-->
+                        <!--$('#placeholder_3').html(serverResponse)-->
+                    <!--}-->
+                <!--})-->
+            <!--})-->
+        <!--})-->
+      <!--</script>-->
 
 
 {% endblock javascripts %}

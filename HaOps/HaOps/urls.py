@@ -22,7 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # app/ -> Genetelella UI and resources
-    url(r'^app/', include('app.urls')),
 
     url(r'^add/', include('app.urls')),
 

@@ -6,6 +6,7 @@ from app.models import *
 from datetime import datetime
 from django.db.models import Count
 from django.utils import timezone
+import datetime
 
 # rest风格
 from rest_framework.renderers import JSONRenderer
@@ -47,6 +48,19 @@ class IndexView(APIView):
         context['style'] = self.style
 
         return Response(context)
+
+    def post(self,request):
+
+        # 获取所有运营数据
+        context = get_context_data_all()
+
+        context['style'] = self.style
+
+        return Response(context['opsJira'])
+        #return HttpResponse(context, content_type="application/json")
+
+
+
 
     #
     # 待结构化调整
@@ -102,6 +116,36 @@ class ReviewCreate(APIView):
         return Response(context,template_name=template_name)
 
 
+class PostView(APIView):
+
+    def get(self,request):
+        # 获取所有运营数据
+        context = get_context_data_all()
+
+        return Response(context)
+
+
+    def post(self, request):
+        context = dict()
+
+        UTC_FORMAT = "%Y-%m-%dT%H:%M:%S+08:00"
+
+        startDate = datetime.datetime.strptime(request.POST['startDate'], UTC_FORMAT)
+        endDate = datetime.datetime.strptime(request.POST['endDate'], UTC_FORMAT)
+
+        context['start'] = startDate
+        context['end'] = endDate
+
+
+        opsJira = Dcitemdata.objects.filter(itemno='A01010101',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+        opsJira_ser = DcitemdataSer(opsJira, many=True)
+        context['js_opsJira'] = JSONRenderer().render(opsJira_ser.data)
+
+
+        #context = get_context_data_all()
+        return Response(context)
+
+
 
 # ReviewCreate_BACKUP
 #
@@ -146,11 +190,21 @@ class HaOpsView(APIView):
 def get_context_data_all(**kwargs):
 
     # jira分布情况
-    kwargs['opsJira'] = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:7]
+
+    #直接查询
+    #kwargs['opsJira'] = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
+
+    #关联查询
+    kwargs['opsJira'] = Dcitemdata.objects.filter(itemno__itemcode='Pr_sys').order_by('-itemvalue1')[:5]
+
+    #sql查询
+    # kwargs['opsJira'] = Dcitemdata.objects.raw('SELECT * FROM SysCfg_DCItemData WHERE itemno in （ SELECT itemno FROM SysCfg_DCItemData where itemcode="Pr_sys")')
 
     opsJira = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
     opsJira_ser = DcitemdataSer(opsJira, many=True)
     kwargs['json_opsJira'] = JSONRenderer().render(opsJira_ser.data)
+
+
 
 
     ''' 待结构化
