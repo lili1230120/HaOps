@@ -139,8 +139,10 @@ class PostView(APIView):
 
         opsJira = Dcitemdata.objects.filter(itemno='A01010101',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
         opsJira_ser = DcitemdataSer(opsJira, many=True)
-        context['js_opsJira'] = JSONRenderer().render(opsJira_ser.data)
+        # context['js_opsJira'] = JSONRenderer().render(opsJira_ser.data)
 
+        #尝试以 json_opsJira 更新全局变量
+        context['json_opsJira'] = JSONRenderer().render(opsJira_ser.data)
 
         #context = get_context_data_all()
         return Response(context)

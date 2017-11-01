@@ -1703,8 +1703,8 @@ function init_daterangepicker() {
     var optionSet1 = {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
-        minDate: '01/01/2015',
-        maxDate: '12/31/2017',
+        minDate: '01/01/2012',
+        maxDate: moment().subtract(1, 'days'),
         dateLimit: {
             days: 60
         },
@@ -1714,12 +1714,12 @@ function init_daterangepicker() {
         timePickerIncrement: 1,
         timePicker12Hour: true,
         ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            '本日': [moment(), moment()],
+            '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            '最近 7 天': [moment().subtract(6, 'days'), moment()],
+            '最近 30 天': [moment().subtract(29, 'days'), moment()],
+            '本月': [moment().startOf('month'), moment().endOf('month')],
+            '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         },
         opens: 'left',
         buttonClasses: ['btn btn-default'],
@@ -1728,13 +1728,13 @@ function init_daterangepicker() {
         format: 'MM/DD/YYYY',
         separator: ' to ',
         locale: {
-            applyLabel: 'Submit',
-            cancelLabel: 'Clear',
+            applyLabel: '提交',
+            cancelLabel: '清空',
             fromLabel: 'From',
             toLabel: 'To',
-            customRangeLabel: 'Custom',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            customRangeLabel: '自定义',
+            daysOfWeek: ['周日', '一', '二', '三', '四', '五', '六'],
+            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
             firstDay: 1
         }
     };
@@ -1762,7 +1762,7 @@ function init_daterangepicker() {
 //        'endDate':picker.endDate.serialize()
         },
         success: function(data) {
-                    console.log("Done",data);
+                    console.log("Done",data)
                     //$("#chart_plot_01").html(data);//要刷新的div
                     init_flot_chart();
                     }
@@ -1801,8 +1801,8 @@ function init_daterangepicker_right() {
     var optionSet1 = {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
-        minDate: '01/01/2015',
-        maxDate: '12/31/2017',
+        minDate: '01/01/2012',
+        maxDate: moment().subtract(1, 'days'),
         dateLimit: {
             days: 60
         },
@@ -1812,12 +1812,12 @@ function init_daterangepicker_right() {
         timePickerIncrement: 1,
         timePicker12Hour: true,
         ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            '本日': [moment(), moment()],
+            '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            '最近 7 天': [moment().subtract(6, 'days'), moment()],
+            '最近 30 天': [moment().subtract(29, 'days'), moment()],
+            '本月': [moment().startOf('month'), moment().endOf('month')],
+            '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         },
         opens: 'right',
         buttonClasses: ['btn btn-default'],
@@ -1826,13 +1826,13 @@ function init_daterangepicker_right() {
         format: 'MM/DD/YYYY',
         separator: ' to ',
         locale: {
-            applyLabel: 'Submit',
-            cancelLabel: 'Clear',
+            applyLabel: '提交',
+            cancelLabel: '清空',
             fromLabel: 'From',
             toLabel: 'To',
-            customRangeLabel: 'Custom',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            customRangeLabel: '自定义',
+            daysOfWeek: ['周日', '一', '二', '三', '四', '五', '六'],
+            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
             firstDay: 1
         }
     };
@@ -4214,7 +4214,7 @@ function init_echarts() {
             }],
             yAxis: [{
                 type: 'category',
-                data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+                data: ['Jan', 'Feb', 'Mar', 'Apr', '五月', 'Jun']
             }],
             series: [{
                 name: '2015',
