@@ -1764,6 +1764,8 @@ function init_daterangepicker() {
         success: function(data) {
                     console.log("Done",data)
                     //$("#chart_plot_01").html(data);//要刷新的div
+//                    $("#chart_plot_01").remove();
+//                    $("#chart_plot_01").show();
                     init_flot_chart();
                     }
     });

@@ -56,7 +56,7 @@ class IndexView(APIView):
 
         context['style'] = self.style
 
-        return Response(context['opsJira'])
+        return Response(context)
         #return HttpResponse(context, content_type="application/json")
 
 
