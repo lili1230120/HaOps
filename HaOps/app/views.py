@@ -136,8 +136,8 @@ class PostView(APIView):
         context['start'] = startDate
         context['end'] = endDate
 
-
-        opsJira = Dcitemdata.objects.filter(itemno='A01010101',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+        # opsJira = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
+        opsJira = Dcitemdata.objects.filter(itemno='A01010101',datadate__range=(startDate, endDate))
         opsJira_ser = DcitemdataSer(opsJira, many=True)
         # context['js_opsJira'] = JSONRenderer().render(opsJira_ser.data)
 
@@ -146,25 +146,6 @@ class PostView(APIView):
 
         #context = get_context_data_all()
         return Response(context)
-
-
-
-# ReviewCreate_BACKUP
-#
-# class ReviewCreate(APIView):
-#
-#     renderer_classes = [TemplateHTMLRenderer]
-#
-#
-#     def get(self, request, *args, **kwargs):
-#         model = OpsReview
-#         template_name = "app/review_add.html"
-#         fields = ['title', 'comment']
-#         context = {
-#                '1': 1
-#                }
-#         return Response(context,template_name=template_name)
-
 
 
 
@@ -191,6 +172,10 @@ class HaOpsView(APIView):
 
 def get_context_data_all(**kwargs):
 
+    startDate = datetime.date(2017, 10, 1)
+
+    endDate = datetime.date(2017, 10, 31)
+
     # jira分布情况
 
     #直接查询
@@ -202,7 +187,7 @@ def get_context_data_all(**kwargs):
     #sql查询
     # kwargs['opsJira'] = Dcitemdata.objects.raw('SELECT * FROM SysCfg_DCItemData WHERE itemno in （ SELECT itemno FROM SysCfg_DCItemData where itemcode="Pr_sys")')
 
-    opsJira = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
+    opsJira = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')
     opsJira_ser = DcitemdataSer(opsJira, many=True)
     kwargs['json_opsJira'] = JSONRenderer().render(opsJira_ser.data)
 

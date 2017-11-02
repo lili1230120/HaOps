@@ -354,29 +354,29 @@ var opsJira = js_opsJira;
 
 /// 给 arr_data1 赋值
     for(var i=0;i<opsJira.length;i++){
-    arr_data1[i]= [gd(2012, 1, i+1), opsJira[i].itemvalue1] ;
+    arr_data1[i]= [gd(2017, 1, i+1), opsJira[i].itemvalue1] ;
     }
 
-    var arr_data2 = [
-        [gd(2012, 1, 1), 280],
-        [gd(2012, 1, 2), 356],
-        [gd(2012, 1, 3), 159],
-        [gd(2012, 1, 4), 278],
-        [gd(2012, 1, 5), 189],
-        [gd(2012, 1, 6), 299],
-        [gd(2012, 1, 7), 234]
-    ];
-
-    var arr_data_3 = [
-        [gd(2012, 1, 1), 140],
-        [gd(2012, 1, 2), 350],
-        [gd(2012, 1, 3), 150],
-        [gd(2012, 1, 4), 370],
-        [gd(2012, 1, 5), 280],
-        [gd(2012, 1, 6), 160],
-        [gd(2012, 1, 7), 240]
-    ];
-
+//    var arr_data2 = [
+//        [gd(2012, 1, 1), 280],
+//        [gd(2012, 1, 2), 356],
+//        [gd(2012, 1, 3), 159],
+//        [gd(2012, 1, 4), 278],
+//        [gd(2012, 1, 5), 189],
+//        [gd(2012, 1, 6), 299],
+//        [gd(2012, 1, 7), 234]
+//    ];
+//
+//    var arr_data_3 = [
+//        [gd(2012, 1, 1), 140],
+//        [gd(2012, 1, 2), 350],
+//        [gd(2012, 1, 3), 150],
+//        [gd(2012, 1, 4), 370],
+//        [gd(2012, 1, 5), 280],
+//        [gd(2012, 1, 6), 160],
+//        [gd(2012, 1, 7), 240]
+//    ];
+//
     var arr_data3 = [
         [0, 1],
         [1, 9],
@@ -566,7 +566,7 @@ var opsJira = js_opsJira;
 
         // console.log()
 
-        $.plot($("#chart_plot_01"), [arr_data1, arr_data2,arr_data_3], chart_plot_01_settings);
+        $.plot($("#chart_plot_01"), [arr_data1], chart_plot_01_settings);
     }
 
 
@@ -1747,12 +1747,15 @@ function init_daterangepicker() {
     $('#reportrange').on('hide.daterangepicker', function() {
         console.log("hide event fired");
     });
+    var callback = function(){ console.log(js_opsJira)}
+
     $('#reportrange').on('apply.daterangepicker', function(ev,picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
         //测试 ajax post方法
         $.ajax({
         type: 'POST',
         url: "/create/",
+//        async : false,        //异步
         dataType: "json",
         data:
          {
@@ -1763,12 +1766,19 @@ function init_daterangepicker() {
         },
         success: function(data) {
                     console.log("Done",data)
-                    //$("#chart_plot_01").html(data);//要刷新的div
 //                    $("#chart_plot_01").remove();
-//                    $("#chart_plot_01").show();
+//                    var json_opsJira = data.json_opsJira;
+                    js_opsJira = JSON.parse(data.json_opsJira);
+                    console.log(js_opsJira);
                     init_flot_chart();
                     }
-    });
+
+    } );
+//    .done(function(data){                     //回调函数test
+//    console.log("Done",data);
+//    var js_opsJira = data.json_opsJira;
+//    callback();
+//    }  )   ;
 
  return false;
 

@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'HaOps.wsgi.application'
 # }
 
 
-
+#
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

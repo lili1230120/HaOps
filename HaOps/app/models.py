@@ -35,7 +35,7 @@ class Dcitemdata(models.Model):
     itemvalue5 = models.FloatField(db_column='ItemValue5', blank=True, null=True)  # Field name made lowercase.
 
     def __str__(self):
-        return self.typename
+        return self.datadate
 
     class Meta:
         #managed = False

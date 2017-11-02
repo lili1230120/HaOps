@@ -4046,6 +4046,27 @@ fieldset {
 .progress.progress_sm .progress-bar {
     height: 10px !important
 }
+.progress.progress_sm .progress-bar:nth-child(1){
+    background: #1ABB9C !important;
+    border: 1px solid #1ABB9C !important;
+    color: #fff
+}
+.progress.progress_sm .progress-bar:nth-child(2){
+    background: #E74C3C !important;
+    border: 1px solid #E74C3C !important;
+    color: #fff
+}
+.progress.progress_sm .progress-bar:nth-child(3){
+    background: #3498DB !important;
+    border: 1px solid #3498DB !important;
+    color: #fff
+}
+.progress.progress_sm .progress-bar:nth-child(4){
+    background: #F39C12 !important;
+    border: 1px solid #F39C12 !important;
+    color: #fff
+}
+
 .dashboard_graph p {
     margin: 0 0 4px
 }
