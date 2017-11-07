@@ -12,7 +12,7 @@ class DcdatasetSer(serializers.ModelSerializer):
 class DcitemdataSer(serializers.ModelSerializer):
 	class Meta:
 		model = Dcitemdata
-		fields = '__all__'
+		fields = ('itemno', 'itemname', 'itemvalue1', 'datadate','itemvalue1','itemvalue2',)
 
 class DcitemdefineSer(serializers.ModelSerializer):
 	class Meta:

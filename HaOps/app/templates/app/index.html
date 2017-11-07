@@ -55,6 +55,7 @@
 
           <div class="row x_title">
             <div class="col-md-6">
+                <button id="fullscreen" class="btn btn-primary">fullscreen</button>
               <h3>近一周jira趋势 <!--<small>{% if todo.description is not None %}{{todo.description}}{% endif %} Description</small>--></h3>
             </div>
             <div class="col-md-6">
@@ -95,7 +96,7 @@
             <div class="col-md-12 col-sm-12 col-xs-6">
               {% for JiraTag in opsJira %}
               <div>
-                <p>{{JiraTag.typename}}</p>
+                <p>{{JiraTag.itemname}}</p>
                 <div class="widget_summary">
                   <div class="progress progress_sm" style="width: 76%;">
                     <div class="progress-bar" role="progressbar" data-transitiongoal="{{JiraTag.itemvalue1}}"></div>
@@ -270,9 +271,9 @@
                     <tr>
                       <td>
                         <!--blue，green，purple，aero，red-->
-                        <p><i class="fa fa-square {{OpsJira.itemfunc}}"></i>{{OpsJira.typename}} </p>
+                        <p><i class="fa fa-square green"></i>{{OpsJira.itemname}} </p>
                       </td>
-                      <td>{% widthratio OpsJira.itemvalue2 1 100 %}</td>
+                      <td>{% widthratio OpsJira.itemvalue1 1 100 %}</td>
                     </tr>
                     {% endfor %}
 

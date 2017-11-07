@@ -6,53 +6,57 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Dcdataset(models.Model):
-    dsid = models.IntegerField(db_column='DSID', primary_key=True)  # Field name made lowercase.
-    dsname = models.CharField(db_column='DSName', max_length=45)  # Field name made lowercase.
-    defineno = models.CharField(db_column='DefineNo', max_length=45, blank=True,
+    dsid = models.IntegerField(db_column='dsid', primary_key=True)  # Field name made lowercase.
+    dsname = models.CharField(db_column='dsname', max_length=45)  # Field name made lowercase.
+    defineno = models.CharField(db_column='defineno', max_length=45, blank=True,
                                 null=True)  # Field name made lowercase.
-    funcid = models.CharField(db_column='FuncID', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    chartkind = models.CharField(db_column='ChartKind', max_length=45, blank=True,
+    funcid = models.CharField(db_column='funcid', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    refreshint = models.CharField(db_column='RereshInt', max_length=45, blank=True,
                                  null=True)  # Field name made lowercase.
-    remark = models.CharField(db_column='Remark', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    remark = models.CharField(db_column='remark', max_length=45, blank=True, null=True)  # Field name made lowercase.
     class Meta:
         #managed = False
-        db_table = 'SysCfg_DCDataSet'
+        db_table = 'SYSCFG_DCDATASET'
 
 
 class Dcitemdata(models.Model):
-    itemid = models.AutoField(db_column='ItemID', primary_key=True)  # Field name made lowercase.
-    itemno = models.ForeignKey('Dcitemdefine', models.DO_NOTHING,
-                               db_column='ItemNo')  # Field name made lowercase.
-    typename = models.CharField(db_column='TypeName', max_length=45, blank=True,
+    itemno = models.ForeignKey('Dcitemdefine', models.DO_NOTHING ,
+                               db_column='itemno')  # Field name made lowercase.
+    itemname = models.CharField(db_column='itemname', max_length=45, blank=True,
                                 null=True)  # Field name made lowercase.
-    datadate = models.CharField(db_column='DataDate', max_length=20)  # Field name made lowercase.
-    itemfunc = models.CharField(db_column='Itemfunc', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    v2name = models.CharField(db_column='V2Name', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    itemvalue1 = models.FloatField(db_column='ItemValue1', blank=True, null=True)  # Field name made lowercase.
-    itemvalue2 = models.FloatField(db_column='ItemValue2', blank=True, null=True)  # Field name made lowercase.
-    itemvalue3 = models.FloatField(db_column='ItemValue3', blank=True, null=True)  # Field name made lowercase.
-    itemvalue4 = models.FloatField(db_column='ItemValue4', blank=True, null=True)  # Field name made lowercase.
-    itemvalue5 = models.FloatField(db_column='ItemValue5', blank=True, null=True)  # Field name made lowercase.
+    datadate = models.CharField(db_column='datadate', max_length=20)  # Field name made lowercase.
+    itemvalue1 = models.FloatField(db_column='itemvalue1', blank=True, null=True)  # Field name made lowercase.
+    itemvalue2 = models.FloatField(db_column='itemvalue2', blank=True, null=True)  # Field name made lowercase.
+    itemvalue3 = models.FloatField(db_column='itemvalue3', blank=True, null=True)  # Field name made lowercase.
+    itemvalue4 = models.FloatField(db_column='itemvalue4', blank=True, null=True)  # Field name made lowercase.
+    itemvalue5 = models.FloatField(db_column='itemvalue5', blank=True, null=True)  # Field name made lowercase.
 
     def __str__(self):
         return self.datadate
 
+
+    def __unicode__(self):
+        return '%s,%d' % (self.itemno, self.datadate)
+
     class Meta:
         #managed = False
-        db_table = 'SysCfg_DCItemData'
+        unique_together = ('itemno', 'datadate')
+
+        db_table = 'SYSCFG_DCITEMDATA'
+
 
 
 class Dcitemdefine(models.Model):
-    itemno = models.CharField(db_column='ItemNo', primary_key=True, max_length=100)  # Field name made lowercase.
-    itemname = models.CharField(db_column='ItemName', max_length=100)  # Field name made lowercase.
-    parentno = models.CharField(db_column='ParentNo', max_length=100, blank=True,
+    itemno = models.CharField(db_column='itemno', primary_key=True, max_length=100)  # Field name made lowercase.
+    itemname = models.CharField(db_column='itemname', max_length=100)  # Field name made lowercase.
+    parentno = models.CharField(db_column='parentno', max_length=100, blank=True,
                                 null=True)  # Field name made lowercase.
-    itemcode = models.CharField(db_column='ItemCode', max_length=50, blank=True,
+    itemcode = models.CharField(db_column='itemcode', max_length=50, blank=True,
                                 null=True)  # Field name made lowercase.
-    itemindex = models.IntegerField(db_column='ItemIndex', blank=True, null=True)  # Field name made lowercase.
-    itemstate = models.IntegerField(db_column='ItemState')  # Field name made lowercase.
-    itemkind = models.IntegerField(db_column='ItemKind')  # Field name made lowercase.
-    remark = models.CharField(db_column='Remark', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    # itemindex = models.IntegerField(db_column='ItemIndex', blank=True, null=True)  # Field name made lowercase.
+    # itemstate = models.IntegerField(db_column='ItemState')  # Field name made lowercase.
+    # itemkind = models.IntegerField(db_column='ItemKind')  # Field name made lowercase.
+    remark = models.CharField(db_column='remark', max_length=45, blank=True, null=True)  # Field name made lowercase.
 
     def __str__(self):
         return self.itemno
@@ -60,7 +64,7 @@ class Dcitemdefine(models.Model):
 
     class Meta:
         #managed = False
-        db_table = 'SysCfg_DCItemDefine'
+        db_table = 'SYSCFG_DCITEMDEFINE'
 
 
 # 老版本db
