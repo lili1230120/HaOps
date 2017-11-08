@@ -755,6 +755,20 @@ for(var i=0;i<JiraSys.length;i++){
     sys_per[i]= JiraSys[i].itemvalue1
 
 }
+
+
+//for(var i=0;i<JiraSys.length;i++){
+//    for(var j=0;i<JiraSys.length;i++){
+//        if JiraSys[i].itemname = '030101'
+//
+//
+//    }
+//    sysname[i]= JiraSys[i].itemname;
+//    sys_per[i]= JiraSys[i].itemvalue1
+//
+//}
+
+
 var color = new Array();    //颜色配置
 color = [
             "#E74C3C", // 红
