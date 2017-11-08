@@ -136,13 +136,13 @@ class PostView(APIView):
         context['start'] = startDate
         context['end'] = endDate
 
-        # opsJira = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
-        opsJira = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate))
-        opsJira_ser = DcitemdataSer(opsJira, many=True)
-        # context['js_opsJira'] = JSONRenderer().render(opsJira_ser.data)
+        # JiraSys = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
+        JiraSys = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate))
+        JiraSys_ser = DcitemdataSer(JiraSys, many=True)
+        # context['js_JiraSys'] = JSONRenderer().render(JiraSys_ser.data)
 
-        #尝试以 json_opsJira 更新全局变量
-        context['json_opsJira'] = JSONRenderer().render(opsJira_ser.data)
+        #尝试以 json_JiraSys 更新全局变量
+        context['json_JiraSys'] = JSONRenderer().render(JiraSys_ser.data)
 
         #context = get_context_data_all()
         return Response(context)
@@ -176,23 +176,39 @@ def get_context_data_all(**kwargs):
 
     endDate = datetime.date(2017, 11, 1)
 
-    # jira分布情况
-
+    ######### jira分布情况  #######
     #直接查询
-    #kwargs['opsJira'] = Dcitemdata.objects.filter(itemno='0').order_by('-itemvalue1')[:5]
+    #kwargs['JiraSys'] = Dcitemdata.objects.filter(itemno='0').order_by('-itemvalue1')[:5]
 
     #关联查询
-    kwargs['opsJira'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+    kwargs['JiraSys'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
 
     #sql查询
-    # kwargs['opsJira'] = Dcitemdata.objects.raw('SELECT * FROM SysCfg_DCItemData WHERE itemno in （ SELECT itemno FROM SysCfg_DCItemData where itemcode="Pr_sys")')
+    # kwargs['JiraSys'] = Dcitemdata.objects.raw('SELECT * FROM SysCfg_DCItemData WHERE itemno in （ SELECT itemno FROM SysCfg_DCItemData where itemcode="Pr_sys")')
 
-    opsJira = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
-    opsJira_ser = DcitemdataSer(opsJira, many=True)
-    kwargs['json_opsJira'] = JSONRenderer().render(opsJira_ser.data)
+    JiraSys = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+    JiraSys_ser = DcitemdataSer(JiraSys, many=True)
+    kwargs['json_JiraSys'] = JSONRenderer().render(JiraSys_ser.data)
 
 
 
+    # 获取全部OpsCal（页顶 指标）数据
+    kwargs['opsCal']  = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:6]
+
+    # 产能统计
+    kwargs['capacity'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:5]
+
+    # 重点反馈
+    kwargs['opsReview'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:7]
+
+    # 地区统计
+    kwargs['jiraArea'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:6]
+
+    # 生产发布计划
+    kwargs['ReleasePlan'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:7]
+
+    # 机构考核数据
+    kwargs['opsExamineUser'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:5]
 
     ''' 待结构化
     
@@ -215,13 +231,13 @@ def get_context_data_all(**kwargs):
     kwargs['opsExamineUser'] = OpsExamine.objects.order_by('-d_sum')[:5]
 
     # 标签统计
-    kwargs['jiraTag'] = OpsJiraDtl.objects.filter(jira_type = 'pr').values('tag').annotate(total=Count('tag') * 15).order_by('total')
+    kwargs['jiraTag'] = JiraSysDtl.objects.filter(jira_type = 'pr').values('tag').annotate(total=Count('tag') * 15).order_by('total')
 
     # 产能统计
     kwargs['capacity'] = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
 
     # 地区统计
-    kwargs['jiraArea'] = OpsJiraDtl.objects.filter(jira_type = 'pr').values('area').annotate(total=Count('area') * 15).order_by('-total')
+    kwargs['jiraArea'] = JiraSysDtl.objects.filter(jira_type = 'pr').values('area').annotate(total=Count('area') * 15).order_by('-total')
 
     #时间筛选
     kwargs['form'] = TestForm(initial={"period": (date.today() - timedelta(days=7), date.today())})
@@ -245,7 +261,7 @@ def get_context_data_all(**kwargs):
     kwargs['Review_form'] = Review_form
 
     #生产发布计划
-    kwargs['ReleasePlan'] = OpsJiraDtl.objects.filter(jira_type = 'publish').order_by('update_date')
+    kwargs['ReleasePlan'] = JiraSysDtl.objects.filter(jira_type = 'publish').order_by('update_date')
 '''
     return kwargs
     # The template to be loaded as per HaOps.

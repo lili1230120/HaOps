@@ -334,7 +334,7 @@ function gd(year, month, day) {
 function init_flot_chart() {
 
 //趋势线赋值
-var opsJira = js_opsJira;
+var JiraSys = js_JiraSys;
  var arr_data1 = new Array();
     if (typeof($.plot) === 'undefined') {
         return;
@@ -353,8 +353,8 @@ var opsJira = js_opsJira;
 //    ];
 
 /// 给 arr_data1 赋值
-    for(var i=0;i<opsJira.length;i++){
-    arr_data1[i]= [gd(2017, 1, i+1), opsJira[i].itemvalue1] ;
+    for(var i=0;i<JiraSys.length;i++){
+    arr_data1[i]= [gd(2017, 1, i+1), JiraSys[i].itemvalue1] ;
     }
 
 //    var arr_data2 = [
@@ -732,9 +732,10 @@ function init_skycons() {
 
 }
 
+//PR问题分布js   init_chart_doughnut
 
 function init_chart_doughnut() {
-  //  var sysname = opsJira.getKey("sys_name");
+  //  var sysname = JiraSys.getKey("sys_name");
 //$("#key_js").text(valor);
 //    var sysname = {'name': 123, 'name1': 456, 'sysname': ['单证','理赔'],"items":
 //        [{"name": "name1", "sector": "sector1"},
@@ -743,17 +744,25 @@ function init_chart_doughnut() {
 
 
 
-    var opsJira = js_opsJira;
-        console.log('js_opsJira');
+    var JiraSys = js_JiraSys;
+        console.log('js_JiraSys');
 
-
+// pr分布 新建数组
 var sysname =new Array();
 var sys_per = new Array();
-for(var i=0;i<opsJira.length;i++){
-    sysname[i]= opsJira[i].typename;
-    sys_per[i]= opsJira[i].itemvalue1
+for(var i=0;i<JiraSys.length;i++){
+    sysname[i]= JiraSys[i].itemname;
+    sys_per[i]= JiraSys[i].itemvalue1
 
 }
+var color = new Array();    //颜色配置
+color = [
+            "#E74C3C", // 红
+            "#9B59B6", // 紫
+            "#BDC3C7", //灰
+            "#3498DB", //蓝
+            "#26B99A" //绿
+        ]
 
 //    var sysname1 = sysname.parseJSON();
 //    JSON.stringify(sysname);
@@ -776,43 +785,11 @@ for(var i=0;i<opsJira.length;i++){
             tooltipFillColor: "rgba(51, 51, 51, 0.55)",
 
             data: {
-                labels: sysname,
-
-//                labels: [
-//                sysname[0].fields.sys_name,
-//                sysname[1].fields.sys_name,
-//                    //"单证",
-//                    //"理赔",
-//                    "收付",
-//                    "车险",
-//                    "非车"
-//                ],
+                labels: sysname,    //系统名称
                 datasets: [{
-//                    data: [25, 15, 20, 18, 9],
-                    data: sys_per,
-                    backgroundColor: [
-                                            "#E74C3C", //red
-                        "#9B59B6", //zise
-
-                        "#BDC3C7", //huise
-                                                "#3498DB", //蓝色
-
-                       "#26B99A" //greeen
-                    ],
-                    hoverBackgroundColor: [
-                                         "#E74C3C", //red
-                        "#9B59B6", //zise
-
-                        "#BDC3C7", //huise
-                                                "#3498DB", //蓝色
-
-                       "#26B99A" //greeen
-//                        "#CFD4D8",
-//                        "#B370CF",
-//                        "#E95E4F",
-//                        "#36CAAB",
-//                        "#49A9EA"
-                    ]
+                    data: sys_per ,  //系统占比
+                    backgroundColor: color ,
+                    hoverBackgroundColor: color
                 }]
             },
             options: {
@@ -1747,7 +1724,7 @@ function init_daterangepicker() {
     $('#reportrange').on('hide.daterangepicker', function() {
         console.log("hide event fired");
     });
-    var callback = function(){ console.log(js_opsJira)}
+    var callback = function(){ console.log(js_JiraSys)}
 
     $('#reportrange').on('apply.daterangepicker', function(ev,picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
@@ -1767,16 +1744,16 @@ function init_daterangepicker() {
         success: function(data) {
                     console.log("Done",data)
 //                    $("#chart_plot_01").remove();
-//                    var json_opsJira = data.json_opsJira;
-                    js_opsJira = JSON.parse(data.json_opsJira);
-                    console.log(js_opsJira);
+//                    var json_JiraSys = data.json_JiraSys;
+                    js_JiraSys = JSON.parse(data.json_JiraSys);
+                    console.log(js_JiraSys);
                     init_flot_chart();
                     }
 
     } );
 //    .done(function(data){                     //回调函数test
 //    console.log("Done",data);
-//    var js_opsJira = data.json_opsJira;
+//    var js_JiraSys = data.json_JiraSys;
 //    callback();
 //    }  )   ;
 

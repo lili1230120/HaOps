@@ -4067,6 +4067,19 @@ fieldset {
     color: #fff
 }
 
+.progress .progress-bar:nth-child(n+1){
+    background: #1ABB9C !important;
+    border: 1px solid #1ABB9C !important;
+    color: #fff
+}
+
+.progress .progress-bar:nth-child(n+2){
+    background: #3498DB !important;
+    border: 1px solid #3498DB !important;
+    color: #fff
+}
+
+
 .dashboard_graph p {
     margin: 0 0 4px
 }
