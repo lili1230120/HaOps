@@ -125,6 +125,27 @@ class PostView(APIView):
         return Response(context)
 
 
+    # def post(self, request):
+    #     context = dict()
+    #
+    #     UTC_FORMAT = "%Y-%m-%dT%H:%M:%S+08:00"
+    #
+    #     startDate = datetime.datetime.strptime(request.POST['startDate'], UTC_FORMAT)
+    #     endDate = datetime.datetime.strptime(request.POST['endDate'], UTC_FORMAT)
+    #
+    #     context['start'] = startDate
+    #     context['end'] = endDate
+    #
+    #     # JiraSys = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
+    #     JiraSys = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate))
+    #     JiraSys_ser = DcitemdataSer(JiraSys, many=True)
+    #     # context['js_JiraSys'] = JSONRenderer().render(JiraSys_ser.data)
+    #
+    #     #尝试以 json_JiraSys 更新全局变量
+    #     context['json_JiraSys'] = JSONRenderer().render(JiraSys_ser.data)
+    #
+    #     #context = get_context_data_all()
+    #     return Response(context)
     def post(self, request):
         context = dict()
 
@@ -136,15 +157,26 @@ class PostView(APIView):
         context['start'] = startDate
         context['end'] = endDate
 
-        # JiraSys = Dcitemdata.objects.filter(itemno='A01010101').order_by('-itemvalue1')[:5]
-        JiraSys = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate))
-        JiraSys_ser = DcitemdataSer(JiraSys, many=True)
-        # context['js_JiraSys'] = JSONRenderer().render(JiraSys_ser.data)
+        # 承保jira趋势
+        JiraNBZ = Dcitemdata.objects.filter(itemno__itemno='020101', datadate__range=(startDate, endDate)).order_by(
+            'datadate')
+        JiraNBZ_ser = DcitemdataSer(JiraNBZ, many=True)
+        context['json_JiraNBZ'] = JSONRenderer().render(JiraNBZ_ser.data)
 
-        #尝试以 json_JiraSys 更新全局变量
-        context['json_JiraSys'] = JSONRenderer().render(JiraSys_ser.data)
+        # 理赔jira趋势
+        JiraCLM = Dcitemdata.objects.filter(itemno__itemno='020116', datadate__range=(startDate, endDate)).order_by(
+            'datadate')
+        JiraCLM_ser = DcitemdataSer(JiraCLM, many=True)
+        context['json_JiraCLM'] = JSONRenderer().render(JiraCLM_ser.data)
 
-        #context = get_context_data_all()
+        # 财务jira趋势
+        JiraFIN = Dcitemdata.objects.filter(itemno__itemno='020128', datadate__range=(startDate, endDate)).order_by(
+            'datadate')
+        JiraFin_ser = DcitemdataSer(JiraFIN, many=True)
+        context['json_JiraFIN'] = JSONRenderer().render(JiraFin_ser.data)
+
+        #context = JSONRenderer().render(context)
+
         return Response(context)
 
 
@@ -170,45 +202,60 @@ class HaOpsView(APIView):
 
 
 
-def get_context_data_all(**kwargs):
+def get_context_data_all(startDate = datetime.date(2017, 4, 1),endDate = datetime.date(2017, 5, 6),**kwargs):
 
-    startDate = datetime.date(2017, 11, 1)
-
-    endDate = datetime.date(2017, 11, 1)
 
     ######### jira分布情况  #######
     #直接查询
     #kwargs['JiraSys'] = Dcitemdata.objects.filter(itemno='0').order_by('-itemvalue1')[:5]
 
     #关联查询
-    kwargs['JiraSys'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+    kwargs['JiraSys'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
 
     #sql查询
     # kwargs['JiraSys'] = Dcitemdata.objects.raw('SELECT * FROM SysCfg_DCItemData WHERE itemno in （ SELECT itemno FROM SysCfg_DCItemData where itemcode="Pr_sys")')
 
-    JiraSys = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+    JiraSys = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
     JiraSys_ser = DcitemdataSer(JiraSys, many=True)
     kwargs['json_JiraSys'] = JSONRenderer().render(JiraSys_ser.data)
 
 
+    #承保jira趋势
+    JiraNBZ = Dcitemdata.objects.filter(itemno__itemno='020101', datadate__range=(startDate, endDate)).order_by('datadate')
+    JiraNBZ_ser = DcitemdataSer(JiraNBZ, many=True)
+    kwargs['json_JiraNBZ'] = JSONRenderer().render(JiraNBZ_ser.data)
+
+    # 理赔jira趋势
+    JiraCLM = Dcitemdata.objects.filter(itemno__itemno='020116', datadate__range=(startDate, endDate)).order_by(
+        'datadate')
+    JiraCLM_ser = DcitemdataSer(JiraCLM, many=True)
+    kwargs['json_JiraCLM'] = JSONRenderer().render(JiraCLM_ser.data)
+
+    # 财务jira趋势
+    JiraFIN = Dcitemdata.objects.filter(itemno__itemno='020128', datadate__range=(startDate, endDate)).order_by(
+        'datadate')
+    JiraFin_ser = DcitemdataSer(JiraFIN, many=True)
+    kwargs['json_JiraFIN'] = JSONRenderer().render(JiraFin_ser.data)
+
+
 
     # 获取全部OpsCal（页顶 指标）数据
-    kwargs['opsCal']  = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:6]
+    kwargs['opsCal']  = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:6]
 
     # 产能统计
-    kwargs['capacity'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:5]
+    kwargs['capacity'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
 
     # 重点反馈
-    kwargs['opsReview'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:7]
+    kwargs['opsReview'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:7]
 
     # 地区统计
-    kwargs['jiraArea'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:6]
+    kwargs['jiraArea'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:6]
 
     # 生产发布计划
-    kwargs['ReleasePlan'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:7]
+    kwargs['ReleasePlan'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:7]
 
     # 机构考核数据
-    kwargs['opsExamineUser'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(startDate, endDate)).order_by('-id')[:5]
+    kwargs['opsExamineUser'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
 
     ''' 待结构化
     

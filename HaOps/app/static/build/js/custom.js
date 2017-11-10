@@ -327,15 +327,19 @@ $('body').popover({
     }
 });
 
-function gd(year, month, day) {
-    return new Date(year, month - 1, day).getTime();
+function gd(date) {
+    return new Date(date).getTime();
 }
 
 function init_flot_chart() {
 
-//趋势线赋值
-var JiraSys = js_JiraSys;
- var arr_data1 = new Array();
+//趋势图 数据初始化
+
+
+var arr_NBZ = new Array();
+var arr_CLM = new Array();
+var arr_FIN = new Array();
+var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
     if (typeof($.plot) === 'undefined') {
         return;
     }
@@ -352,10 +356,33 @@ var JiraSys = js_JiraSys;
 //        [gd(2012, 1, 7), 30]
 //    ];
 
-/// 给 arr_data1 赋值
-    for(var i=0;i<JiraSys.length;i++){
-    arr_data1[i]= [gd(2017, 1, i+1), JiraSys[i].itemvalue1] ;
+
+
+/// 承保趋势线数值初始化
+    for(var i=0;i<js_JiraNBZ.length;i++){
+    arr_NBZ[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue1] ;
+    NBZ_count += js_JiraNBZ[i].itemvalue1
+    console.log(arr_NBZ[i])
     }
+//    console.log(NBZ_count)  //查看总数
+
+///  理赔趋势线数值初始化
+    for(var i=0;i<js_JiraCLM.length;i++){
+    arr_CLM[i]= [gd(js_JiraCLM[i].datadate), js_JiraCLM[i].itemvalue1] ;
+    CLM_count += js_JiraCLM[i].itemvalue1
+    //var d2 = new Date(JiraSys[i].datadate).getTime();
+//    var d2 = gd(JiraSys[i].datadate)
+//    console.log(d2)
+    console.log(arr_CLM[i])
+    }
+
+/// 财务趋势线数值初始化
+    for(var i=0;i<js_JiraFIN.length;i++){
+    arr_FIN[i]= [gd(js_JiraFIN[i].datadate), js_JiraFIN[i].itemvalue1] ;
+    console.log(arr_FIN[i]);
+    FIN_count += js_JiraFIN[i].itemvalue1
+    }
+
 
 //    var arr_data2 = [
 //        [gd(2012, 1, 1), 280],
@@ -366,17 +393,7 @@ var JiraSys = js_JiraSys;
 //        [gd(2012, 1, 6), 299],
 //        [gd(2012, 1, 7), 234]
 //    ];
-//
-//    var arr_data_3 = [
-//        [gd(2012, 1, 1), 140],
-//        [gd(2012, 1, 2), 350],
-//        [gd(2012, 1, 3), 150],
-//        [gd(2012, 1, 4), 370],
-//        [gd(2012, 1, 5), 280],
-//        [gd(2012, 1, 6), 160],
-//        [gd(2012, 1, 7), 240]
-//    ];
-//
+
     var arr_data3 = [
         [0, 1],
         [1, 9],
@@ -435,7 +452,7 @@ var JiraSys = js_JiraSys;
                 show: true,
                 tension: 0.4,
                 lineWidth: 1,
-                fill: 0.4
+                fill: 0.2
             },
             points: {
                 radius: 0,
@@ -451,12 +468,22 @@ var JiraSys = js_JiraSys;
             borderWidth: 1,
             color: '#fff'
         },
-        colors: ["rgba(38, 185, 154, 0.38)", "rgba(3, 88, 106, 0.38)"],
+        colors: ["#fbb967","#26b99a", "#3498db" ],
         xaxis: {
             tickColor: "rgba(51, 51, 51, 0.06)",
             mode: "time",
             tickSize: [1, "day"],
             //tickLength: 10,
+            tickFormatter: function (v, axis) {
+            var date = new Date(v);
+
+             if (date.getDate() % 20 == 0) {
+
+            } else {
+                    return "";
+                }
+            },
+
             axisLabel: "Date",
             axisLabelUseCanvas: true,
             axisLabelFontSizePixels: 12,
@@ -566,7 +593,7 @@ var JiraSys = js_JiraSys;
 
         // console.log()
 
-        $.plot($("#chart_plot_01"), [arr_data1], chart_plot_01_settings);
+        $.plot($("#chart_plot_01"), [arr_NBZ , arr_CLM , arr_FIN ], chart_plot_01_settings);
     }
 
 
@@ -1759,8 +1786,11 @@ function init_daterangepicker() {
                     console.log("Done",data)
 //                    $("#chart_plot_01").remove();
 //                    var json_JiraSys = data.json_JiraSys;
-                    js_JiraSys = JSON.parse(data.json_JiraSys);
-                    console.log(js_JiraSys);
+                    console.log(data);
+                    js_JiraNBZ = JSON.parse(data.json_JiraNBZ);
+                    js_JiraCLM = JSON.parse(data.json_JiraCLM);
+                    js_JiraFIN = JSON.parse(data.json_JiraFIN);
+                    console.log(js_JiraNBZ);
                     init_flot_chart();
                     }
 
