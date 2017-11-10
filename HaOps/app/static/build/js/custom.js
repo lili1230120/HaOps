@@ -361,10 +361,15 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 /// 承保趋势线数值初始化
     for(var i=0;i<js_JiraNBZ.length;i++){
     arr_NBZ[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue1] ;
+//    arr_CLM[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue2] ;
+//    arr_FIN[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue3] ;
+
     NBZ_count += js_JiraNBZ[i].itemvalue1
     console.log(arr_NBZ[i])
     }
 //    console.log(NBZ_count)  //查看总数
+
+
 
 ///  理赔趋势线数值初始化
     for(var i=0;i<js_JiraCLM.length;i++){
@@ -474,15 +479,7 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
             mode: "time",
             tickSize: [1, "day"],
             //tickLength: 10,
-            tickFormatter: function (v, axis) {
-            var date = new Date(v);
-
-             if (date.getDate() % 20 == 0) {
-
-            } else {
-                    return "";
-                }
-            },
+            tickFormatter: 3,
 
             axisLabel: "Date",
             axisLabelUseCanvas: true,

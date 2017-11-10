@@ -354,7 +354,7 @@
                       {% for JiraArea in jiraArea %}
                         <tr>
                           <td>{{JiraArea.itemname }}</td>
-                          <td class="fs15 fw700 text-right">{{JiraArea.itemvalue1 }}</td>
+                          <td class="fs15 fw700 text-right">{{JiraArea.itemvalue2 }}</td>
                         </tr>
                       {% endfor %}
                       </tbody>
@@ -399,7 +399,8 @@
                     {% for releasePlan in ReleasePlan %}
                     <li>
                       <p>
-                        <input type="checkbox" class="flat"> {{releasePlan.itemname }} | {{ releasePlan.datadate }} |</p>
+                        <!--<input type="checkbox" class="flat"> </p>-->
+                        <a href="http://jira.sinosafe.com.cn/">{{releasePlan.itemname }} | Publish-{{releasePlan.itemvalue1 }}</a>
                     </li>
                     {% endfor %}
                   </ul>
@@ -441,15 +442,15 @@
 
                   <ul class="list-unstyled top_profiles scroll-view">
                     <!--color: aero green blue aero gre -->
-                     {% for OpsExamineUser in opsExamineUser %}
+                     {% for OpsExamineUser in jiraArea %}
                     <li class="media event">
                       <a class="pull-left border-blue profile_thumb">
                         <i class="fa fa-user green"></i>
                       </a>
                       <div class="media-body">
                         <a class="title" href="#">{{OpsExamineUser.itemname}}</a>
-                        <p><strong>考核总分： </strong> {{OpsExamineUser.itemvalue1}}. </p>
-                        <p> <small> 当前处理量： </small>
+                        <p><strong>均处理时间： </strong> {{OpsExamineUser.itemvalue3}} </p>
+                        <p> <small> 处理总量：{{OpsExamineUser.itemvalue1}} </small>
                         </p>
                       </div>
                     </li>

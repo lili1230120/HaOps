@@ -202,7 +202,7 @@ class HaOpsView(APIView):
 
 
 
-def get_context_data_all(startDate = datetime.date(2017, 4, 1),endDate = datetime.date(2017, 5, 6),**kwargs):
+def get_context_data_all(startDate = datetime.date(2017, 4, 1),endDate = datetime.date(2017, 6, 6),**kwargs):
 
 
     ######### jira分布情况  #######
@@ -249,10 +249,10 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1),endDate = datetim
     kwargs['opsReview'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:7]
 
     # 地区统计
-    kwargs['jiraArea'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:6]
+    kwargs['jiraArea'] = Dcitemdata.objects.filter(itemno__parentno='0302',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
 
     # 生产发布计划
-    kwargs['ReleasePlan'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:7]
+    kwargs['ReleasePlan'] = Dcitemdata.objects.filter(itemno__parentno='0304',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:7]
 
     # 机构考核数据
     kwargs['opsExamineUser'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
