@@ -441,6 +441,29 @@ body .container.body .right_col {
 .border-dark {
     border-color: #34495E !important
 }
+
+
+.tile_info tr:nth-child(1) .fa {
+    color: #E74C3C;
+}
+
+.tile_info tr:nth-child(2) .fa {
+    color: #9B59B6;
+}
+.tile_info tr:nth-child(3) .fa {
+    color: #BDC3C7;
+}
+
+.tile_info tr:nth-child(4) .fa {
+    color: #3498DB;
+}
+
+.tile_info tr:nth-child(5) .fa {
+    color: #26B99A;
+}
+
+
+
 .bg-white {
     background: #fff !important;
     border: 1px solid #fff !important;
@@ -546,6 +569,11 @@ body {
 .progress-bar-gray {
     background-color: #BDC3C7 !important
 }
+
+.progress-bar-green {
+    background-color: #1abb9c !important
+}
+
 table.no-margin .progress {
     margin-bottom: 0
 }

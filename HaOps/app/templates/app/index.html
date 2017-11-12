@@ -51,7 +51,7 @@
 
           <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
             <div class="x_title">
-              <h2>问题分类概况</h2>
+              <h2>问题分类概况 <small> <a href="jira_type.html"> 详情</a>   </small></h2>
               <div class="clearfix"></div>
             </div>
 
@@ -87,7 +87,7 @@
         <div class="col-md-4 col-sm-4 col-xs-12">
         <div id="cap" class="x_panel tile fixed_height_320">
           <div class="x_title">
-            <h2>KPI异常 <small> 详情 </small></h2>
+            <h2>KPI异常 <small><a href="KPI.html">详情</a>  </small></h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -122,7 +122,7 @@
                 </div>
               </div>
               <div class="w_right w_20">
-                <span>{{OpsKPI.itemvalue1}}</span>
+                <span>{{OpsKPI.itemvalue1|floatformat}}</span>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -183,7 +183,7 @@
                     <p class="">系统</p>
                   </div>
                   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                    <p class="">    占比    </p>
+                    <p class="">    总数    </p>
                   </div>
                 </th>
               </tr>
@@ -193,13 +193,13 @@
                 </td>
                 <td>
                   <table class="tile_info">
-                    {% for OpsMQ in opsMQ %}
+                    {% for jiraSys in JiraSys %}
                     <tr>
                       <td>
                         <!--blue，green，purple，aero，red-->
-                        <p><i class="fa fa-square green"></i>{{OpsMQ.itemname}} </p>
+                        <p><i class="fa fa-square green"></i>{{jiraSys.itemname}} </p>
                       </td>
-                      <td>{% widthratio OpsMQ.itemvalue1 1 100 %}</td>
+                      <td>{{ jiraSys.itemvalue1|floatformat }}</td>
                     </tr>
                     {% endfor %}
 
@@ -324,7 +324,7 @@
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
               <div class="x_title">
-                <h2>机构jira分布情况 <small>分省</small></h2>
+                <h2> jira 地区分布 <small>分省</small></h2>
                 <ul class="nav navbar-right panel_toolbox">
                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                   </li>
@@ -401,7 +401,7 @@
                     <li>
                       <p>
                         <!--<input type="checkbox" class="flat"> </p>-->
-                        <a href="http://jira.sinosafe.com.cn/browse/PUBLISH-{{releasePlan.itemvalue1|floatformat }}">{{releasePlan.itemname }} | PUBLISH-{{releasePlan.itemvalue1|floatformat }}</a>
+                        <a >{{releasePlan.itemname }} | 任务号：{{releasePlan.itemno }}</a>
                     </li>
                     {% endfor %}
                   </ul>
@@ -418,165 +418,72 @@
 
 
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel">
-              <div class="x_title">
-                <div>
-                  <div class="x_title">
-                    <h2>KPI异常 <small> 详情 </small></h2>
-            <ul class="nav navbar-right panel_toolbox">
-              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dro    pdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Settings 1</a>
-                  </li>
-                  <li><a href="#">Settings 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li><a class="close-link"><i class="fa fa-close"></i></a>
-              </li>
-            </ul>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <!--<h4>Top 5</h4>-->
-                        <h4></h4>
-             {% for OpsKPI in opsKPI %}
-            <div class="widget_summary">
+            <div class="x_panel fixed_height_390">
+                    <div class="x_title">
+                      <h2> 昨日产能 </h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
 
-              <div class="w_left w_25">
-                <span>{{OpsKPI.itemname}}</span>
-              </div>
-              <div class="w_center w_55">
-                <div class="progress">
-                  <div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{OpsKPI.itemvalue1}}%;">
-                    <span class="sr-only">90% Complete</span>
+                      <div style="text-align: center; margin-bottom: 17px">
+                        <ul class="verticle_bars list-inline">
+                          <li>
+                            <div class="progress vertical progress_wide bottom">
+                              <div class="progress-bar progress-bar-dark" role="progressbar" data-transitiongoal="45"></div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="progress vertical progress_wide bottom">
+                              <div class="progress-bar progress-bar-green" role="progressbar" data-transitiongoal="85"></div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="progress vertical progress_wide bottom">
+                              <div class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal="25"></div>
+                            </div>
+                          </li>
+
+                        </ul>
+                      </div>
+                      <div class="divider"></div>
+
+                      <ul class="legend list-unstyled">
+                        <li>
+                          <p>
+                            <span class="icon"><i class="fa fa-square dark"></i></span> <span class="name"> 电商 </span>
+                          </p>
+                        </li>
+                        <li>
+                          <p>
+                            <span class="icon"><i class="fa fa-square green"></i></span> <span class="name"> 核心 </span>
+                          </p>
+                        </li>
+                        <li>
+                          <p>
+                            <span class="icon"><i class="fa fa-square blue"></i></span> <span class="name"> 创新、再保</span>
+                          </p>
+                        </li>
+
+                      </ul>
+
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="w_right w_20">
-                <span>{{OpsKPI.itemvalue1}}</span>
-              </div>
-              <div class="clearfix"></div>
-            </div>
-            {% endfor %}
-                  </ul>
 
-                  </div>
-                  <div class="clearfix"></div>
-                </div>
-              </div>
-            </div>
-
-
-          <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
-            <!--<div class="x_panel">-->
-              <!--<div class="x_title">-->
-                <!--<h2>Daily active users <small>Sessions</small></h2>-->
-                <!--<ul class="nav navbar-right panel_toolbox">-->
-                  <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>-->
-                  <!--</li>-->
-                  <!--<li class="dropdown">-->
-                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>-->
-                    <!--<ul class="dropdown-menu" role="menu">-->
-                      <!--<li><a href="#">Settings 1</a>-->
-                      <!--</li>-->
-                      <!--<li><a href="#">Settings 2</a>-->
-                      <!--</li>-->
-                    <!--</ul>-->
-                  <!--</li>-->
-                  <!--<li><a class="close-link"><i class="fa fa-close"></i></a>-->
-                  <!--</li>-->
-                <!--</ul>-->
-                <!--<div class="clearfix"></div>-->
-              <!--</div>-->
-              <!--<div class="x_content">-->
-                <!--<div class="row">-->
-                  <!--<div class="col-sm-12">-->
-                    <!--<div class="temperature"><b>Monday</b>, 07:30 AM-->
-                      <!--<span>F</span>-->
-                      <!--<span><b>C</b></span>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <!--<div class="row">-->
-                  <!--<div class="col-sm-4">-->
-                    <!--<div class="weather-icon">-->
-                      <!--<canvas height="84" width="84" id="partly-cloudy-day"></canvas>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="col-sm-8">-->
-                    <!--<div class="weather-text">-->
-                      <!--<h2>Texas <br><i>Partly Cloudy Day</i></h2>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-sm-12">-->
-                  <!--<div class="weather-text pull-right">-->
-                    <!--<h3 class="degrees">23</h3>-->
-                  <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="clearfix"></div>-->
-
-                <!--<div class="row weather-days">-->
-                  <!--<div class="col-sm-2">-->
-                    <!--<div class="daily-weather">-->
-                      <!--<h2 class="day">Mon</h2>-->
-                      <!--<h3 class="degrees">25</h3>-->
-                      <!--<canvas id="clear-day" width="32" height="32"></canvas>-->
-                      <!--<h5>15 <i>km/h</i></h5>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="col-sm-2">-->
-                    <!--<div class="daily-weather">-->
-                      <!--<h2 class="day">Tue</h2>-->
-                      <!--<h3 class="degrees">25</h3>-->
-                      <!--<canvas height="32" width="32" id="rain"></canvas>-->
-                      <!--<h5>12 <i>km/h</i></h5>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="col-sm-2">-->
-                    <!--<div class="daily-weather">-->
-                      <!--<h2 class="day">Wed</h2>-->
-                      <!--<h3 class="degrees">27</h3>-->
-                      <!--<canvas height="32" width="32" id="snow"></canvas>-->
-                      <!--<h5>14 <i>km/h</i></h5>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="col-sm-2">-->
-                    <!--<div class="daily-weather">-->
-                      <!--<h2 class="day">Thu</h2>-->
-                      <!--<h3 class="degrees">28</h3>-->
-                      <!--<canvas height="32" width="32" id="sleet"></canvas>-->
-                      <!--<h5>15 <i>km/h</i></h5>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="col-sm-2">-->
-                    <!--<div class="daily-weather">-->
-                      <!--<h2 class="day">Fri</h2>-->
-                      <!--<h3 class="degrees">28</h3>-->
-                      <!--<canvas height="32" width="32" id="wind"></canvas>-->
-                      <!--<h5>11 <i>km/h</i></h5>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="col-sm-2">-->
-                    <!--<div class="daily-weather">-->
-                      <!--<h2 class="day">Sat</h2>-->
-                      <!--<h3 class="degrees">26</h3>-->
-                      <!--<canvas height="32" width="32" id="cloudy"></canvas>-->
-                      <!--<h5>10 <i>km/h</i></h5>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="clearfix"></div>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-
-          <!--</div>-->
-          <!-- end of weather widget -->
         </div>
       </div>
     </div>

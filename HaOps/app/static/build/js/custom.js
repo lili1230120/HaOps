@@ -593,7 +593,7 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
         // console.log()
 
-        $.plot($("#chart_plot_01"), [{ label: "--承保--", data: arr_NBZ } , { label: "--理赔--", data: arr_CLM } ,  { label: "--财务--", data: arr_FIN } ], chart_plot_01_settings);
+        $.plot($("#chart_plot_01"), [{ label: "--理赔--", data: arr_NBZ } , { label: "--理赔--", data: arr_CLM } ,  { label: "--财务--", data: arr_FIN } ], chart_plot_01_settings);
     }
 
     if ($("#chart_plot_02").length) {
@@ -2728,8 +2728,8 @@ function init_DataTables() {
     console.log('init_DataTables');
 
     var handleDataTableButtons = function() {
-        if ($("#datatable-buttons").length) {
-            $("#datatable-buttons").DataTable({
+        if ($(".table").length) {
+            $(".table").DataTable({
                 dom: "Bfrtip",
                 buttons: [{
                     extend: "copy",

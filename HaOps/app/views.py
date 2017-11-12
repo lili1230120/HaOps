@@ -170,10 +170,10 @@ class PostView(APIView):
         context['json_JiraCLM'] = JSONRenderer().render(JiraCLM_ser.data)
 
         # 财务jira趋势
-        JiraOUT = Dcitemdata.objects.filter(itemno__itemno='020128', datadate__range=(startDate, endDate)).order_by(
+        JiraFIN = Dcitemdata.objects.filter(itemno__itemno='020128', datadate__range=(startDate, endDate)).order_by(
             'datadate')
-        JiraOUT_ser = DcitemdataSer(JiraOUT, many=True)
-        context['json_JiraOUT'] = JSONRenderer().render(JiraOUT_ser.data)
+        JiraFIN_ser = DcitemdataSer(JiraFIN, many=True)
+        context['json_JiraFIN'] = JSONRenderer().render(JiraFIN_ser.data)
 
         #context = JSONRenderer().render(context)
 
@@ -202,7 +202,7 @@ class HaOpsView(APIView):
 
 
 
-def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datetime.date(2017, 6, 6),**kwargs):
+def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datetime.date(2017, 7, 6),**kwargs):
 
     OstartDate = datetime.date(2017, 9, 1)
     OendDate = datetime.date(2017,11, 1)
@@ -212,12 +212,12 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datet
     #kwargs['JiraSys'] = Dcitemdata.objects.filter(itemno='0').order_by('-itemvalue1')[:5]
 
     #关联查询
-    kwargs['JiraSys'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+    kwargs['JiraSys'] = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(OendDate, OendDate)).order_by('-itemvalue1')[:5]
 
     #sql查询
     # kwargs['JiraSys'] = Dcitemdata.objects.raw('SELECT * FROM SysCfg_DCItemData WHERE itemno in （ SELECT itemno FROM SysCfg_DCItemData where itemcode="Pr_sys")')
 
-    JiraSys = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+    JiraSys = Dcitemdata.objects.filter(itemno__parentno='0301',datadate__range=(OendDate, OendDate)).order_by('-itemvalue1')[:5]
     JiraSys_ser = DcitemdataSer(JiraSys, many=True)
     kwargs['json_JiraSys'] = JSONRenderer().render(JiraSys_ser.data)
 
@@ -245,6 +245,11 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datet
     # JiraSPT_ser = DcitemdataSer(JiraSPT, many=True)
     # kwargs['JiraSPT'] = JSONRenderer().render(JiraSPT_ser.data)
 
+    # 问题趋势统计
+    kwargs['JiraType'] = Dcitemdata.objects.filter(itemno__itemno='0303',
+                                                  datadate__range=(startDate, endDate)).order_by(
+        'datadate')
+
     # # 需求缺陷
     # JiraREQ = Dcitemdata.objects.filter(itemno__itemno='030302', datadate__range=(OstartDate, OendDate)).order_by(
     #     'datadate')
@@ -264,10 +269,24 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datet
 
     # 获取KPI数据
     kwargs['opsKPI'] = Dcitemdata.objects.filter(itemno__parentno='0202',
-                                                 datadate__range=(startDate, endDate)).order_by('-datadate')[:6]
+                                                 datadate__range=(OstartDate, OstartDate)).order_by('-itemvalue1')[:6]
+
+    # 获取承保KPI数据
+    kwargs['NBZ_KPI'] = Dcitemdata.objects.filter(itemno__parentno ='0201',
+                                                  datadate__range=(startDate, endDate)).order_by('-datadate')
+
+    # 获取理赔KPI数据
+    kwargs['CLM_KPI'] = Dcitemdata.objects.filter(itemno__parentno='0202',
+                                                  datadate__range=(startDate, endDate)).order_by('-datadate')
+
+
     # 获取MQ数据
     kwargs['opsMQ'] = Dcitemdata.objects.filter(itemno__parentno='0206',
                                                  datadate__range=(OstartDate, OstartDate)).order_by('-datadate')[:6]
+
+    # 获取MQ数据-all
+    kwargs['MQ_KPI'] = Dcitemdata.objects.filter(itemno__parentno='0206',
+                                                datadate__range=(startDate, OendDate)).order_by('-datadate')
 
     # 获取全部OpsCal（页顶 指标）数据
     kwargs['opsCal']  = Dcitemdata.objects.filter(itemno__parentno='0104',datadate__range=(OstartDate,OstartDate)).order_by('itemno')[:6]
