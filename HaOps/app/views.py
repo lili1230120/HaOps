@@ -170,10 +170,10 @@ class PostView(APIView):
         context['json_JiraCLM'] = JSONRenderer().render(JiraCLM_ser.data)
 
         # 财务jira趋势
-        JiraFIN = Dcitemdata.objects.filter(itemno__itemno='020128', datadate__range=(startDate, endDate)).order_by(
+        JiraOUT = Dcitemdata.objects.filter(itemno__itemno='020128', datadate__range=(startDate, endDate)).order_by(
             'datadate')
-        JiraFin_ser = DcitemdataSer(JiraFIN, many=True)
-        context['json_JiraFIN'] = JSONRenderer().render(JiraFin_ser.data)
+        JiraOUT_ser = DcitemdataSer(JiraOUT, many=True)
+        context['json_JiraOUT'] = JSONRenderer().render(JiraOUT_ser.data)
 
         #context = JSONRenderer().render(context)
 
@@ -202,8 +202,10 @@ class HaOpsView(APIView):
 
 
 
-def get_context_data_all(startDate = datetime.date(2017, 4, 1),endDate = datetime.date(2017, 6, 6),**kwargs):
+def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datetime.date(2017, 6, 6),**kwargs):
 
+    OstartDate = datetime.date(2017, 9, 1)
+    OendDate = datetime.date(2017, 9, 1)
 
     ######### jira分布情况  #######
     #直接查询
@@ -237,10 +239,38 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1),endDate = datetim
     JiraFin_ser = DcitemdataSer(JiraFIN, many=True)
     kwargs['json_JiraFIN'] = JSONRenderer().render(JiraFin_ser.data)
 
+    # 二线支持
+    kwargs['JiraSPT'] = Dcitemdata.objects.filter(itemno__parentno='0303', datadate__range=(OstartDate, OendDate)).order_by(
+        'datadate')
+    # JiraSPT_ser = DcitemdataSer(JiraSPT, many=True)
+    # kwargs['JiraSPT'] = JSONRenderer().render(JiraSPT_ser.data)
 
+    # # 需求缺陷
+    # JiraREQ = Dcitemdata.objects.filter(itemno__itemno='030302', datadate__range=(OstartDate, OendDate)).order_by(
+    #     'datadate')
+    # JiraREQ_ser = DcitemdataSer(JiraREQ, many=True)
+    # kwargs['json_JiraREQ'] = JSONRenderer().render(JiraREQ_ser.data)
+    #
+    # # 超期未完成
+    # JiraOUT = Dcitemdata.objects.filter(itemno__itemno='030303', datadate__range=(OstartDate, OendDate)).order_by(
+    #     'datadate')
+    # JiraOUT_ser = DcitemdataSer(JiraOUT, many=True)
+    # kwargs['json_JiraOUT'] = JSONRenderer().render(JiraOUT_ser.data)
+
+
+    # 获取标签数据
+    kwargs['opsTag'] = Dcitemdata.objects.filter(itemno__parentno='0202',
+                                                 datadate__range=(startDate, endDate)).order_by('-datadate')[:3]
+
+    # 获取KPI数据
+    kwargs['opsKPI'] = Dcitemdata.objects.filter(itemno__parentno='0202',
+                                                 datadate__range=(startDate, endDate)).order_by('-datadate')[:6]
+    # 获取MQ数据
+    kwargs['opsMQ'] = Dcitemdata.objects.filter(itemno__parentno='0206',
+                                                 datadate__range=(OstartDate, OendDate)).order_by('-datadate')[:6]
 
     # 获取全部OpsCal（页顶 指标）数据
-    kwargs['opsCal']  = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:6]
+    kwargs['opsCal']  = Dcitemdata.objects.filter(itemno__parentno='0104',datadate__range=(OendDate,OendDate)).order_by('itemno')[:6]
 
     # 产能统计
     kwargs['capacity'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]

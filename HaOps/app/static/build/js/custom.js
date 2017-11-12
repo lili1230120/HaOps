@@ -71,6 +71,7 @@ function init_sidebar() {
         contentHeight -= $NAV_MENU.height() + footerHeight;
 
         $RIGHT_COL.css('min-height', contentHeight);
+
     };
 
     $SIDEBAR_MENU.find('a').on('click', function(ev) {
@@ -101,7 +102,7 @@ function init_sidebar() {
         }
     });
 
-    // toggle small or large menu
+    // 导航隐藏
     $MENU_TOGGLE.on('click', function() {
         console.log('clicked - menu toggle');
 
@@ -360,12 +361,12 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
 /// 承保趋势线数值初始化
     for(var i=0;i<js_JiraNBZ.length;i++){
-    arr_NBZ[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue1] ;
+    arr_NBZ[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue1/10] ;
 //    arr_CLM[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue2] ;
 //    arr_FIN[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue3] ;
 
     NBZ_count += js_JiraNBZ[i].itemvalue1
-    console.log(arr_NBZ[i])
+    console.log('arr_NBZ success');
     }
 //    console.log(NBZ_count)  //查看总数
 
@@ -373,19 +374,19 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
 ///  理赔趋势线数值初始化
     for(var i=0;i<js_JiraCLM.length;i++){
-    arr_CLM[i]= [gd(js_JiraCLM[i].datadate), js_JiraCLM[i].itemvalue1] ;
+    arr_CLM[i]= [gd(js_JiraCLM[i].datadate), js_JiraCLM[i].itemvalue1/10] ;
     CLM_count += js_JiraCLM[i].itemvalue1
     //var d2 = new Date(JiraSys[i].datadate).getTime();
 //    var d2 = gd(JiraSys[i].datadate)
 //    console.log(d2)
-    console.log(arr_CLM[i])
+    console.log('arr_CLM success');
     }
 
 /// 财务趋势线数值初始化
     for(var i=0;i<js_JiraFIN.length;i++){
-    arr_FIN[i]= [gd(js_JiraFIN[i].datadate), js_JiraFIN[i].itemvalue1] ;
-    console.log(arr_FIN[i]);
-    FIN_count += js_JiraFIN[i].itemvalue1
+    arr_FIN[i]= [gd(js_JiraFIN[i].datadate), js_JiraFIN[i].itemvalue1/10] ;
+    console.log('arr_FIN success');
+//    FIN_count += js_JiraFIN[i].itemvalue1
     }
 
 
@@ -450,22 +451,24 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
     var chart_plot_01_settings = {
         series: {
             lines: {
-                show: false,
+                show: false,         //显示直线
                 fill: true
             },
             splines: {
                 show: true,
-                tension: 0.4,
-                lineWidth: 1,
+                tension: 0.2,   //平滑度
+                lineWidth: 2,   //线宽
                 fill: 0.2
             },
             points: {
-                radius: 0,
+                radius: 0.3,    //点的半径
                 show: true
             },
-            shadowSize: 2
+            shadowSize: 2  ,     //阴影
+            highlightColor: '#e84b3c',  //高亮颜色
+
         },
-        grid: {
+        grid: {                 //网格设置
             verticalLines: true,
             hoverable: true,
             clickable: true,
@@ -477,9 +480,9 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
         xaxis: {
             tickColor: "rgba(51, 51, 51, 0.06)",
             mode: "time",
-            tickSize: [1, "day"],
+            tickSize: [5, "day"],
             //tickLength: 10,
-            tickFormatter: 3,
+            tickFormatter: "%m/%d",
 
             axisLabel: "Date",
             axisLabelUseCanvas: true,
@@ -491,7 +494,7 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
             ticks: 8,
             tickColor: "rgba(51, 51, 51, 0.06)",
         },
-        tooltip: true
+        tooltip: true,
     };
 
     var chart_plot_02_settings = {
@@ -590,9 +593,8 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
         // console.log()
 
-        $.plot($("#chart_plot_01"), [arr_NBZ , arr_CLM , arr_FIN ], chart_plot_01_settings);
+        $.plot($("#chart_plot_01"), [{ label: "--承保--", data: arr_NBZ } , { label: "--理赔--", data: arr_CLM } ,  { label: "--财务--", data: arr_FIN } ], chart_plot_01_settings);
     }
-
 
     if ($("#chart_plot_02").length) {
         console.log('Plot2');
@@ -5237,7 +5239,6 @@ $('#fullscreen').click(function() {
 });
 
 $(document).ready(function() {
-
     init_sparklines();
     init_flot_chart();
     init_sidebar();
@@ -5272,5 +5273,4 @@ $(document).ready(function() {
     init_CustomNotification();
     init_autosize();
     init_autocomplete();
-
 });

@@ -417,6 +417,12 @@ body .container.body .right_col {
 .dark {
     color: #34495E
 }
+
+.legendLabel
+{
+    color: #100b0b;
+}
+
 .border-blue {
     border-color: #3498DB !important
 }
@@ -4046,34 +4052,29 @@ fieldset {
 .progress.progress_sm .progress-bar {
     height: 10px !important
 }
-.progress.progress_sm .progress-bar:nth-child(1){
-    background: #1ABB9C !important;
-    border: 1px solid #1ABB9C !important;
+#tagline:nth-child(3n+1) .progress-bar{
+    background: #fbb967 !important;
+    border: 1px solid #26b99a !important;
     color: #fff
 }
-.progress.progress_sm .progress-bar:nth-child(2){
-    background: #E74C3C !important;
-    border: 1px solid #E74C3C !important;
+#tagline:nth-child(3n+2) .progress-bar{
+    background: #26b99a !important;
+    border: 1px solid #26b99a !important;
     color: #fff
 }
-.progress.progress_sm .progress-bar:nth-child(3){
-    background: #3498DB !important;
-    border: 1px solid #3498DB !important;
-    color: #fff
-}
-.progress.progress_sm .progress-bar:nth-child(4){
-    background: #F39C12 !important;
-    border: 1px solid #F39C12 !important;
+#tagline:nth-child(3n+3) .progress-bar{
+    background: #3498db !important;
+    border: 1px solid #26b99a !important;
     color: #fff
 }
 
-.widget_summary:nth-child(2n) .progress-bar {
+.col-md-4 .widget_summary:nth-child(2n) .progress-bar {
     background: #1ABB9C !important;
     border: 1px solid #1ABB9C !important;
     color: #fff
 }
 
-.widget_summary:nth-child(2n+1) .progress-bar {
+.col-md-4 .widget_summary:nth-child(2n+1) .progress-bar {
     background: #3498DB !important;
     border: 1px solid #3498DB !important;
     color: #fff
