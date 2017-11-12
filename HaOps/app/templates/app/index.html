@@ -354,8 +354,8 @@
                       <tbody>
                       {% for JiraArea in jiraArea %}
                         <tr>
-                          <td>{{JiraArea.itemname }}</td>
-                          <td class="fs15 fw700 text-right">{{JiraArea.itemvalue2 }}</td>
+                          <td>{{JiraArea.itemname}}</td>
+                          <td class="fs15 fw700 text-right">{{JiraArea.itemvalue2|floatformat }} 个</td>
                         </tr>
                       {% endfor %}
                       </tbody>
@@ -607,71 +607,14 @@
   <!--<script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>-->
   <!--<script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>-->
   <!--<script src="/static/vendors/jqvmap/dist/maps/jquery-jvectormap-cn-mill.js"></script>-->
-  <!--<script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>-->
+  <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
 
 <!-- JQVMap cn补充-->
-  <script type="text/javascript" src="../lib/jquery-1.8.2.js"></script>
 	<script type="text/javascript" src="/static/vendors/jqvmap/dist/jquery-mousewheel.js"></script>
 	<link rel="stylesheet" type="text/css" href="/static/vendors/jqvmap/dist/maps/jquery-jvectormap-2.0.3.css">
 	<script type="text/javascript" src="/static/vendors/jqvmap/dist/maps/jquery-jvectormap-2.0.3.min.js"></script>
 	<script type="text/javascript" src="/static/vendors/jqvmap/dist/maps/jquery-jvectormap-cn-mill.js"></script>
 
- <!--<script>-->
-        <!--$(document).ready(function(){-->
-
-            <!--$('#button_json').click(function(){-->
-                <!--console.log('button_json was clicked!');-->
-                <!--$.ajax({-->
-                    <!--url: 'http://127.0.0.1:8001/create/',-->
-                    <!--success: function(JiraSys){-->
-                        <!--&lt;!&ndash;console.log('url: ',url),&ndash;&gt;-->
-                        <!--console.log('success, function JiraSys: ', JiraSys)-->
-                        <!--$('#p1').html(JSON.stringify(JiraSys))-->
-                    <!--}-->
-                <!--});-->
-            <!--});-->
-
-            <!--$('#button_html').click(function(){-->
-                <!--console.log('button_html was clicked!')-->
-                <!--$.ajax({-->
-                    <!--url: '/',-->
-                    <!--success: function(serverResponse){-->
-                        <!--console.log('success, function serverResponse: ', serverResponse)-->
-                        <!--$('#p1').html(serverResponse)-->
-                    <!--}-->
-                <!--});-->
-            <!--});-->
-
-            <!--$('#ajax_starts_with').keyup(function(){-->
-                <!--console.log("starts_with input value entered")-->
-                <!--console.log("parent's serialize() returned: ", $(this).parent().serialize())-->
-                <!--$.ajax({-->
-                    <!--url: "/",-->
-                    <!--method: "POST",-->
-                    <!--data: $(this).parent().serialize(),-->
-                    <!--success: function(serverResponse){-->
-                        <!--console.log("success", serverResponse)-->
-                        <!--$('#placeholder_2').html(serverResponse)-->
-                    <!--}-->
-                <!--})-->
-            <!--})-->
-
-            <!--$('#create_user_ajax_form').submit(function(e){-->
-                <!--console.log("create_user_ajax_form was clicked!")-->
-                <!--e.preventDefault()-->
-                <!--$.ajax({-->
-                    <!--url: "/create/",-->
-                    <!--method: 'POST',-->
-                    <!--data: $(this).serialize(),-->
-                    <!--success: function(serverResponse){-->
-                        <!--console.log("success", serverResponse)-->
-                        <!--&lt;!&ndash;$('#placeholder_3').html(JSON.stringify(serverResponse))&ndash;&gt;-->
-                        <!--$('#placeholder_3').html(serverResponse)-->
-                    <!--}-->
-                <!--})-->
-            <!--})-->
-        <!--})-->
-      <!--</script>-->
 
 
 {% endblock javascripts %}

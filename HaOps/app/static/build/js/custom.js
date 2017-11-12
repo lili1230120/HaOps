@@ -667,44 +667,62 @@ function init_JQVmap() {
 
     console.log('init_JQVmap');
 
+    console.log('检测地图数据',js_AreaAll);     //检测地图数据是否载入
+
+    var AreaAll = {};
+    AreaAll['CN-54'] = AreaAll['CN-63'] = AreaAll['CN-64'] = AreaAll['CN-65']= '0';
+//    AreaAll['CN-54'] = '0';
+//    AreaAll['CN-54'] = '0';
+    console.log('检测地图数据是否载入,AreaAll:',AreaAll);     //检测地图数据是否载入
+
+
+/// 机构数据初始化
+    for(var i=0;i<js_AreaAll.length;i++){
+//    console.log(js_AreaAll[i].itemno);
+//    console.log(js_AreaAll[i].itemvalue2);
+    AreaAll[js_AreaAll[i].itemno] = js_AreaAll[i].itemvalue2 ;
+    //console.log(AreaAll);
+    }
+    console.log(AreaAll);
+
+
     if ($('#world-map-gdp').length) {
 
         $('#world-map-gdp').vectorMap({
             //map: 'world_en',
             map: 'cn_mill',
             backgroundColor: '#FFF',
-            color: "#13FF60",
             hoverOpacity: 0.7,
-            hoverColor : '#3498DB',//鼠标移入时图块高亮显示的颜色
-            selectedColor: '#666666',
-            enableZoom: true,
-            showTooltip: true,
-            //values: sample_data,
-            scaleColors: ['#E6F2F0', '#149B7E'],
-            normalizeFunction: 'polynomial',
 
-         //<!– 设置地图区域的样式, 共有四种状态, 分别是 initial(初始状态), hover(当鼠标经过时的状态), selected(被选中的状态), selectedHover(当被选中之后鼠标经过的状态) –>
-		        regionStyle: {
-					initial: {
-						fill: '#1ABC9C',
-						"fill-opacity": 0.7,
-						stroke: 'none',
-						"stroke-width": 0,
-						"stroke-opacity": 1
-					},
-					hover: {
-						fill: '#3498DB', //颜色
-						"fill-opacity": 1,//透明度
-						stroke: 'black',//边框颜色
-						"stroke-width": 2,//边框宽度
-						"stroke-opacity": 1
-					},
-					selected: {
-						fill: 'yellow'
-					},
-					selectedHover: {
-					}
-                }
+
+            series: {
+                regions: [{
+                values: AreaAll,
+                scale: ['#1abb9c','#f9e139','#e80909'],
+                 normalizeFunction: 'polynomial'
+                }]
+             },
+
+            onRegionTipShow: function(e, el, code){
+            console.log('onRegionLabelShow显示e：',e);
+                 console.log('onRegionLabelShow显示el：',code);
+             el.html(el.html()+' ( 上报jira： '+AreaAll[code]+')');
+            },
+
+//            onRegionTipShow: function(e, el, code){
+//                e.preventDefault();
+//            },
+
+             onRegionOver: function(e,code) {
+                 console.log('显示e：',e);
+                 console.log('显示el：',code);
+                 console.log('显示data：',AreaAll['CN-44']);
+
+                 console.log('显示datadd：',AreaAll[code]);
+                 $('.jvectormap-tip').text("Some appended text.");
+                 console.log('显示最终：',$('.jvectormap-tip'));
+
+             },
 
         });
 

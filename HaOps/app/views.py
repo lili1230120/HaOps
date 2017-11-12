@@ -205,7 +205,7 @@ class HaOpsView(APIView):
 def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datetime.date(2017, 6, 6),**kwargs):
 
     OstartDate = datetime.date(2017, 9, 1)
-    OendDate = datetime.date(2017, 9, 1)
+    OendDate = datetime.date(2017,11, 1)
 
     ######### jira分布情况  #######
     #直接查询
@@ -240,7 +240,7 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datet
     kwargs['json_JiraFIN'] = JSONRenderer().render(JiraFin_ser.data)
 
     # 二线支持
-    kwargs['JiraSPT'] = Dcitemdata.objects.filter(itemno__parentno='0303', datadate__range=(OstartDate, OendDate)).order_by(
+    kwargs['JiraSPT'] = Dcitemdata.objects.filter(itemno__parentno='0303', datadate__range=(OstartDate, OstartDate)).order_by(
         'datadate')
     # JiraSPT_ser = DcitemdataSer(JiraSPT, many=True)
     # kwargs['JiraSPT'] = JSONRenderer().render(JiraSPT_ser.data)
@@ -267,10 +267,10 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datet
                                                  datadate__range=(startDate, endDate)).order_by('-datadate')[:6]
     # 获取MQ数据
     kwargs['opsMQ'] = Dcitemdata.objects.filter(itemno__parentno='0206',
-                                                 datadate__range=(OstartDate, OendDate)).order_by('-datadate')[:6]
+                                                 datadate__range=(OstartDate, OstartDate)).order_by('-datadate')[:6]
 
     # 获取全部OpsCal（页顶 指标）数据
-    kwargs['opsCal']  = Dcitemdata.objects.filter(itemno__parentno='0104',datadate__range=(OendDate,OendDate)).order_by('itemno')[:6]
+    kwargs['opsCal']  = Dcitemdata.objects.filter(itemno__parentno='0104',datadate__range=(OstartDate,OstartDate)).order_by('itemno')[:6]
 
     # 产能统计
     kwargs['capacity'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
@@ -280,6 +280,12 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datet
 
     # 地区统计
     kwargs['jiraArea'] = Dcitemdata.objects.filter(itemno__parentno='0302',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+
+    # 地区统计-all
+    AreaAll = Dcitemdata.objects.filter(itemno__parentno='0302', datadate__range=(OendDate, OendDate)).order_by(
+        'datadate')
+    AreaAll_ser = DcitemdataSer(AreaAll, many=True)
+    kwargs['json_AreaAll'] = JSONRenderer().render(AreaAll_ser.data)
 
     # 生产发布计划
     kwargs['ReleasePlan'] = Dcitemdata.objects.filter(itemno__parentno='0304',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:7]
