@@ -758,7 +758,7 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 				max: 100
 			},
 			xaxis: {
-				show: false
+				show: true
 			}
 		});
 
