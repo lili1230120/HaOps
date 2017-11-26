@@ -340,6 +340,8 @@ function init_flot_chart() {
 var arr_NBZ = new Array();
 var arr_CLM = new Array();
 var arr_FIN = new Array();
+var arr_XB = new Array();
+var arr_ZB = new Array();
 var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
     if (typeof($.plot) === 'undefined') {
         return;
@@ -360,12 +362,12 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
 
 /// 承保趋势线数值初始化
-    for(var i=0;i<js_JiraNBZ.length;i++){
-    arr_NBZ[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue1/10] ;
-//    arr_CLM[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue2] ;
-//    arr_FIN[i]= [gd(js_JiraNBZ[i].datadate), js_JiraNBZ[i].itemvalue3] ;
+    for(var i=0;i<js_nbzJira.length;i++){
+    arr_NBZ[i]= [gd(js_nbzJira[i].datadate), js_nbzJira[i].itemvalue2] ;
+//    arr_CLM[i]= [gd(js_nbzJira[i].datadate), js_nbzJira[i].itemvalue2] ;
+//    arr_FIN[i]= [gd(js_nbzJira[i].datadate), js_nbzJira[i].itemvalue3] ;
 
-    NBZ_count += js_JiraNBZ[i].itemvalue1
+    NBZ_count += js_nbzJira[i].itemvalue1
     console.log('arr_NBZ success');
     }
 //    console.log(NBZ_count)  //查看总数
@@ -373,9 +375,9 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
 
 ///  理赔趋势线数值初始化
-    for(var i=0;i<js_JiraCLM.length;i++){
-    arr_CLM[i]= [gd(js_JiraCLM[i].datadate), js_JiraCLM[i].itemvalue1/10] ;
-    CLM_count += js_JiraCLM[i].itemvalue1
+    for(var i=0;i<js_clmJira.length;i++){
+    arr_CLM[i]= [gd(js_clmJira[i].datadate), js_clmJira[i].itemvalue2] ;
+    CLM_count += js_clmJira[i].itemvalue1
     //var d2 = new Date(JiraSys[i].datadate).getTime();
 //    var d2 = gd(JiraSys[i].datadate)
 //    console.log(d2)
@@ -383,13 +385,22 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
     }
 
 /// 财务趋势线数值初始化
-    for(var i=0;i<js_JiraFIN.length;i++){
-    arr_FIN[i]= [gd(js_JiraFIN[i].datadate), js_JiraFIN[i].itemvalue1/10] ;
+    for(var i=0;i<js_finJira.length;i++){
+    arr_FIN[i]= [gd(js_finJira[i].datadate), js_finJira[i].itemvalue2] ;
     console.log('arr_FIN success');
-//    FIN_count += js_JiraFIN[i].itemvalue1
+//    FIN_count += js_finJira[i].itemvalue1
     }
 
+/// 信保趋势线数值初始化
+    for(var i=0;i<js_xbJira.length;i++){
+    arr_XB[i]= [gd(js_xbJira[i].datadate), js_xbJira[i].itemvalue2] ;
+    }
 
+/// 周边趋势线数值初始化
+    for(var i=0;i<js_zbJira.length;i++){
+    arr_ZB[i]= [gd(js_zbJira[i].datadate), js_zbJira[i].itemvalue2] ;
+    }    
+    console.log('查看赋值:',arr_CLM)
 //    var arr_data2 = [
 //        [gd(2012, 1, 1), 280],
 //        [gd(2012, 1, 2), 356],
@@ -480,10 +491,10 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
         xaxis: {
             tickColor: "rgba(51, 51, 51, 0.06)",
             mode: "time",
-            tickSize: [5, "day"],
+            monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            tickSize: [ 2,"month"],
             //tickLength: 10,
-            tickFormatter: "%m/%d",
-
+            tickFormatter: "%yyyy/%mm",
             axisLabel: "Date",
             axisLabelUseCanvas: true,
             axisLabelFontSizePixels: 12,
@@ -593,7 +604,36 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
         // console.log()
 
-        $.plot($("#chart_plot_01"), [{ label: "--理赔--", data: arr_NBZ } , { label: "--理赔--", data: arr_CLM } ,  { label: "--财务--", data: arr_FIN } ], chart_plot_01_settings);
+        $.plot($("#chart_plot_01"), [{ label: "--承保--", data: arr_NBZ } , { label: "--理赔--", data: arr_CLM } , { label: "--财务--", data: arr_FIN }, { label: "--信保--", data: arr_XB }, { label: "--周边--", data: arr_ZB } ], chart_plot_01_settings);
+
+
+
+		$("<div id='tooltip'></div>").css({
+			position: "absolute",
+			display: "none",
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#fee",
+			opacity: 0.80
+		}).appendTo("body");
+
+        $("#chart_plot_01").bind("plothover", function (event, pos, item) {
+
+				if (item) {
+					var x = item.datapoint[0].toFixed(2),
+						y = item.datapoint[1].toFixed(2);
+
+//					$("#tooltip").html(item.series.label + " of " + x + " = " + y)
+	                $("#tooltip").html(item.series.label + " jira数量："  + y)
+						.css({top: item.pageY+5, left: item.pageX+5})
+						.fadeIn(200);
+				} else {
+					$("#tooltip").hide();
+				}
+
+		});
+
+
     }
 
     if ($("#chart_plot_02").length) {
@@ -626,8 +666,117 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
                 fillColor: "#fff"
             }
         }], chart_plot_03_settings);
-
     };
+
+
+
+    if ($("#chart_plot_real").length) {
+     // We use an inline data source in the example, usually data would
+		// be fetched from a server
+
+		var data = [],
+			totalPoints = 300;
+
+		function getRandomData() {
+
+			if (data.length > 0)
+				data = data.slice(1);
+
+			// Do a random walk
+
+			while (data.length < totalPoints) {
+
+				var prev = data.length > 0 ? data[data.length - 1] : 50,
+					y = prev + Math.random() * 10 - 5;
+
+				if (y < 0) {
+					y = 0;
+				} else if (y > 100) {
+					y = 100;
+				}
+
+				data.push(y);
+			}
+
+			// Zip the generated y values with the x values
+
+			var res = [];
+			for (var i = 0; i < data.length; ++i) {
+				res.push([i, data[i]])
+			}
+
+			return res;
+		}
+
+		// Set up the control widget
+
+		var updateInterval = 1000;
+		$("#updateInterval").val(updateInterval).change(function () {
+			var v = $(this).val();
+			if (v && !isNaN(+v)) {
+				updateInterval = +v;
+				if (updateInterval < 1) {
+					updateInterval = 1;
+				} else if (updateInterval > 2000) {
+					updateInterval = 2000;
+				}
+				$(this).val("" + updateInterval);
+			}
+		});
+
+		var plot = $.plot("#chart_plot_real", [ getRandomData() ], {
+			series: {
+            lines: {
+                show: false,         //显示直线
+                fill: true
+            },
+            splines: {
+                show: true,
+                tension: 0.2,   //平滑度
+                lineWidth: 2,   //线宽
+                fill: 0.2
+            },
+            points: {
+                radius: 0.3,    //点的半径
+                show: true
+            },
+            shadowSize: 2  ,     //阴影
+            highlightColor: '#e84b3c',  //高亮颜色
+
+             },
+             colors: ["#26b99a", "#3498db" ],
+              grid: {                 //网格设置
+            verticalLines: true,
+            hoverable: true,
+            clickable: true,
+            tickColor: "#d5d5d5",
+            borderWidth: 1,
+            color: '#fff'
+        },
+			yaxis: {
+				min: 0,
+				max: 100
+			},
+			xaxis: {
+				show: false
+			}
+		});
+
+		function update() {
+
+			plot.setData([getRandomData()]);
+
+			// Since the axes don't change, we don't need to call plot.setupGrid()
+
+			plot.draw();
+			setTimeout(update, updateInterval);
+		}
+
+		update();
+
+		// Add the Flot version string to the footer
+	};
+
 }
 
 
@@ -667,7 +816,7 @@ function init_JQVmap() {
 
     console.log('init_JQVmap');
 
-    console.log('检测地图数据',js_AreaAll);     //检测地图数据是否载入
+    console.log('检测地图数据',js_AreaCal);     //检测地图数据是否载入
 
     var AreaAll = {};
     AreaAll['CN-54'] = AreaAll['CN-63'] = AreaAll['CN-64'] = AreaAll['CN-65']= '0';
@@ -677,10 +826,10 @@ function init_JQVmap() {
 
 
 /// 机构数据初始化
-    for(var i=0;i<js_AreaAll.length;i++){
-//    console.log(js_AreaAll[i].itemno);
-//    console.log(js_AreaAll[i].itemvalue2);
-    AreaAll[js_AreaAll[i].itemno] = js_AreaAll[i].itemvalue2 ;
+    for(var i=0;i<js_AreaCal.length;i++){
+//    console.log(js_AreaCal[i].itemno);
+//    console.log(js_AreaCal[i].itemvalue2);
+    AreaAll[js_AreaCal[i].itemno] = js_AreaCal[i].itemvalue2 ;
     //console.log(AreaAll);
     }
     console.log(AreaAll);
@@ -1804,10 +1953,10 @@ function init_daterangepicker() {
 //                    $("#chart_plot_01").remove();
 //                    var json_JiraSys = data.json_JiraSys;
                     console.log(data);
-                    js_JiraNBZ = JSON.parse(data.json_JiraNBZ);
-                    js_JiraCLM = JSON.parse(data.json_JiraCLM);
-                    js_JiraFIN = JSON.parse(data.json_JiraFIN);
-                    console.log(js_JiraNBZ);
+                    js_nbzJira = JSON.parse(data.json_JiraNBZ);
+                    js_clmJira= JSON.parse(data.json_JiraCLM);
+                    js_finJira = JSON.parse(data.json_JiraFIN);
+                    console.log(js_nbzJira);
                     init_flot_chart();
                     }
 
@@ -2919,10 +3068,10 @@ function init_morris_charts() {
         Morris.Donut({
             element: 'graph_donut',
             data: [
-                { label: 'Jam', value: 25 },
-                { label: 'Frosted', value: 40 },
-                { label: 'Custard', value: 25 },
-                { label: 'Sugar', value: 10 }
+                { label: '历史数据类', value: 25 },
+                { label: '操作类', value: 40 },
+                { label: 'bug修复', value: 25 },
+                { label: '咨询类', value: 10 }
             ],
             colors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
             formatter: function(y) {

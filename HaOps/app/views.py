@@ -3,17 +3,19 @@ from django.template import loader
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core import serializers
 from app.models import *
+from app.serializers import *
+
 from datetime import datetime
 from django.db.models import Count
 from django.utils import timezone
 import datetime
+import json
 
 # rest风格
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
-from app.serializers import *
 
 
 from datetime import date, timedelta
@@ -58,45 +60,6 @@ class IndexView(APIView):
 
         return Response(context)
         #return HttpResponse(context, content_type="application/json")
-
-
-
-
-    #
-    # 待结构化调整
-    # def post(self, request):
-    #     period = None
-    #     Review_form = OpsReviewSerializer(data=request.data)
-    #
-    #     form = TestForm(request.POST)
-    #     #period = form.cleaned_data['period']
-    #
-    #     if Review_form.is_valid():
-    #         Review_form.save(account='liuqx',user_name='liuqx')
-    #         return HttpResponseRedirect('/')
-    #     else:
-    #         queryset = OpsReview.objects.all()
-    #         serializer = OpsReviewSerializer(queryset, many=True)
-    #
-    #         context = get_context_data_all()
-    #     return Response(context)
-    #
-
-
-
- #
- # 序列化示例
- #    def post(self, request):
- #        form = SchoolSerializer(data=request.data)
- #        if form.is_valid():
- #            form.save()
- #            return HttpResponseRedirect('/')
- #        else:
- #            queryset = School.objects.all()
- #            serializer = SchoolSerializer(queryset, many=True)
- #            return Response({'data': serializer.data, 'form': form})
- #
-
 
 
 
@@ -207,6 +170,91 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datet
     OstartDate = datetime.date(2017, 9, 1)
     OendDate = datetime.date(2017,11, 1)
 
+    startMonth = '2017-01'
+
+    '''
+   生产jira趋势查询
+
+    '''
+    ##承保趋势
+    nbzJira =  Dcitemdata.objects.raw("""
+ SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
+(select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
+from syscfg_dcitemdata a
+where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+where itemname = '承保-总部运维'
+order by datadate,dataid""" ,[startMonth])
+    nbzJira_ser = DcitemdataSer(nbzJira, many=True)
+
+    kwargs['nbzJira'] = nbzJira
+    kwargs['js_nbzJira'] = JSONRenderer().render(nbzJira_ser.data)
+
+    ##理赔趋势
+    clmJira = Dcitemdata.objects.raw("""
+     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
+    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
+    from syscfg_dcitemdata a
+    where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+    where itemname = '理赔-总部运维'
+    order by datadate,dataid""", [startMonth])
+    clmJira_ser = DcitemdataSer(clmJira, many=True)
+    kwargs['js_clmJira'] = JSONRenderer().render(clmJira_ser.data)
+
+    ##收付趋势
+    finJira = Dcitemdata.objects.raw("""
+     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
+    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
+    from syscfg_dcitemdata a
+    where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+    where itemname = '收付-总部运维'
+    order by datadate,dataid""", [startMonth])
+    finJira_ser = DcitemdataSer(finJira, many=True)
+    kwargs['js_finJira'] = JSONRenderer().render(finJira_ser.data)
+
+
+
+
+
+    ##信保趋势
+    xbJira = Dcitemdata.objects.raw("""
+     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
+    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
+    from syscfg_dcitemdata a
+    where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+    where itemname = '信保-总部运维'
+    order by datadate,dataid""", [startMonth])
+    xbJira_ser = DcitemdataSer(xbJira, many=True)
+    kwargs['js_xbJira'] = JSONRenderer().render(xbJira_ser.data)
+
+    ##周边趋势
+    zbJira = Dcitemdata.objects.raw("""
+     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
+    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
+    from syscfg_dcitemdata a
+    where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+    where itemname = '周边-总部运维'
+    order by datadate,dataid""", [startMonth])
+    zbJira_ser = DcitemdataSer(zbJira, many=True)
+    kwargs['js_zbJira'] = JSONRenderer().render(zbJira_ser.data)
+
+    # 地区统计-all
+    AreaCal = Dcitemdata.objects.raw("""
+         SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
+        (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
+        from syscfg_dcitemdata a
+        where a.itemno = 'A01001' and length(a.datadate) = 7 and a.datadate > %s )
+        where rownum < 6
+        order by datadate,dataid  """, [startMonth])
+    AreaCal_ser = DcitemdataSer(AreaCal, many=True)
+    kwargs['AreaCal'] = AreaCal
+    kwargs['js_AreaCal'] = JSONRenderer().render(zbJira_ser.data)
+
+
+    '''
+
+    '''
+
+    '''  待清理
     ######### jira分布情况  #######
     #直接查询
     #kwargs['JiraSys'] = Dcitemdata.objects.filter(itemno='0').order_by('-itemvalue1')[:5]
@@ -311,61 +359,9 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datet
 
     # 机构考核数据
     kwargs['opsExamineUser'] = Dcitemdata.objects.filter(itemno__itemno='020111',datadate__range=(startDate, endDate)).order_by('-itemvalue1')[:5]
+    '''
 
-    ''' 待结构化
-    
-    # test
-    # kwargs['todo'] = Todo.objects.get(id='2')
-    
-    
-    # 获取全部OpsCal（页顶 指标）数据
-    #kwargs['opsCal']  = OpsCal.objects.all
-    #serializers = OpsCalSerializer(opsCal, many=True)
 
-    # 通过sql查询OpsCal数据
-    #kwargs['opsCal'] = Dcitemdata.objects.raw(
-    #    'SELECT * FROM SysCfg_DCItemData WHERE itemno < 7')
-    
-    # 机构考核数据
-    kwargs['opsExamine'] = OpsExamine.objects.order_by('-d_sum')[:10]
-
-    # 机构考核数据
-    kwargs['opsExamineUser'] = OpsExamine.objects.order_by('-d_sum')[:5]
-
-    # 标签统计
-    kwargs['jiraTag'] = JiraSysDtl.objects.filter(jira_type = 'pr').values('tag').annotate(total=Count('tag') * 15).order_by('total')
-
-    # 产能统计
-    kwargs['capacity'] = OpsCapacity.objects.filter(input_date__startswith=datetime(2017, 9, 20)).order_by('-num')[:5]
-
-    # 地区统计
-    kwargs['jiraArea'] = JiraSysDtl.objects.filter(jira_type = 'pr').values('area').annotate(total=Count('area') * 15).order_by('-total')
-
-    #时间筛选
-    kwargs['form'] = TestForm(initial={"period": (date.today() - timedelta(days=7), date.today())})
-
-    #js测试
-    kwargs['results'] = {'name': 123, 'name1': 456, 'sysname': ['单证', '理赔'], "items":
-        [{"name": "name1", "sector": "sector1"},
-         {"name": "name2", "sector": "sector2"},
-         {"name": "name3", "sector": "sector3"}]}
-
-    #test
-    kwargs['iosper'] = OpsCal.objects.get(id='2')
-
-    #重点反馈
-    kwargs['opsReview'] = OpsReview.objects.all().order_by('-created_at')
-    opsReview = OpsReview.objects.all().order_by('-created_at')
-    kwargs['opsReview_ser'] = OpsReviewSerializer(opsReview, many=True)
-
-    Review_form = OpsReviewSerializer()
-
-    kwargs['Review_form'] = Review_form
-
-    #生产发布计划
-    kwargs['ReleasePlan'] = JiraSysDtl.objects.filter(jira_type = 'publish').order_by('update_date')
-'''
     return kwargs
-    # The template to be loaded as per HaOps.
-    # All resource paths for HaOps end in .html.
+
 

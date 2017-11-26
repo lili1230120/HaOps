@@ -1,88 +1,96 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey has `on_delete` set to the desired behavior.
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils import timezone
-from django.contrib.auth.models import User
-# Create your models here.
+
+
 
 class Dcdataset(models.Model):
-    dsid = models.IntegerField(db_column='dsid', primary_key=True)  # Field name made lowercase.
-    dsname = models.CharField(db_column='dsname', max_length=45)  # Field name made lowercase.
-    defineno = models.CharField(db_column='defineno', max_length=45, blank=True,
-                                null=True)  # Field name made lowercase.
-    funcid = models.CharField(db_column='funcid', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    refreshint = models.CharField(db_column='RereshInt', max_length=45, blank=True,
-                                 null=True)  # Field name made lowercase.
-    remark = models.CharField(db_column='remark', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    dsid = models.CharField(primary_key=True, max_length=10)
+    dsname = models.CharField(max_length=50)
+    defineno = models.CharField(max_length=10)
+    funcid = models.CharField(max_length=100)
+    refreshint = models.BigIntegerField(blank=True, null=True)
+    remark = models.CharField(max_length=100, blank=True, null=True)
+
     class Meta:
-        #managed = False
-        db_table = 'SYSCFG_DCDATASET'
+        managed = False
+        db_table = 'syscfg_dcdataset'
+
+
+class Dcdatasetchart(models.Model):
+    dsid = models.CharField(primary_key=True, max_length=10)
+    funcid = models.CharField(max_length=10)
+    dsindex = models.BigIntegerField()
+    chartkind = models.BigIntegerField()
+    xfields = models.CharField(max_length=100, blank=True, null=True)
+    yfields = models.CharField(max_length=100, blank=True, null=True)
+    extcfg = models.CharField(max_length=1000, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'syscfg_dcdatasetchart'
+        unique_together = (('dsid', 'funcid'),)
 
 
 class Dcitemdata(models.Model):
-    itemno = models.ForeignKey('Dcitemdefine', models.DO_NOTHING ,
-                               db_column='itemno')  # Field name made lowercase.
-    itemname = models.CharField(db_column='itemname', max_length=45, blank=True,
-                                null=True)  # Field name made lowercase.
-    datadate = models.CharField(db_column='datadate', max_length=20)  # Field name made lowercase.
-    itemvalue1 = models.FloatField(db_column='itemvalue1', blank=True, null=True)  # Field name made lowercase.
-    itemvalue2 = models.FloatField(db_column='itemvalue2', blank=True, null=True)  # Field name made lowercase.
-    itemvalue3 = models.FloatField(db_column='itemvalue3', blank=True, null=True)  # Field name made lowercase.
-    itemvalue4 = models.FloatField(db_column='itemvalue4', blank=True, null=True)  # Field name made lowercase.
-    itemvalue5 = models.FloatField(db_column='itemvalue5', blank=True, null=True)  # Field name made lowercase.
-
-    def __str__(self):
-        return self.datadate
-
-
-    def __unicode__(self):
-        return '%s,%d' % (self.itemno, self.datadate)
+    dataid = models.BigIntegerField(primary_key=True)
+    itemno = models.CharField(max_length=10)
+    datadate = models.CharField(max_length=20)
+    itemvalue1 = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
+    itemvalue2 = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
+    itemvalue3 = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
+    itemvalue4 = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
+    itemvalue5 = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
 
     class Meta:
-        #managed = False
-        unique_together = ('itemno', 'datadate')
+        managed = False
+        db_table = 'syscfg_dcitemdata'
+    def __str__(self):
+        return self.dataid
 
-        db_table = 'SYSCFG_DCITEMDATA'
 
+
+class DcitemdataDtl(models.Model):
+    dataid = models.BigIntegerField()
+    factorcode = models.CharField(max_length=10)
+    factorvalue = models.CharField(max_length=20)
+    factorname = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'syscfg_dcitemdata_dtl'
+
+
+class DcitemdataDtltmp(models.Model):
+    tempid = models.CharField(max_length=20)
+    factorcode = models.CharField(max_length=10, blank=True, null=True)
+    factorvalue = models.CharField(max_length=20, blank=True, null=True)
+    factorname = models.CharField(max_length=20, blank=True, null=True)
+    createdate = models.DateField()
+
+    class Meta:
+        managed = False
+        db_table = 'syscfg_dcitemdata_dtltmp'
 
 
 class Dcitemdefine(models.Model):
-    itemno = models.CharField(db_column='itemno', primary_key=True, max_length=100)  # Field name made lowercase.
-    itemname = models.CharField(db_column='itemname', max_length=100)  # Field name made lowercase.
-    parentno = models.CharField(db_column='parentno', max_length=100, blank=True,
-                                null=True)  # Field name made lowercase.
-    itemcode = models.CharField(db_column='itemcode', max_length=50, blank=True,
-                                null=True)  # Field name made lowercase.
-    # itemindex = models.IntegerField(db_column='ItemIndex', blank=True, null=True)  # Field name made lowercase.
-    # itemstate = models.IntegerField(db_column='ItemState')  # Field name made lowercase.
-    # itemkind = models.IntegerField(db_column='ItemKind')  # Field name made lowercase.
-    remark = models.CharField(db_column='remark', max_length=45, blank=True, null=True)  # Field name made lowercase.
-
-    def __str__(self):
-        return self.itemno
-
+    itemno = models.CharField(primary_key=True, max_length=10)
+    itemname = models.CharField(max_length=100)
+    parentno = models.CharField(max_length=10, blank=True, null=True)
+    itemcode = models.CharField(max_length=50, blank=True, null=True)
+    itemindex = models.BigIntegerField(blank=True, null=True)
+    itemstate = models.BigIntegerField()
+    itemkind = models.BigIntegerField()
+    remark = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
-        #managed = False
-        db_table = 'SYSCFG_DCITEMDEFINE'
-
-
-# 老版本db
-# class OpsReview(models.Model):
-#     account = models.CharField(max_length=45, blank=True, null=True,default='liuqingixn')
-#     user_name = models.CharField(max_length=45, blank=True, null=True,default = 'liuqx')
-#     title = models.CharField(max_length=100, blank=True, null=True)
-#     comment = models.CharField(max_length=300, blank=True, null=True)
-#     created_at = models.DateTimeField(blank=True, null=True,auto_now = True)
-#     updated_at = models.DateTimeField(blank=True, null=True,auto_now = True)
-#
-#     def __str__(self):
-#         return self.comment
-#
-#     class Meta:
-#         ordering = ['created_at']
-#         managed = False
-#         db_table = 'Ops_review'
-#
-
+        managed = False
+        db_table = 'syscfg_dcitemdefine'
 

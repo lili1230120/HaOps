@@ -103,12 +103,17 @@
 
 
     <script>
+    console.log(' 开始传值给 cutmos.js ');
+    var js_nbzJira = {{js_nbzJira|safe }};
+    var js_clmJira = {{js_clmJira|safe }};
+    var js_finJira = {{js_finJira|safe }};
+    var js_zbJira = {{js_zbJira|safe }};
+    var js_xbJira = {{js_xbJira|safe }};
+    var js_AreaCal = {{js_AreaCal|safe }};
 
-    var js_JiraSys = {{json_JiraSys|safe}};
-    var js_JiraNBZ = {{json_JiraNBZ|safe}};
-    var js_JiraCLM = {{json_JiraCLM|safe}};
-    var js_JiraFIN = {{json_JiraFIN|safe}};
-    var js_AreaAll = {{json_AreaAll|safe}};
+
+    console.log(' 传值完成 ')
+
       <!--var sys_name = JSON.parse({{results}});-->
 
     </script>

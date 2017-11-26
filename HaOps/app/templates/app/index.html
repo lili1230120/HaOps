@@ -45,33 +45,50 @@
               <!--<button id="fullscreen" class="btn btn-primary" >fullscreen</button>-->
           </div>
 
-          <div class="col-md-9 col-sm-9 col-xs-12">
+          <div class="col-md-12 col-sm-12 col-xs-12">
             <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
           </div>
 
-          <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
-            <div class="x_title">
-              <h2>问题分类概况 <small> <a href="jira_type.html"> 详情</a>   </small></h2>
-              <div class="clearfix"></div>
-            </div>
+          <!--<div class="col-md-3 col-sm-3 col-xs-12 bg-white">-->
+            <!--<div class="x_title">-->
+              <!--<h2>问题分类概况 <small> <a href="jira_type.html"> 详情</a>   </small></h2>-->
+              <!--<div class="clearfix"></div>-->
+            <!--</div>-->
 
-            <div class="col-md-12 col-sm-12 col-xs-6">
-              {% for JiraSPT in JiraSPT %}
-              <div id = 'tagline'>
-                <p>{{JiraSPT.itemname}}</p>
-                <div class="widget_summary">
-                  <div class="progress progress_sm" style="width: 76%;">
-                    <div class="progress-bar" role="progressbar" data-transitiongoal="{{JiraSPT.itemvalue1}}"></div>
+            <!--<div class="col-md-12 col-sm-12 col-xs-6">-->
+              <!--{% for JiraSPT in JiraSPT %}-->
+              <!--<div id = 'tagline'>-->
+                <!--<p>{{JiraSPT.itemname}}</p>-->
+                <!--<div class="widget_summary">-->
+                  <!--<div class="progress progress_sm" style="width: 76%;">-->
+                    <!--<div class="progress-bar" role="progressbar" data-transitiongoal="{{JiraSPT.itemvalue1}}"></div>-->
 
-                    </div>
-                   <div class="w_right w_20">
-                <span>{{JiraSPT.itemvalue1}}个</span>
-                   </div>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
+                    <!--</div>-->
+                   <!--<div class="w_right w_20">-->
+                <!--<span>{{JiraSPT.itemvalue1}}个</span>-->
+                   <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--{% endfor %}-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="col-md-2 col-sm-2 col-xs-12 bg-white">-->
+            <!--<div class="x_title">-->
+              <!--<h2>问题分类概况 <small> <a href="jira_type.html"> 详情</a>   </small></h2>-->
+              <!--<div class="clearfix"></div>-->
+            <!--</div>-->
+
+            <!--<div class="col-md-12 col-sm-12 col-xs-6">-->
+              <!--<div id = 'tagline' >-->
+                <!--<div class="x_content2">-->
+              <!--<div id="graph_donut" style="width:100%; height:200px;"></div>-->
+              <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+
+
 
           <div class="clearfix"></div>
         </div>
@@ -79,7 +96,16 @@
     </div>
 
 
+
     <br />
+
+    <div class=row>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+
+			<div id="chart_plot_real" class="demo-placeholder"></div>
+                  <p> 刷新频率: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> 毫秒</p>
+                 </div>
+		</div>
 
     <div class="row">
 
@@ -107,45 +133,48 @@
           </div>
           <div class="x_content">
             <!--<h4>Top 5</h4>-->
-                        <h4></h4>
-             {% for OpsKPI in opsKPI %}
+                        <h4>
+                          <!--{{opsTag|safe }}-->
+                          <!--{{ nbzJira }}-->
+                        </h4>
+             {% for jiraSys in nbzJira %}
             <div class="widget_summary">
 
               <div class="w_left w_25">
-                <span>{{OpsKPI.itemname}}</span>
+                <span>{{jiraSys.itemname}}</span>
               </div>
               <div class="w_center w_55">
                 <div class="progress">
-                  <div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{OpsKPI.itemvalue1}}%;">
+                  <div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{jiraSys.itemvalue1}}%;">
                     <span class="sr-only">90% Complete</span>
                   </div>
                 </div>
               </div>
               <div class="w_right w_20">
-                <span>{{OpsKPI.itemvalue1|floatformat}}</span>
+                <span>{{jiraSys.itemvalue1|floatformat}}</span>
               </div>
               <div class="clearfix"></div>
             </div>
             {% endfor %}
 
-              <!--测试循环颜色-->
-              <!--<div class="widget_summary">-->
+              测试循环颜色
+              <div class="widget_summary">
 
-              <!--<div class="w_left w_25">-->
-                <!--<span>itemname</span>-->
-              <!--</div>-->
-              <!--<div class="w_center w_55">-->
-                <!--<div class="progress">-->
-                  <!--<div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:30% ;">-->
-                    <!--<span class="sr-only">90% Complete</span>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="w_right w_20">-->
-                <!--<span>Capacity</span>-->
-              <!--</div>-->
-              <!--<div class="clearfix"></div>-->
-            <!--</div>-->
+              <div class="w_left w_25">
+                <span>itemname</span>
+              </div>
+              <div class="w_center w_55">
+                <div class="progress">
+                  <div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:30% ;">
+                    <span class="sr-only">90% Complete</span>
+                  </div>
+                </div>
+              </div>
+              <div class="w_right w_20">
+                <span>Capacity</span>
+              </div>
+              <div class="clearfix"></div>
+            </div>
 
           </div>
         </div>
@@ -352,10 +381,10 @@
 
                     <table class="countries_list">
                       <tbody>
-                      {% for JiraArea in jiraArea %}
+                      {% for areaCal in AreaCal %}
                         <tr>
-                          <td>{{JiraArea.itemname}}</td>
-                          <td class="fs15 fw700 text-right">{{JiraArea.itemvalue2|floatformat }} 个</td>
+                          <td>{{areaCal.itemname}}</td>
+                          <td class="fs15 fw700 text-right">{{areaCal.itemvalue1|floatformat }} RMB</td>
                         </tr>
                       {% endfor %}
                       </tbody>
@@ -488,6 +517,7 @@
       </div>
     </div>
   </div>
+      </div>
 {% endblock content %}
 
 {% block javascripts %}
@@ -522,6 +552,8 @@
 	<script type="text/javascript" src="/static/vendors/jqvmap/dist/maps/jquery-jvectormap-2.0.3.min.js"></script>
 	<script type="text/javascript" src="/static/vendors/jqvmap/dist/maps/jquery-jvectormap-cn-mill.js"></script>
 
-
+  <!--morris-->
+  <script src="/static/vendors/raphael/raphael.min.js"></script>
+  <script src="/static/vendors/morris.js/morris.min.js"></script>
 
 {% endblock javascripts %}
