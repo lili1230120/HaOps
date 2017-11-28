@@ -479,15 +479,44 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
             highlightColor: '#e84b3c',  //高亮颜色
 
         },
+//        legend: {
+//             show: boolean
+//             labelFormatter: null or (fn: string, series object -> string)
+//             labelBoxBorderColor: color
+//             noColumns: number
+//             position: "ne" or "nw" or "se" or "sw"
+//             margin: number of pixels or [x margin, y margin]
+//             backgroundColor: null or color
+//             backgroundOpacity: number between 0 and 1
+//             container: null or jQuery object/DOM element/jQuery expression
+//             orted: null/false, true, "ascending", "descending", "reverse", or a comparator
+//        }
+
+//  label 链接 地址
+         legend: {
+            position: "ne",
+            margin: [0, -25],
+            noColumns: 0,
+            labelBoxBorderColor: null,
+            labelFormatter:  function(label, series) {
+                // series is the series object for the label
+                //return '<a href="#' + label + '">' + label + '</a>';
+               return '<a href='+ series.href +'>' + label + '</a>';
+
+            },
+            width: 40,
+            height: 1
+        },
         grid: {                 //网格设置
             verticalLines: true,
             hoverable: true,
             clickable: true,
             tickColor: "#d5d5d5",
             borderWidth: 1,
-            color: '#fff'
+            color: '#fff',
+            clickable: true
         },
-        colors: ["#fbb967","#26b99a", "#3498db" ],
+        colors: ["#fbb967","#26b99a", "#3498db" , '#f7cb38', '#5a8022', '#2c7282'],
         xaxis: {
             tickColor: "rgba(51, 51, 51, 0.06)",
             mode: "time",
@@ -518,7 +547,7 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
             borderWidth: 0,
             borderColor: null,
             minBorderMargin: 5,
-            clickable: true,
+            //clickable: true,
             hoverable: true,
             autoHighlight: true,
             mouseActiveRadius: 100
@@ -604,8 +633,15 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
         // console.log()
 
-        $.plot($("#chart_plot_01"), [{ label: "--承保--", data: arr_NBZ } , { label: "--理赔--", data: arr_CLM } , { label: "--财务--", data: arr_FIN }, { label: "--信保--", data: arr_XB }, { label: "--周边--", data: arr_ZB } ], chart_plot_01_settings);
+        $.plot($("#chart_plot_01"), [{ href:"nbz.html",label: "--承保--", data: arr_NBZ,clickable: true } , { href:"clm.html", label: "--理赔--", data: arr_CLM } , { label: "--财务--", data: arr_FIN }, { label: "--信保--", data: arr_XB }, { label: "--周边--", data: arr_ZB } ], chart_plot_01_settings);
 
+//          绑定网格点击事件
+//        $("#chart_plot_01").bind("plotclick", function (event, pos, item) {
+//            alert('click!');
+//            for(var i in item){
+//               alert('my '+i+' = '+ item[i]);
+//             }
+//         });
 
 
 		$("<div id='tooltip'></div>").css({
