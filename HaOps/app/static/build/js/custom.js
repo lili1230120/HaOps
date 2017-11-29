@@ -122,11 +122,12 @@ function init_sidebar() {
     // check active menu
     $SIDEBAR_MENU.find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('current-page');
 
-    $SIDEBAR_MENU.find('a').filter(function() {
-        return this.href == CURRENT_URL;
-    }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
-        setContentHeight();
-    }).parent().addClass('active');
+//      取消 a 激活菜单
+//    $SIDEBAR_MENU.find('a').filter(function() {
+//        return this.href == CURRENT_URL;
+//    }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
+//        setContentHeight();
+//    }).parent().addClass('active');
 
     // recompute content when resizing
     $(window).smartresize(function() {
@@ -555,7 +556,7 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
         series: {
             lines: {
                 show: true,
-                fill: true,
+                fill: false,
                 lineWidth: 2,
                 steps: false
             },
@@ -565,7 +566,11 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
                 symbol: "circle",
                 lineWidth: 3.0
             }
+
         },
+
+        colors: ["#26B99A"],
+
         legend: {
             position: "ne",
             margin: [0, -25],
@@ -577,7 +582,7 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
             width: 40,
             height: 1
         },
-        colors: ['#96CA59', '#3F97EB', '#72c380', '#6f7a8a', '#f7cb38', '#5a8022', '#2c7282'],
+        colors: ['#1abb9c', '#72c380', '#6f7a8a', '#f7cb38', '#5a8022', '#2c7282'],
         shadowSize: 0,
         tooltip: true,
         tooltipOpts: {
@@ -704,6 +709,39 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
         }], chart_plot_03_settings);
     };
 
+
+    if ($("#chart_plot_detail_wan").length) {
+        console.log('chart_plot_detail_wan');
+
+        $.plot($("#chart_plot_detail_shi"), [{
+            label: "Email Sent",
+            data: chart_plot_02_data,
+            lines: {
+                fillColor: "rgba(150, 202, 89, 0.12)"
+            },
+            points: {
+                fillColor: "#fff"
+            }
+        }], chart_plot_02_settings);
+
+    }
+
+
+    if ($("#chart_plot_detail_wan").length) {
+        console.log('chart_plot_detail_wan');
+
+        $.plot($("#chart_plot_detail_wan"), [{
+            label: "Email Sent",
+            data: chart_plot_02_data,
+            lines: {
+                fillColor: "rgba(150, 202, 89, 0.12)"
+            },
+            points: {
+                fillColor: "#fff"
+            }
+        }], chart_plot_02_settings);
+
+    }
 
 
     if ($("#chart_plot_real").length) {
@@ -973,7 +1011,7 @@ function init_chart_doughnut() {
 
 
 
-    var JiraSys = js_JiraSys;
+    var JiraSys = js_nbzJira;
         console.log('js_JiraSys');
 
 // pr分布 新建数组
@@ -1291,7 +1329,8 @@ function init_parsley() {
         validateFront();
     });
     var validateFront = function() {
-        if (true === $('#demo-form').parsley().isValid()) {
+        if ($('#demo-form').length){
+        //if (true === $('#demo-form').parsley().isValid()) {
             $('.bs-callout-info').removeClass('hidden');
             $('.bs-callout-warning').addClass('hidden');
         } else {
@@ -1308,7 +1347,8 @@ function init_parsley() {
         validateFront();
     });
     var validateFront = function() {
-        if (true === $('#demo-form2').parsley().isValid()) {
+        if ($('#demo-form2').length){
+        //if (true === $('#demo-form2').parsley().isValid()) {
             $('.bs-callout-info').removeClass('hidden');
             $('.bs-callout-warning').addClass('hidden');
         } else {

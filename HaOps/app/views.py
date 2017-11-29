@@ -74,8 +74,6 @@ class SysDetailView(APIView):
         template_name = "app/sysdetail.html"
         fields = ['title', 'comment']
 
-
-
         context = get_context_data_all()
 
         return Response(context,template_name=template_name)
