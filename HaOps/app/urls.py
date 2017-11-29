@@ -8,8 +8,8 @@ urlpatterns = [
     # Or create a separate django app.
     # url(r'^.*\.html', views.gentella_html, name='gentella'),
 
-    #新增评论
-    url(r'^add/$', ReviewCreate.as_view(), name="review-add"),
+    # 系统详情
+    url(r'^sysdetail/', SysDetailView.as_view(), name="sys-detail"),
 
     url(r'^create/$',PostView.as_view()),
 

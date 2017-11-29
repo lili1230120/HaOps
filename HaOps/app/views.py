@@ -64,18 +64,20 @@ class IndexView(APIView):
 
 
 
-class ReviewCreate(APIView):
+class SysDetailView(APIView):
 
     renderer_classes = [TemplateHTMLRenderer]
 
 
     def get(self, request, *args, **kwargs):
-        model = Dcitemdata
-        template_name = "app/review_add.html"
+        systype = request.path.split('/')[-1]
+        template_name = "app/sysdetail.html"
         fields = ['title', 'comment']
-        context = {
-               '1': 1
-               }
+
+
+
+        context = get_context_data_all()
+
         return Response(context,template_name=template_name)
 
 
@@ -181,7 +183,7 @@ def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datet
  SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
 (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
 from syscfg_dcitemdata a
-where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
 where itemname = '承保-总部运维'
 order by datadate,dataid""" ,[startMonth])
     nbzJira_ser = DcitemdataSer(nbzJira, many=True)
@@ -194,7 +196,7 @@ order by datadate,dataid""" ,[startMonth])
      SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
     (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
     from syscfg_dcitemdata a
-    where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
     where itemname = '理赔-总部运维'
     order by datadate,dataid""", [startMonth])
     clmJira_ser = DcitemdataSer(clmJira, many=True)
@@ -205,7 +207,7 @@ order by datadate,dataid""" ,[startMonth])
      SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
     (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
     from syscfg_dcitemdata a
-    where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
     where itemname = '收付-总部运维'
     order by datadate,dataid""", [startMonth])
     finJira_ser = DcitemdataSer(finJira, many=True)
@@ -220,7 +222,7 @@ order by datadate,dataid""" ,[startMonth])
      SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
     (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
     from syscfg_dcitemdata a
-    where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
     where itemname = '信保-总部运维'
     order by datadate,dataid""", [startMonth])
     xbJira_ser = DcitemdataSer(xbJira, many=True)
@@ -231,7 +233,7 @@ order by datadate,dataid""" ,[startMonth])
      SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
     (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
     from syscfg_dcitemdata a
-    where a.itemno = 'B01201' and length(a.datadate) = 7 and a.datadate > %s )
+    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
     where itemname = '周边-总部运维'
     order by datadate,dataid""", [startMonth])
     zbJira_ser = DcitemdataSer(zbJira, many=True)

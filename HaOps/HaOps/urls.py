@@ -23,7 +23,8 @@ urlpatterns = [
 
     # app/ -> Genetelella UI and resources
 
-    url(r'^add/', include('app.urls')),
+    #系统详情
+    url(r'^sysdetail/', include('app.urls')),
 
     url(r'^', include('app.urls')),
 

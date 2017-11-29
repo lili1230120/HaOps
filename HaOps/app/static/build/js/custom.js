@@ -633,7 +633,7 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
         // console.log()
 
-        $.plot($("#chart_plot_01"), [{ href:"nbz.html",label: "--承保--", data: arr_NBZ,clickable: true } , { href:"clm.html", label: "--理赔--", data: arr_CLM } , { label: "--财务--", data: arr_FIN }, { label: "--信保--", data: arr_XB }, { label: "--周边--", data: arr_ZB } ], chart_plot_01_settings);
+        $.plot($("#chart_plot_01"), [{ href:"sysdetail/nbz",label: "--承保--", data: arr_NBZ,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: arr_CLM } , { label: "--财务--", data: arr_FIN }, { label: "--信保--", data: arr_XB }, { label: "--周边--", data: arr_ZB } ], chart_plot_01_settings);
 
 //          绑定网格点击事件
 //        $("#chart_plot_01").bind("plotclick", function (event, pos, item) {

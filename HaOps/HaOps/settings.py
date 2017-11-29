@@ -98,33 +98,33 @@ WSGI_APPLICATION = 'HaOps.wsgi.application'
 
 
 #预备用oracle
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.oracle',
-#         'NAME': 'corestg',
-#         'USER': 'omplatform',
-#         'PASSWORD': 'plat561om',
-#         'HOST': '10.1.108.40',
-#         'PORT': '1521',
-#     }
-# }
-
-
-#家用oracle
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'orcl',
-        'USER': 'haops',
-        'PASSWORD': 'haops',
-        'HOST': '192.168.199.128',
+        'NAME': 'corestg',
+        'USER': 'omplatform',
+        'PASSWORD': 'plat561om',
+        'HOST': '10.1.108.40',
         'PORT': '1521',
-        'OPTIONS': {
-            'threaded': True,
-            'use_returning_into': False,
-        },
     }
 }
+
+
+#家用oracle
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.oracle',
+#         'NAME': 'orcl',
+#         'USER': 'haops',
+#         'PASSWORD': 'haops',
+#         'HOST': '192.168.199.128',
+#         'PORT': '1521',
+#         'OPTIONS': {
+#             'threaded': True,
+#             'use_returning_into': False,
+#         },
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
