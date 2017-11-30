@@ -346,7 +346,7 @@ var Pr_time_01 = new Array();
 var Pr_time_02 = new Array();
 var Pr_time_03 = new Array();
 var Pr_time_04 = new Array();
-var Pr_nbz_wan = new Array();
+var Pr_detail_wan = new Array();
 
 function init_flot_chart() {
 
@@ -465,7 +465,22 @@ var Req_xb = new Array();
     //Pub_zb[i]= [gd(js_Pub_zb[i].datadate), js_Pub_zb[i].itemvalue1] ;
     }
 
+/// 趋势明细
+    for(var i=0;i<js_Pr_detail_01.length;i++){
+    Pr_num_01[i]= [gd(js_Pr_detail_01[i].datadate), js_Pr_detail_01[i].itemvalue2] ;
+    Pr_num_02[i]= [gd(js_Pr_detail_02[i].datadate), js_Pr_detail_02[i].itemvalue2] ;
+    Pr_num_03[i]= [gd(js_Pr_detail_03[i].datadate), js_Pr_detail_03[i].itemvalue2] ;
+    Pr_num_04[i]= [gd(js_Pr_detail_04[i].datadate), js_Pr_detail_04[i].itemvalue2] ;
 
+    Pr_time_01[i]= [gd(js_Pr_detail_01[i].datadate), js_Pr_detail_01[i].itemvalue3] ;
+    Pr_time_02[i]= [gd(js_Pr_detail_02[i].datadate), js_Pr_detail_02[i].itemvalue3] ;
+    Pr_time_03[i]= [gd(js_Pr_detail_03[i].datadate), js_Pr_detail_03[i].itemvalue3] ;
+    Pr_time_04[i]= [gd(js_Pr_detail_04[i].datadate), js_Pr_detail_04[i].itemvalue3] ;
+
+    Pr_detail_wan[i]= [gd(js_Pr_detail_wan[i].datadate), js_Pr_detail_wan[i].itemvalue1] ;
+
+    //Pub_zb[i]= [gd(js_Pub_zb[i].datadate), js_Pub_zb[i].itemvalue1] ;
+    }
 
 
 
@@ -699,7 +714,7 @@ var Req_xb = new Array();
         console.log('Pr_nbz:',Pr_nbz)
     //Pr_nbz
 
-        $.plot($("#chart_plot_01"), [{ href:"sysdetail/nbz",label: "--承保--", data: Pr_nbz,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: Pr_clm } , { label: "--财务--", data: Pr_fin }, { label: "--信保--", data: Pr_xb }, { label: "--周边--", data: Pr_zb } ], chart_plot_01_settings);
+        $.plot($("#chart_plot_01"), [{ href:"sysdetail/nbz",label: "--承保--", data: Pr_nbz,clickable: true } , { href:"sysdetail/clm", label: "--理赔--", data: Pr_clm } , { href:"sysdetail/fin", label: "--财务--", data: Pr_fin }, { href:"sysdetail/xb", label: "--信保--", data: Pr_xb }, { href:"project_detail.html", label: "--周边--", data: Pr_zb } ], chart_plot_01_settings);
 
 //          绑定网格点击事件
 //        $("#chart_plot_01").bind("plotclick", function (event, pos, item) {
@@ -767,39 +782,105 @@ var Req_xb = new Array();
         }], chart_plot_03_settings);
     };
 
+    console.log('Pr_num_01:',Pr_num_01)
+     if ($("#chart_plot_detail_num").length) {
+        console.log('chart_plot_detail_num - testing...');
+
+        var stuff = $("#chart_plot_detail_num").data('stuff');
+
+        $.plot($("#chart_plot_detail_num"), [{ label: "--用户--", data: Pr_num_01 } , { label: "机构IT", data: Pr_num_02} , { label: "总部运维", data: Pr_num_03}, { label: "二线支持", data: Pr_num_04 } ], chart_plot_01_settings);
+
+
+		$("<div id='tooltip'></div>").css({
+			position: "absolute",
+			display: "none",
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#070808",
+			"color": "#ffffff",
+			opacity: 0.80
+		}).appendTo("body");
+
+        $("#chart_plot_detail_num").bind("plothover", function (event, pos, item) {
+        if (item) {
+            var x = item.datapoint[0].toFixed(2),
+            y = item.datapoint[1].toFixed(2);
+        //$("#tooltip").html(item.series.label + " of " + x + " = " + y)
+            $("#tooltip").html(item.series.label + " 处理问题数："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
+
+            else {
+            $("#tooltip").hide();
+            }
+
+        });
+      }
+
+      if ($("#chart_plot_detail_time").length) {
+        console.log('chart_plot_detail_num - testing...');
+
+        var stuff = $("#chart_plot_detail_time").data('stuff');
+
+        $.plot($("#chart_plot_detail_time"), [{ label: "--用户--", data: Pr_time_01 } , { label: "机构IT", data: Pr_time_02} , { label: "总部运维", data: Pr_time_03}, { label: "二线支持", data: Pr_time_04 } ], chart_plot_01_settings);
+
+
+		$("<div id='tooltip'></div>").css({
+			position: "absolute",
+			display: "none",
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#070808",
+			"color": "#ffffff",
+			opacity: 0.80
+		}).appendTo("body");
+
+        $("#chart_plot_detail_time").bind("plothover", function (event, pos, item) {
+        if (item) {
+            var x = item.datapoint[0].toFixed(2),
+            y = item.datapoint[1].toFixed(2);
+        //$("#tooltip").html(item.series.label + " of " + x + " = " + y)
+            $("#tooltip").html(item.series.label + " 版本次数："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
+
+            else {
+            $("#tooltip").hide();
+            }
+
+        });
+      }
+
+    console.log('Pr_detail_wan:',Pr_detail_wan);
 
     if ($("#chart_plot_detail_wan").length) {
-        console.log('chart_plot_detail_wan');
+        console.log('chart_plot_detail_wan - testing...');
 
-        $.plot($("#chart_plot_detail_shi"), [{
-            label: "Email Sent",
-            data: chart_plot_02_data,
-            lines: {
-                fillColor: "rgba(150, 202, 89, 0.12)"
-            },
-            points: {
-                fillColor: "#fff"
+        var stuff = $("#chart_plot_detail_wan").data('stuff');
+
+        $.plot($("#chart_plot_detail_wan"), [{ label: "--上报jira--", data: Pr_detail_wan} ], chart_plot_01_settings);
+
+
+		$("<div id='tooltip'></div>").css({
+			position: "absolute",
+			display: "none",
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#070808",
+			"color": "#ffffff",
+			opacity: 0.80
+		}).appendTo("body");
+
+        $("#chart_plot_detail_wan").bind("plothover", function (event, pos, item) {
+        if (item) {
+            var x = item.datapoint[0].toFixed(2),
+            y = item.datapoint[1].toFixed(2);
+        //$("#tooltip").html(item.series.label + " of " + x + " = " + y)
+            $("#tooltip").html(item.series.label + " 问题数："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
+
+            else {
+            $("#tooltip").hide();
             }
-        }], chart_plot_02_settings);
 
-    }
+        });
+      }
 
-
-    if ($("#chart_plot_detail_wan").length) {
-        console.log('chart_plot_detail_wan');
-
-        $.plot($("#chart_plot_detail_wan"), [{
-            label: "Email Sent",
-            data: chart_plot_02_data,
-            lines: {
-                fillColor: "rgba(150, 202, 89, 0.12)"
-            },
-            points: {
-                fillColor: "#fff"
-            }
-        }], chart_plot_02_settings);
-
-    }
 
     if ($("#chart_plot_publish").length) {
         console.log('chart_plot_publish - testing...');

@@ -80,6 +80,21 @@ def get_context_data_all(startDate=datetime.date(2017, 4, 1), endDate=datetime.d
     ##xb Pub趋势
     kwargs['js_Pub_xb'] = sql_raw( 'B030001','P0001:14')
 
+
+    ##xb Pub趋势
+    kwargs['js_Pub_xb'] = sql_raw('B030001', 'P0001:14')
+
+    ##  明细趋势
+    kwargs['js_Pr_detail_01'] = sql_raw('B012001', 'P0001:11,P0006:11')
+    kwargs['js_Pr_detail_02'] = sql_raw('B012001', 'P0001:11,P0006:12')
+    kwargs['js_Pr_detail_03'] = sql_raw('B012001', 'P0001:11,P0006:13')
+    kwargs['js_Pr_detail_04'] = sql_raw('B012001', 'P0001:11,P0006:14')
+
+    #万单
+    kwargs['js_Pr_detail_wan'] = sql_raw('B011001', 'P0001:11')
+
+
+
     # ## num 趋势
     # Pub_xb1 = Dcitemdata.objects.raw("""
     #                  SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM

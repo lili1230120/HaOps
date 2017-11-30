@@ -142,7 +142,7 @@
                   <table class="tile_info">
                     {% for jiraSys in Pr_sys %}
                     <tr>
-                      <td>
+                      <td >
                         <!--blue，green，purple，aero，red-->
                         <p><i class="fa fa-square green"></i>{{jiraSys.itemname}} </p>
                       </td>
@@ -181,7 +181,7 @@
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
-              <canvas id="mybarChart"></canvas>
+              <canvas id="mybarChart" ></canvas>
             </div>
           </div>
         </div>
@@ -276,366 +276,133 @@
 
   <br/>
 
-    <div class="row" >
+    <!--<div class="row" >-->
 
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="dashboard_graph">
+                <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                  <!--<div class="dashboard_graph">-->
 
-			<div id="chart_plot_real" class="demo-placeholder"></div>
-                  <p> 刷新频率: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> 毫秒</p>
-                  </div>
-                 </div>
-		</div>
+			<!--<div id="chart_plot_real" class="demo-placeholder"></div>-->
+                  <!--<p> 刷新频率: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> 毫秒</p>-->
+                  <!--</div>-->
+                 <!--</div>-->
+		<!--</div>-->
 
-    <br />
+    <!--<br />-->
 
-    <div class="row">
-        <div class="col-md-4 col-sm-4 col-xs-12">
-        <div id="cap" class="x_panel tile fixed_height_320">
-          <div class="x_title">
-            <h2>KPI异常 <small><a href="KPI.html">详情</a>  </small></h2>
-            <ul class="nav navbar-right panel_toolbox">
-              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dro    pdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Settings 1</a>
-                  </li>
-                  <li><a href="#">Settings 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li><a class="close-link"><i class="fa fa-close"></i></a>
-              </li>
-            </ul>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <!--<h4>Top 5</h4>-->
-                        <h4>
-                          <!--{{opsTag|safe }}-->
-                          <!--{{ nbzJira }}-->
-                        </h4>
-             {% for jiraSys in nbzJira %}
-            <div class="widget_summary">
-
-              <div class="w_left w_25">
-                <span>{{jiraSys.itemname}}</span>
-              </div>
-              <div class="w_center w_55">
-                <div class="progress">
-                  <div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{jiraSys.itemvalue1}}%;">
-                    <span class="sr-only">90% Complete</span>
-                  </div>
-                </div>
-              </div>
-              <div class="w_right w_20">
-                <span>{{jiraSys.itemvalue1|floatformat}}</span>
-              </div>
-              <div class="clearfix"></div>
-            </div>
-            {% endfor %}
-
-              测试循环颜色
-              <div class="widget_summary">
-
-              <div class="w_left w_25">
-                <span>itemname</span>
-              </div>
-              <div class="w_center w_55">
-                <div class="progress">
-                  <div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:30% ;">
-                    <span class="sr-only">90% Complete</span>
-                  </div>
-                </div>
-              </div>
-              <div class="w_right w_20">
-                <span>Capacity</span>
-              </div>
-              <div class="clearfix"></div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
+    <!--<div class="row">-->
 
      <!--环节分析   -->
-   <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="x_panel fixed_height_320">
-          <div class="x_title">
-            <h2> 环节分析 <small> 专题优化 </small></h2>
-            <ul class="nav navbar-right panel_toolbox">
-              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Settings 1</a>
-                  </li>
-                  <li><a href="#">Settings 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li><a class="close-link"><i class="fa fa-close"></i></a>
-              </li>
-            </ul>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <div class="dashboard-widget-content">
-              <ul class="quick-list">
-                <!--<li><i class="fa fa-line-chart"></i><a href="#"> 出单时效 </a></li>-->
-                <!--<li><i class="fa fa-thumbs-up"></i><a href="#"> 缴费时效 </a></li>-->
-                <!--<li><i class="fa fa-calendar-o"></i><a href="#"> 理赔查勘派单 </a></li>-->
-                <!--<li><i class="fa fa-cog"></i><a href="#"> 赔付时效 </a></li>-->
-                <!--<li><i class="fa fa-area-chart"></i><a href="#"> 基础信息维护时效 </a></li>-->
+   <!--<div class="col-md-4 col-sm-4 col-xs-12">-->
+        <!--<div class="x_panel fixed_height_320">-->
+          <!--<div class="x_title">-->
+            <!--<h2> 环节分析 <small> 专题优化 </small></h2>-->
+            <!--<ul class="nav navbar-right panel_toolbox">-->
+              <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>-->
+              <!--</li>-->
+              <!--<li class="dropdown">-->
+                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>-->
+                <!--<ul class="dropdown-menu" role="menu">-->
+                  <!--<li><a href="#">Settings 1</a>-->
+                  <!--</li>-->
+                  <!--<li><a href="#">Settings 2</a>-->
+                  <!--</li>-->
+                <!--</ul>-->
+              <!--</li>-->
+              <!--<li><a class="close-link"><i class="fa fa-close"></i></a>-->
+              <!--</li>-->
+            <!--</ul>-->
+            <!--<div class="clearfix"></div>-->
+          <!--</div>-->
+          <!--<div class="x_content">-->
+            <!--<div class="dashboard-widget-content">-->
+              <!--<ul class="quick-list">-->
+                <!--&lt;!&ndash;<li><i class="fa fa-line-chart"></i><a href="#"> 出单时效 </a></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li><i class="fa fa-thumbs-up"></i><a href="#"> 缴费时效 </a></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li><i class="fa fa-calendar-o"></i><a href="#"> 理赔查勘派单 </a></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li><i class="fa fa-cog"></i><a href="#"> 赔付时效 </a></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li><i class="fa fa-area-chart"></i><a href="#"> 基础信息维护时效 </a></li>&ndash;&gt;-->
 
-                <li><i class="fa fa-line-chart"></i><a href="project_detail.html"> 出单时效 </a></li>
-                <li><i class="fa fa-line-chart"></i><a href="project_detail.html"> 缴费时效 </a></li>
-                <li><i class="fa fa-calendar-o"></i><a href="project_detail.html"> 理赔查勘派单 </a></li>
-                <li><i class="fa fa-calendar-o"></i><a href="project_detail.html"> 赔付时效 </a></li>
-                <li><i class="fa fa-calendar-o"></i><a href="project_detail.html" > 基础信息维护时效 </a></li>
-              </ul>
+                <!--<li><i class="fa fa-line-chart"></i><a href="project_detail.html"> 出单时效 </a></li>-->
+                <!--<li><i class="fa fa-line-chart"></i><a href="project_detail.html"> 缴费时效 </a></li>-->
+                <!--<li><i class="fa fa-calendar-o"></i><a href="project_detail.html"> 理赔查勘派单 </a></li>-->
+                <!--<li><i class="fa fa-calendar-o"></i><a href="project_detail.html"> 赔付时效 </a></li>-->
+                <!--<li><i class="fa fa-calendar-o"></i><a href="project_detail.html" > 基础信息维护时效 </a></li>-->
+              <!--</ul>-->
 
-              <div class="sidebar-widget">
-                <h4>本周效率</h4>
-                <canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>
-                <div class="goal-wrapper">
-                  <span id="gauge-text" class="gauge-value gauge-chart pull-left">0</span>
-                  <span class="gauge-value pull-left">%</span>
-                  <span id="goal-text" class="goal-value pull-right">100%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              <!--<div class="sidebar-widget">-->
+                <!--<h4>本周效率</h4>-->
+                <!--<canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>-->
+                <!--<div class="goal-wrapper">-->
+                  <!--<span id="gauge-text" class="gauge-value gauge-chart pull-left">0</span>-->
+                  <!--<span class="gauge-value pull-left">%</span>-->
+                  <!--<span id="goal-text" class="goal-value pull-right">100%</span>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-md-8 col-sm-8 col-xs-12">-->
 
+        <!--<div class="row">-->
 
-    <div class="row">
+          <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+            <!--<div class="x_panel">-->
+              <!--<div class="x_title">-->
+                <!--<h2> jira 地区分布 <small>分省</small></h2>-->
+                <!--<ul class="nav navbar-right panel_toolbox">-->
+                  <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>-->
+                  <!--</li>-->
+                  <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>-->
+                    <!--<ul class="dropdown-menu" role="menu">-->
+                      <!--<li><a href="#">Settings 1</a>-->
+                      <!--</li>-->
+                      <!--<li><a href="#">Settings 2</a>-->
+                      <!--</li>-->
+                    <!--</ul>-->
+                  <!--</li>-->
+                  <!--<li><a class="close-link"><i class="fa fa-close"></i></a>-->
+                  <!--</li>-->
+                <!--</ul>-->
+                <!--<div class="clearfix"></div>-->
+              <!--</div>-->
 
-    <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="x_panel">
-          <div class="x_title">
-            <h2>生产版本发布  <small> 已发布</small></h2>
-            <ul class="nav navbar-right panel_toolbox">
-              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#"> Settings 1</a>
-                  </li>
-                  <li><a href="#"> Settings 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li><a class="close-link"><i class="fa fa-close"></i></a>
-              </li>
-            </ul>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <div class="dashboard-widget-content">
-              <ul class="list-unstyled timeline widget">
-                {% for releasePlan in ReleasePlan %}
-                <li>
-                  <div class="block">
-                    <div class="block_content">
-                      <h2 class="title">
-                                        <a>{{releasePlan.itemname}}</a>
-                                    </h2>
-                      <div class="byline">
-                        <span>{{releasePlan.datadate}}</span> by <a></a>
-                      </div>
-                      <p class="excerpt">PUBLISH-{{releasePlan.itemvalue1}} <a href="http://jira.sinosafe.com.cn/browse/PUBLISH-{{releasePlan.itemvalue1|floatformat }}"> 查看更多</a>
-                      </p>
-                    </div>
-                  </div>
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
+                <!--<div class="x_content">-->
+                <!--<div class="dashboard-widget-content">-->
+                  <!--&lt;!&ndash;<div class="col-md-4 hidden-small">&ndash;&gt;-->
+                   <!--<div class="col-md-4 ">-->
 
-          </div>
-        </div>
-        </div>
+                    <!--<h2 class="line_30"> Top 7 </h2>-->
 
+                    <!--<table class="countries_list">-->
+                      <!--<tbody>-->
+                      <!--{% for areaCal in AreaCal %}-->
+                        <!--<tr>-->
+                          <!--<td>{{areaCal.itemname}}</td>-->
+                          <!--<td class="fs15 fw700 text-right">{{areaCal.itemvalue1|floatformat }} RMB</td>-->
+                        <!--</tr>-->
+                      <!--{% endfor %}-->
+                      <!--</tbody>-->
+                    <!--</table>-->
+                  <!--</div>-->
+                  <!--<div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12" style="height:230px;"></div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
 
+        <!--</div>-->
 
-        <div class="col-md-8 col-sm-8 col-xs-12">
-
-        <div class="row">
-
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-              <div class="x_title">
-                <h2> jira 地区分布 <small>分省</small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Settings 1</a>
-                      </li>
-                      <li><a href="#">Settings 2</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a class="close-link"><i class="fa fa-close"></i></a>
-                  </li>
-                </ul>
-                <div class="clearfix"></div>
-              </div>
-
-                <div class="x_content">
-                <div class="dashboard-widget-content">
-                  <!--<div class="col-md-4 hidden-small">-->
-                   <div class="col-md-4 ">
-
-                    <h2 class="line_30"> Top 7 </h2>
-
-                    <table class="countries_list">
-                      <tbody>
-                      {% for areaCal in AreaCal %}
-                        <tr>
-                          <td>{{areaCal.itemname}}</td>
-                          <td class="fs15 fw700 text-right">{{areaCal.itemvalue1|floatformat }} RMB</td>
-                        </tr>
-                      {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12" style="height:230px;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="row">
-
-
-          <!-- Start to do list -->
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel">
-              <div class="x_title">
-                <h2>autotask 异常 <small> 昨日 </small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Settings 1</a>
-                      </li>
-                      <li><a href="#">Settings 2</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a class="close-link"><i class="fa fa-close"></i></a>
-                  </li>
-                </ul>
-                <div class="clearfix"></div>
-              </div>
-              <div class="x_content">
-
-                <div class="">
-                  <ul class="to_do">
-                    {% for releasePlan in ReleasePlan %}
-                    <li>
-                      <p>
-                        <!--<input type="checkbox" class="flat"> </p>-->
-                        <a >{{releasePlan.itemname }} | 任务号：{{releasePlan.itemno }}</a>
-                    </li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End to do list -->
+    <!--</div>-->
 
 
 
 
-          <!-- start of weather widget -->
 
 
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel fixed_height_390">
-                    <div class="x_title">
-                      <h2> 昨日产能 </h2>
-                      <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                      </ul>
-                      <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
 
-                      <div style="text-align: center; margin-bottom: 17px">
-                        <ul class="verticle_bars list-inline">
-                          <li>
-                            <div class="progress vertical progress_wide bottom">
-                              <div class="progress-bar progress-bar-dark" role="progressbar" data-transitiongoal="45"></div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="progress vertical progress_wide bottom">
-                              <div class="progress-bar progress-bar-green" role="progressbar" data-transitiongoal="85"></div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="progress vertical progress_wide bottom">
-                              <div class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal="25"></div>
-                            </div>
-                          </li>
 
-                        </ul>
-                      </div>
-                      <div class="divider"></div>
-
-                      <ul class="legend list-unstyled">
-                        <li>
-                          <p>
-                            <span class="icon"><i class="fa fa-square dark"></i></span> <span class="name"> 电商 </span>
-                          </p>
-                        </li>
-                        <li>
-                          <p>
-                            <span class="icon"><i class="fa fa-square green"></i></span> <span class="name"> 核心 </span>
-                          </p>
-                        </li>
-                        <li>
-                          <p>
-                            <span class="icon"><i class="fa fa-square blue"></i></span> <span class="name"> 创新、再保</span>
-                          </p>
-                        </li>
-
-                      </ul>
-
-                    </div>
-                  </div>
-
-        </div>
-      </div>
     </div>
   </div>
       </div>
