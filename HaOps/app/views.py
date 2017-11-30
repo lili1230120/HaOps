@@ -2,13 +2,9 @@ from django.shortcuts import render,get_object_or_404
 from django.template import loader
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core import serializers
-from app.models import *
-from app.serializers import *
 
 from datetime import datetime
-from django.db.models import Count
 from django.utils import timezone
-import datetime
 import json
 
 # rest风格
@@ -22,6 +18,10 @@ from datetime import date, timedelta
 from django.shortcuts import render
 from django import forms
 from django_bootstrap3_daterangepicker.fields import DateRangeField
+
+# 查询数据
+from app.get_context_data import *
+
 
 class TestForm(forms.Form):
 
@@ -165,89 +165,8 @@ class HaOpsView(APIView):
 
 
 
-def get_context_data_all(startDate = datetime.date(2017, 4, 1) , endDate = datetime.date(2017, 7, 6),**kwargs):
-
-    OstartDate = datetime.date(2017, 9, 1)
-    OendDate = datetime.date(2017,11, 1)
-
-    startMonth = '2017-01'
-
-    '''
-   生产jira趋势查询
-
-    '''
-    ##承保趋势
-    nbzJira =  Dcitemdata.objects.raw("""
- SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-(select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-from syscfg_dcitemdata a
-where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
-where itemname = '承保-总部运维'
-order by datadate,dataid""" ,[startMonth])
-    nbzJira_ser = DcitemdataSer(nbzJira, many=True)
-
-    kwargs['nbzJira'] = nbzJira
-    kwargs['js_nbzJira'] = JSONRenderer().render(nbzJira_ser.data)
-
-    ##理赔趋势
-    clmJira = Dcitemdata.objects.raw("""
-     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-    from syscfg_dcitemdata a
-    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
-    where itemname = '理赔-总部运维'
-    order by datadate,dataid""", [startMonth])
-    clmJira_ser = DcitemdataSer(clmJira, many=True)
-    kwargs['js_clmJira'] = JSONRenderer().render(clmJira_ser.data)
-
-    ##收付趋势
-    finJira = Dcitemdata.objects.raw("""
-     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-    from syscfg_dcitemdata a
-    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
-    where itemname = '收付-总部运维'
-    order by datadate,dataid""", [startMonth])
-    finJira_ser = DcitemdataSer(finJira, many=True)
-    kwargs['js_finJira'] = JSONRenderer().render(finJira_ser.data)
 
 
-
-
-
-    ##信保趋势
-    xbJira = Dcitemdata.objects.raw("""
-     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-    from syscfg_dcitemdata a
-    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
-    where itemname = '信保-总部运维'
-    order by datadate,dataid""", [startMonth])
-    xbJira_ser = DcitemdataSer(xbJira, many=True)
-    kwargs['js_xbJira'] = JSONRenderer().render(xbJira_ser.data)
-
-    ##周边趋势
-    zbJira = Dcitemdata.objects.raw("""
-     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-    from syscfg_dcitemdata a
-    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate > %s )
-    where itemname = '周边-总部运维'
-    order by datadate,dataid""", [startMonth])
-    zbJira_ser = DcitemdataSer(zbJira, many=True)
-    kwargs['js_zbJira'] = JSONRenderer().render(zbJira_ser.data)
-
-    # 地区统计-all
-    AreaCal = Dcitemdata.objects.raw("""
-         SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-        (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-        from syscfg_dcitemdata a
-        where a.itemno = 'A01001' and length(a.datadate) = 7 and a.datadate > %s )
-        where rownum < 6
-        order by datadate,dataid  """, [startMonth])
-    AreaCal_ser = DcitemdataSer(AreaCal, many=True)
-    kwargs['AreaCal'] = AreaCal
-    kwargs['js_AreaCal'] = JSONRenderer().render(zbJira_ser.data)
 
 
     '''
@@ -362,6 +281,5 @@ order by datadate,dataid""" ,[startMonth])
     '''
 
 
-    return kwargs
 
 

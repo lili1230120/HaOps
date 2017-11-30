@@ -451,11 +451,11 @@ body .container.body .right_col {
     color: #9B59B6;
 }
 .tile_info tr:nth-child(3) .fa {
-    color: #BDC3C7;
+    color: #3498DB;
 }
 
 .tile_info tr:nth-child(4) .fa {
-    color: #3498DB;
+    color: #BDC3C7;
 }
 
 .tile_info tr:nth-child(5) .fa {

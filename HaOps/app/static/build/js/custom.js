@@ -329,79 +329,148 @@ $('body').popover({
     }
 });
 
+
+
 function gd(date) {
     return new Date(date).getTime();
 }
 
+
+
+//趋势图明细 （万单问题亮、时效、分机构）
+var Pr_num_01 = new Array();
+var Pr_num_02 = new Array();
+var Pr_num_03 = new Array();
+var Pr_num_04 = new Array();
+var Pr_time_01 = new Array();
+var Pr_time_02 = new Array();
+var Pr_time_03 = new Array();
+var Pr_time_04 = new Array();
+var Pr_nbz_wan = new Array();
+
 function init_flot_chart() {
 
-//趋势图 数据初始化
-
-
-var arr_NBZ = new Array();
-var arr_CLM = new Array();
-var arr_FIN = new Array();
-var arr_XB = new Array();
-var arr_ZB = new Array();
+////趋势图 数据初始化
+//var Pr_nbz = Req_nbz = Pub_nbz = new Array();
+//var Pr_clm = Req_clm = Pub_clm =  new Array();
+//var Pr_fin = Req_fin = Pub_fin =  new Array();
+//var Pr_xb = Req_xb = Pub_xb =  new Array();
+//var Pr_zb = Req_zb = Pub_zb =  new Array();
 var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
+var Pr_nbz = new Array();
+var Pr_clm = new Array();
+var Pr_fin = new Array();
+var Pr_zb = new Array();
+var Pr_xb = new Array();
+var Pub_nbz = new Array();
+var Pub_clm = new Array();
+var Pub_fin = new Array();
+var Pub_xb = new Array();
+var Pub_zb = new Array();
+var Req_nbz = new Array();
+var Req_clm = new Array();
+var Req_fin = new Array();
+var Req_zb = new Array();
+var Req_xb = new Array();
+
+
+
+
     if (typeof($.plot) === 'undefined') {
         return;
     }
 
     console.log('init_flot_chart');
 
-//    var arr_data1 = [
-//        [gd(2012, 1, 1), 30],
-//        [gd(2012, 1, 2), 30],
-//        [gd(2012, 1, 3), 30],
-//        [gd(2012, 1, 4), 30],
-//        [gd(2012, 1, 5), 30],
-//        [gd(2012, 1, 6), 30],
-//        [gd(2012, 1, 7), 30]
-//    ];
 
+/// 承保pr趋势线数值初始化
+    for(var i=0;i<js_Pr_nbz.length;i++){
+    Pr_nbz[i]= [gd(js_Pr_nbz[i].datadate), js_Pr_nbz[i].itemvalue2] ;
 
+    console.log('Pr_nbz:',Pr_nbz[i])
 
-/// 承保趋势线数值初始化
-    for(var i=0;i<js_nbzJira.length;i++){
-    arr_NBZ[i]= [gd(js_nbzJira[i].datadate), js_nbzJira[i].itemvalue2] ;
-//    arr_CLM[i]= [gd(js_nbzJira[i].datadate), js_nbzJira[i].itemvalue2] ;
-//    arr_FIN[i]= [gd(js_nbzJira[i].datadate), js_nbzJira[i].itemvalue3] ;
+//    Pr_clm[i]= [gd(js_Pr_nbz[i].datadate), js_Pr_nbz[i].itemvalue2] ;
+//    Pr_fin[i]= [gd(js_Pr_nbz[i].datadate), js_Pr_nbz[i].itemvalue3] ;
 
-    NBZ_count += js_nbzJira[i].itemvalue1
-    console.log('arr_NBZ success');
+    NBZ_count += js_Pr_nbz[i].itemvalue1
+    console.log('Pr_nbz success');
     }
-//    console.log(NBZ_count)  //查看总数
+
+    console.log('Pr_nbz:',Pr_nbz)
+    //Pr_nbz
 
 
 
 ///  理赔趋势线数值初始化
-    for(var i=0;i<js_clmJira.length;i++){
-    arr_CLM[i]= [gd(js_clmJira[i].datadate), js_clmJira[i].itemvalue2] ;
-    CLM_count += js_clmJira[i].itemvalue1
+    for(var i=0;i<js_Pr_clm.length;i++){
+    Pr_clm[i]= [gd(js_Pr_clm[i].datadate), js_Pr_clm[i].itemvalue2] ;
+    CLM_count += js_Pr_clm[i].itemvalue1
     //var d2 = new Date(JiraSys[i].datadate).getTime();
 //    var d2 = gd(JiraSys[i].datadate)
 //    console.log(d2)
-    console.log('arr_CLM success');
+    console.log('Pr_clm success');
     }
 
+
+
+
 /// 财务趋势线数值初始化
-    for(var i=0;i<js_finJira.length;i++){
-    arr_FIN[i]= [gd(js_finJira[i].datadate), js_finJira[i].itemvalue2] ;
-    console.log('arr_FIN success');
-//    FIN_count += js_finJira[i].itemvalue1
+    for(var i=0;i<js_Pr_fin.length;i++){
+    Pr_fin[i]= [gd(js_Pr_fin[i].datadate), js_Pr_fin[i].itemvalue2] ;
+    console.log('Pr_fin success');
+//    FIN_count += js_Pr_fin[i].itemvalue1
     }
 
 /// 信保趋势线数值初始化
-    for(var i=0;i<js_xbJira.length;i++){
-    arr_XB[i]= [gd(js_xbJira[i].datadate), js_xbJira[i].itemvalue2] ;
+    for(var i=0;i<js_Pr_xb.length;i++){
+    Pr_xb[i]= [gd(js_Pr_xb[i].datadate), js_Pr_xb[i].itemvalue2] ;
     }
 
 /// 周边趋势线数值初始化
-    for(var i=0;i<js_zbJira.length;i++){
-    arr_ZB[i]= [gd(js_zbJira[i].datadate), js_zbJira[i].itemvalue2] ;
+    for(var i=0;i<js_Pr_zb.length;i++){
+    Pr_zb[i]= [gd(js_Pr_zb[i].datadate), js_Pr_zb[i].itemvalue2] ;
     }    
-    console.log('查看赋值:',arr_CLM)
+    console.log('查看赋值:',Pr_clm)
+
+
+/// 承保req趋势线数值初始化
+    for(var i=0;i<js_Req_nbz.length;i++){
+    Req_nbz[i]= [gd(js_Req_nbz[i].datadate), js_Req_nbz[i].itemvalue1] ;
+
+    Pub_nbz[i]= [gd(js_Pub_nbz[i].datadate), js_Pub_nbz[i].itemvalue1] ;
+
+    }
+/// 理赔req趋势线数值初始化
+    for(var i=0;i<js_Req_clm.length;i++){
+    Req_clm[i]= [gd(js_Req_clm[i].datadate), js_Req_clm[i].itemvalue1] ;
+
+    Pub_clm[i]= [gd(js_Pub_clm[i].datadate), js_Pub_clm[i].itemvalue1] ;
+    }
+/// 财务req趋势线数值初始化
+    for(var i=0;i<js_Req_fin.length;i++){
+    Req_fin[i]= [gd(js_Req_fin[i].datadate), js_Req_nbz[i].itemvalue1] ;
+
+    Pub_fin[i]= [gd(js_Pub_fin[i].datadate), js_Pub_fin[i].itemvalue1] ;
+    }
+/// xinbao req趋势线数值初始化
+    for(var i=0;i<js_Req_xb.length;i++){
+    Req_xb[i]= [gd(js_Req_xb[i].datadate), js_Req_xb[i].itemvalue1] ;
+    Pub_xb[i]= [gd(js_Pub_xb[i].datadate), js_Pub_xb[i].itemvalue1] ;
+    }
+/// zb req趋势线数值初始化
+    for(var i=0;i<js_Req_zb.length;i++){
+    Req_zb[i]= [gd(js_Req_zb[i].datadate), js_Req_zb[i].itemvalue1] ;
+    Pub_zb[i]= [gd(js_Pub_zb[i].datadate), js_Pub_zb[i].itemvalue1] ;
+    }
+
+
+
+
+
+
+
+
+
 //    var arr_data2 = [
 //        [gd(2012, 1, 1), 280],
 //        [gd(2012, 1, 2), 356],
@@ -480,18 +549,6 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
             highlightColor: '#e84b3c',  //高亮颜色
 
         },
-//        legend: {
-//             show: boolean
-//             labelFormatter: null or (fn: string, series object -> string)
-//             labelBoxBorderColor: color
-//             noColumns: number
-//             position: "ne" or "nw" or "se" or "sw"
-//             margin: number of pixels or [x margin, y margin]
-//             backgroundColor: null or color
-//             backgroundOpacity: number between 0 and 1
-//             container: null or jQuery object/DOM element/jQuery expression
-//             orted: null/false, true, "ascending", "descending", "reverse", or a comparator
-//        }
 
 //  label 链接 地址
          legend: {
@@ -522,7 +579,7 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
             tickColor: "rgba(51, 51, 51, 0.06)",
             mode: "time",
             monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-            tickSize: [ 2,"month"],
+            tickSize: [ 1 ,"month"],
             //tickLength: 10,
             tickFormatter: "%yyyy/%mm",
             axisLabel: "Date",
@@ -638,7 +695,10 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
         // console.log()
 
-        $.plot($("#chart_plot_01"), [{ href:"sysdetail/nbz",label: "--承保--", data: arr_NBZ,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: arr_CLM } , { label: "--财务--", data: arr_FIN }, { label: "--信保--", data: arr_XB }, { label: "--周边--", data: arr_ZB } ], chart_plot_01_settings);
+        console.log('Pr_nbz:',Pr_nbz)
+    //Pr_nbz
+
+        $.plot($("#chart_plot_01"), [{ href:"sysdetail/nbz",label: "--承保--", data: Pr_nbz,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: Pr_clm } , { label: "--财务--", data: Pr_fin }, { label: "--信保--", data: Pr_xb }, { label: "--周边--", data: Pr_zb } ], chart_plot_01_settings);
 
 //          绑定网格点击事件
 //        $("#chart_plot_01").bind("plotclick", function (event, pos, item) {
@@ -654,28 +714,25 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 			display: "none",
 			border: "1px solid #fdd",
 			padding: "2px",
-			"background-color": "#fee",
+			"background-color": "#070808",
+			"color": "#ffffff",
+
 			opacity: 0.80
 		}).appendTo("body");
 
         $("#chart_plot_01").bind("plothover", function (event, pos, item) {
+        if (item) {
+            var x = item.datapoint[0].toFixed(2),
+            y = item.datapoint[1].toFixed(2);
+        //$("#tooltip").html(item.series.label + " of " + x + " = " + y)
+            $("#tooltip").html(item.series.label + " jira数量："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
 
-				if (item) {
-					var x = item.datapoint[0].toFixed(2),
-						y = item.datapoint[1].toFixed(2);
+            else {
+            $("#tooltip").hide();
+            }
 
-//					$("#tooltip").html(item.series.label + " of " + x + " = " + y)
-	                $("#tooltip").html(item.series.label + " jira数量："  + y)
-						.css({top: item.pageY+5, left: item.pageX+5})
-						.fadeIn(200);
-				} else {
-					$("#tooltip").hide();
-				}
-
-		});
-
-
-    }
+            });
+   }
 
     if ($("#chart_plot_02").length) {
         console.log('Plot2');
@@ -743,6 +800,69 @@ var NBZ_count = 0, CLM_count=0 ,FIN_count=0;
 
     }
 
+    if ($("#chart_plot_publish").length) {
+        console.log('chart_plot_publish - testing...');
+
+        var stuff = $("#chart_plot_publish").data('stuff');
+
+        $.plot($("#chart_plot_publish"), [{ href:"sysdetail/nbz",label: "--承保--", data: Pr_nbz,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: Pr_clm } , { label: "--财务--", data: Pr_fin }, { label: "--信保--", data: Pr_xb }, { label: "--周边--", data: Pr_zb } ], chart_plot_01_settings);
+
+
+		$("<div id='tooltip'></div>").css({
+			position: "absolute",
+			display: "none",
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#070808",
+			"color": "#ffffff",
+			opacity: 0.80
+		}).appendTo("body");
+
+        $("#chart_plot_publish").bind("plothover", function (event, pos, item) {
+        if (item) {
+            var x = item.datapoint[0].toFixed(2),
+            y = item.datapoint[1].toFixed(2);
+        //$("#tooltip").html(item.series.label + " of " + x + " = " + y)
+            $("#tooltip").html(item.series.label + " jira数量："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
+
+            else {
+            $("#tooltip").hide();
+            }
+
+        });
+   }
+
+   if ($("#chart_plot_req").length) {
+        console.log('chart_plot_publish - testing...');
+
+        var stuff = $("#chart_plot_req").data('stuff');
+
+        $.plot($("#chart_plot_req"), [{ href:"sysdetail/nbz",label: "--承保--", data: Pr_nbz,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: Pr_clm } , { label: "--财务--", data: Pr_fin }, { label: "--信保--", data: Pr_xb }, { label: "--周边--", data: Pr_zb } ], chart_plot_01_settings);
+
+
+		$("<div id='tooltip'></div>").css({
+			position: "absolute",
+			display: "none",
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#070808",
+			"color": "#ffffff",
+			opacity: 0.80
+		}).appendTo("body");
+
+        $("#chart_plot_req").bind("plothover", function (event, pos, item) {
+        if (item) {
+            var x = item.datapoint[0].toFixed(2),
+            y = item.datapoint[1].toFixed(2);
+        //$("#tooltip").html(item.series.label + " of " + x + " = " + y)
+            $("#tooltip").html(item.series.label + " jira数量："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
+
+            else {
+            $("#tooltip").hide();
+            }
+
+        });
+   }
 
     if ($("#chart_plot_real").length) {
      // We use an inline data source in the example, usually data would
@@ -1002,16 +1122,8 @@ function init_skycons() {
 //PR问题分布js   init_chart_doughnut
 
 function init_chart_doughnut() {
-  //  var sysname = JiraSys.getKey("sys_name");
-//$("#key_js").text(valor);
-//    var sysname = {'name': 123, 'name1': 456, 'sysname': ['单证','理赔'],"items":
-//        [{"name": "name1", "sector": "sector1"},
-//         {"name": "name2", "sector": "sector2"},
-//         {"name": "name3", "sector": "sector3"}]};
 
-
-
-    var JiraSys = js_nbzJira;
+    var JiraSys = js_Pr_sys;
         console.log('js_JiraSys');
 
 // pr分布 新建数组
@@ -1022,7 +1134,6 @@ for(var i=0;i<JiraSys.length;i++){
     sys_per[i]= JiraSys[i].itemvalue1
 
 }
-
 
 //for(var i=0;i<JiraSys.length;i++){
 //    for(var j=0;i<JiraSys.length;i++){
@@ -1040,8 +1151,9 @@ var color = new Array();    //颜色配置
 color = [
             "#E74C3C", // 红
             "#9B59B6", // 紫
-            "#BDC3C7", //灰
             "#3498DB", //蓝
+
+            "#BDC3C7", //灰
             "#26B99A" //绿
         ]
 
@@ -1329,8 +1441,10 @@ function init_parsley() {
         validateFront();
     });
     var validateFront = function() {
-        if ($('#demo-form').length){
-        //if (true === $('#demo-form').parsley().isValid()) {
+//        if ($('#demo-form').length){
+//        if (true === $('#demo-form').parsley().isValid()) {
+        if (true === $('#demo-form').parsley('isValid')) {
+
             $('.bs-callout-info').removeClass('hidden');
             $('.bs-callout-warning').addClass('hidden');
         } else {
@@ -1347,8 +1461,8 @@ function init_parsley() {
         validateFront();
     });
     var validateFront = function() {
-        if ($('#demo-form2').length){
-        //if (true === $('#demo-form2').parsley().isValid()) {
+//        if ($('#demo-form2').length){
+        if (true === $('#demo-form2').parsley('isValid')) {
             $('.bs-callout-info').removeClass('hidden');
             $('.bs-callout-warning').addClass('hidden');
         } else {
@@ -2029,10 +2143,10 @@ function init_daterangepicker() {
 //                    $("#chart_plot_01").remove();
 //                    var json_JiraSys = data.json_JiraSys;
                     console.log(data);
-                    js_nbzJira = JSON.parse(data.json_JiraNBZ);
-                    js_clmJira= JSON.parse(data.json_JiraCLM);
-                    js_finJira = JSON.parse(data.json_JiraFIN);
-                    console.log(js_nbzJira);
+                    js_Pr_nbz = JSON.parse(data.json_JiraNBZ);
+                    js_Pr_clm= JSON.parse(data.json_JiraCLM);
+                    js_Pr_fin = JSON.parse(data.json_JiraFIN);
+                    console.log(js_Pr_nbz);
                     init_flot_chart();
                     }
 
@@ -2418,6 +2532,16 @@ function init_EasyPieChart() {
 
 function init_charts() {
 
+    var Sys_avl_time = new Array();
+    var Sys_avl_num = new Array();
+
+    for(var i=0;i<js_Sys_avl.length;i++){
+    Sys_avl_time[i]= js_Sys_avl[i].datadate ;
+    Sys_avl_num[i]= js_Sys_avl[i].itemvalue1 ;
+
+    }
+    console.log('可用率：',Sys_avl_num)
+
     console.log('run_charts  typeof [' + typeof(Chart) + ']');
 
     if (typeof(Chart) === 'undefined') {
@@ -2606,9 +2730,10 @@ function init_charts() {
         var lineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+//                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: Sys_avl_time,
                 datasets: [{
-                    label: "My First dataset",
+                    label: "可用率为：",
                     backgroundColor: "rgba(38, 185, 154, 0.31)",
                     borderColor: "rgba(38, 185, 154, 0.7)",
                     pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -2616,18 +2741,20 @@ function init_charts() {
                     pointHoverBackgroundColor: "#fff",
                     pointHoverBorderColor: "rgba(220,220,220,1)",
                     pointBorderWidth: 1,
-                    data: [31, 74, 6, 39, 20, 85, 7]
-                }, {
-                    label: "My Second dataset",
-                    backgroundColor: "rgba(3, 88, 106, 0.3)",
-                    borderColor: "rgba(3, 88, 106, 0.70)",
-                    pointBorderColor: "rgba(3, 88, 106, 0.70)",
-                    pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(151,187,205,1)",
-                    pointBorderWidth: 1,
-                    data: [82, 23, 66, 9, 99, 4, 2]
-                }]
+                    data: Sys_avl_num
+                }
+//                , {
+//                    label: "My Second dataset",
+//                    backgroundColor: "rgba(3, 88, 106, 0.3)",
+//                    borderColor: "rgba(3, 88, 106, 0.70)",
+//                    pointBorderColor: "rgba(3, 88, 106, 0.70)",
+//                    pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
+//                    pointHoverBackgroundColor: "#fff",
+//                    pointHoverBorderColor: "rgba(151,187,205,1)",
+//                    pointBorderWidth: 1,
+//                    data: [82, 23, 66, 9, 99, 4, 2]
+//                }
+                ]
             },
         });
 
@@ -2637,20 +2764,31 @@ function init_charts() {
 
     if ($('#mybarChart').length) {
 
+        for(var i=0;i<js_Sys_avl.length;i++){
+        js_Pr_time_01[i]= js_Pr_time_01[i].itemvalue1 ;
+        js_Pr_time_02[i]= js_Pr_time_02[i].itemvalue1 ;
+             }
+
         var ctx = document.getElementById("mybarChart");
         var mybarChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["承保", "收付", "理赔", "信保", "周边"],
                 datasets: [{
                     label: '# of Votes',
-                    backgroundColor: "#26B99A",
-                    data: [51, 30, 40, 28, 92, 50, 45]
+                    backgroundColor: "#3498db",
+                    data: js_Pr_time_01
                 }, {
                     label: '# of Votes',
-                    backgroundColor: "#03586A",
-                    data: [41, 56, 25, 48, 72, 34, 12]
-                }]
+                    backgroundColor: "#d43526",
+                    data: js_Pr_time_01
+                }, {
+                    label: '# of Votes',
+                    backgroundColor: "#26b99a",
+                    data: [41, 56, 25, 48, 72]
+                }
+
+                ]
             },
 
             options: {
@@ -4483,11 +4621,19 @@ function init_echarts() {
                 }
             },
             calculable: true,
-            xAxis: [{
+//            xAxis: [{
+//                type: 'value',
+//                boundaryGap: [0, 0.01]
+//            }],
+//            yAxis: [{
+//                type: 'category',
+//                data: ['Jan', 'Feb', 'Mar', 'Apr', '五月', 'Jun']
+//            }],
+            yAxis: [{
                 type: 'value',
                 boundaryGap: [0, 0.01]
             }],
-            yAxis: [{
+            xAxis: [{
                 type: 'category',
                 data: ['Jan', 'Feb', 'Mar', 'Apr', '五月', 'Jun']
             }],
