@@ -49,6 +49,7 @@ class IndexView(APIView):
 
         context['style'] = self.style
 
+
         return Response(context)
 
     def post(self,request):
@@ -75,6 +76,7 @@ class SysDetailView(APIView):
         fields = ['title', 'comment']
 
         context = get_context_data_all()
+
 
         return Response(context,template_name=template_name)
 

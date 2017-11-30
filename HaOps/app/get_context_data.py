@@ -6,6 +6,24 @@ from rest_framework.renderers import JSONRenderer
 import datetime
 
 
+'''
+定义通用查询模板
+'''
+def sql_raw(itemno,itemfilter):
+
+    itemname = Dcitemdata.objects.raw("""
+
+SELECT a.dataid,pkg_operatefunc_dcshow.GetFactorNames(a.dataid) itemname,a.datadate,a.itemvalue1,a.itemvalue2,a.itemvalue3
+from syscfg_dcitemdata a where a.itemno = %s
+and pkg_operatefunc_dcshow.IsMonthDate(a.datadate) = 1 and a.datadate >= '2017-01'
+and pkg_operatefunc_dcshow.CheckFactorList(a.dataid,%s) = 1  """,[itemno,itemfilter])
+    itemname_ser = DcitemdataSer(itemname, many=True)
+    json = JSONRenderer().render(itemname_ser.data)
+
+    return json
+
+
+
 def get_context_data_all(startDate=datetime.date(2017, 4, 1), endDate=datetime.date(2017, 7, 6), **kwargs):
     OstartDate = datetime.date(2017, 9, 1)
     OendDate = datetime.date(2017, 11, 1)
@@ -17,172 +35,50 @@ def get_context_data_all(startDate=datetime.date(2017, 4, 1), endDate=datetime.d
 
     '''
     ##承保趋势
-    Pr_nbz = Dcitemdata.objects.raw("""
- SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-(select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-from syscfg_dcitemdata a
-where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-where itemname = '承保-总部运维'
-order by datadate,dataid""", [startMonth])
-    Pr_nbz_ser = DcitemdataSer(Pr_nbz, many=True)
+    kwargs['js_Pr_nbz'] = sql_raw( 'B010001','P0001:11')
 
-    kwargs['Pr_nbz'] = Pr_nbz
-    kwargs['js_Pr_nbz'] = JSONRenderer().render(Pr_nbz_ser.data)
 
     ##理赔趋势
-    Pr_clm = Dcitemdata.objects.raw("""
-     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-    from syscfg_dcitemdata a
-    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-    where itemname = '理赔-总部运维'
-    order by datadate,dataid""", [startMonth])
-    Pr_clm_ser = DcitemdataSer(Pr_clm, many=True)
-    kwargs['js_Pr_clm'] = JSONRenderer().render(Pr_clm_ser.data)
+    kwargs['js_Pr_clm'] = sql_raw( 'B010001','P0001:12')
 
     ##收付趋势
-    Pr_fin = Dcitemdata.objects.raw("""
-     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-    from syscfg_dcitemdata a
-    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-    where itemname = '收付-总部运维'
-    order by datadate,dataid""", [startMonth])
-    Pr_fin_ser = DcitemdataSer(Pr_fin, many=True)
-    kwargs['js_Pr_fin'] = JSONRenderer().render(Pr_fin_ser.data)
+    kwargs['js_Pr_fin'] = sql_raw( 'B010001','P0001:13')
 
     ##信保趋势
-    Pr_xb = Dcitemdata.objects.raw("""
-     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-    from syscfg_dcitemdata a
-    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-    where itemname = '信保-总部运维'
-    order by datadate,dataid""", [startMonth])
-    Pr_xb_ser = DcitemdataSer(Pr_xb, many=True)
-    kwargs['js_Pr_xb'] = JSONRenderer().render(Pr_xb_ser.data)
+    kwargs['js_Pr_xb'] = sql_raw( 'B010001','P0001:14')
 
     ##周边趋势
-    Pr_zb = Dcitemdata.objects.raw("""
-     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-    from syscfg_dcitemdata a
-    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-    where itemname = '周边-总部运维'
-    order by datadate,dataid""", [startMonth])
-    Pr_zb_ser = DcitemdataSer(Pr_zb, many=True)
-    kwargs['js_Pr_zb'] = JSONRenderer().render(Pr_zb_ser.data)
+    kwargs['js_Pr_zb'] = sql_raw( 'B010001','P0001:16')
 
     ##承保req趋势
-    Req_nbz = Dcitemdata.objects.raw("""
-     SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-    (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-    from syscfg_dcitemdata a
-    where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-    where itemname = '承保-总部运维'
-    order by datadate,dataid""", [startMonth])
-    Req_nbz_ser = DcitemdataSer(Req_nbz, many=True)
-
-    kwargs['js_Req_nbz'] = JSONRenderer().render(Req_nbz_ser.data)
+    kwargs['js_Req_nbz'] = sql_raw( 'B020001','P0003:11')
 
     ## clm req趋势
-    Req_clm = Dcitemdata.objects.raw("""
-         SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-        (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-        from syscfg_dcitemdata a
-        where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-        where itemname = '承保-总部运维'
-        order by datadate,dataid""", [startMonth])
-    Req_clm_ser = DcitemdataSer(Req_clm, many=True)
-    kwargs['js_Req_clm'] = JSONRenderer().render(Req_clm_ser.data)
+    kwargs['js_Req_clm'] = sql_raw( 'B020001','P0003:12')
 
     ##fin req趋势
-    Req_fin = Dcitemdata.objects.raw("""
-             SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-            (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-            from syscfg_dcitemdata a
-            where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-            where itemname = '承保-总部运维'
-            order by datadate,dataid""", [startMonth])
-    Req_fin_ser = DcitemdataSer(Req_fin, many=True)
-    kwargs['js_Req_fin'] = JSONRenderer().render(Req_fin_ser.data)
+    kwargs['js_Req_fin'] = sql_raw( 'B020001','P0003:13')
 
     ##xb req趋势
-    Req_xb = Dcitemdata.objects.raw("""
-             SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-            (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-            from syscfg_dcitemdata a
-            where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-            where itemname = '承保-总部运维'
-            order by datadate,dataid""", [startMonth])
-    Req_xb_ser = DcitemdataSer(Req_xb, many=True)
-    kwargs['js_Req_xb'] = JSONRenderer().render(Req_xb_ser.data)
+    kwargs['js_Req_xb'] = sql_raw( 'B020001','P0003:16')
 
     ##zb req趋势
-    Req_zb = Dcitemdata.objects.raw("""
-             SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-            (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-            from syscfg_dcitemdata a
-            where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-            where itemname = '承保-总部运维'
-            order by datadate,dataid""", [startMonth])
-    Req_zb_ser = DcitemdataSer(Req_zb, many=True)
-    kwargs['js_Req_zb'] = JSONRenderer().render(Req_zb_ser.data)
+    kwargs['js_Req_zb'] = sql_raw( 'B020001','P0003:15')
 
     ##承保Pub趋势
-    Pub_nbz = Dcitemdata.objects.raw("""
-                 SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-                (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-                from syscfg_dcitemdata a
-                where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-                where itemname = '承保-总部运维'
-                order by datadate,dataid""", [startMonth])
-    Pub_nbz_ser = DcitemdataSer(Pub_nbz, many=True)
-    kwargs['js_Pub_nbz'] = JSONRenderer().render(Pub_nbz_ser.data)
+    kwargs['js_Pub_nbz'] = sql_raw( 'B030001','P0001:11')
 
     ##clm Pub趋势
-    Pub_clm = Dcitemdata.objects.raw("""
-             SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-            (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-            from syscfg_dcitemdata a
-            where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-            where itemname = '承保-总部运维'
-            order by datadate,dataid""", [startMonth])
-    Pub_clm_ser = DcitemdataSer(Pub_clm, many=True)
-    kwargs['js_Pub_clm'] = JSONRenderer().render(Pub_clm_ser.data)
+    kwargs['js_Pub_clm'] = sql_raw( 'B030001','P0001:12')
 
     ##fin Pub趋势
-    Pub_fin = Dcitemdata.objects.raw("""
-                 SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-                (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-                from syscfg_dcitemdata a
-                where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-                where itemname = '承保-总部运维'
-                order by datadate,dataid""", [startMonth])
-    Pub_fin_ser = DcitemdataSer(Pub_fin, many=True)
-    kwargs['js_Pub_fin'] = JSONRenderer().render(Pub_fin_ser.data)
+    kwargs['js_Pub_fin'] = sql_raw( 'B030001','P0001:13')
 
     ##zb Pub趋势
-    Pub_zb = Dcitemdata.objects.raw("""
-                 SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-                (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-                from syscfg_dcitemdata a
-                where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-                where itemname = '承保-总部运维'
-                order by datadate,dataid""", [startMonth])
-    Pub_zb_ser = DcitemdataSer(Pub_zb, many=True)
-    kwargs['js_Pub_zb'] = JSONRenderer().render(Pub_zb_ser.data)
+    kwargs['js_Pub_zb'] = sql_raw( 'B030001','P0001:15')
 
     ##xb Pub趋势
-    Pub_xb = Dcitemdata.objects.raw("""
-                 SELECT dataid,itemno,itemname,datadate ,itemvalue1 ,itemvalue2 ,itemvalue3  FROM
-                (select a.dataid,a.itemno,pkg_operatefunc_dcshow.GetFactorNames(a.dataid,'-') as itemname,a.datadate ,a.itemvalue1 ,a.itemvalue2 ,a.itemvalue3
-                from syscfg_dcitemdata a
-                where a.itemno = 'B012001' and length(a.datadate) = 7 and a.datadate >= %s )
-                where itemname = '承保-总部运维'
-                order by datadate,dataid""", [startMonth])
-    Pub_xb_ser = DcitemdataSer(Pub_xb, many=True)
-    kwargs['js_Pub_xb'] = JSONRenderer().render(Pub_xb_ser.data)
+    kwargs['js_Pub_xb'] = sql_raw( 'B030001','P0001:14')
 
     # ## num 趋势
     # Pub_xb1 = Dcitemdata.objects.raw("""
@@ -207,7 +103,7 @@ order by datadate,dataid""", [startMonth])
         order by datadate,dataid  """, [startMonth])
     AreaCal_ser = DcitemdataSer(AreaCal, many=True)
     kwargs['AreaCal'] = AreaCal
-    kwargs['js_AreaCal'] = JSONRenderer().render(Pr_zb_ser.data)
+    kwargs['js_AreaCal'] = JSONRenderer().render(AreaCal_ser.data)
 
     # 系统问题占比
     Pr_sys = Dcitemdata.objects.raw(
@@ -243,7 +139,31 @@ where a.itemno = 'C010001' and pkg_operatefunc_dcshow.IsMonthDate(a.datadate) = 
     Pr_time_02_ser = DcitemdataSer(Pr_time_02, many=True)
     kwargs['js_Pr_time_02'] = JSONRenderer().render(Pr_time_02_ser.data)
 
-    
+    # SLA_01  总部运维
+    SLA_ops = Dcitemdata.objects.raw("""
+
+    SELECT a.dataid,pkg_operatefunc_dcshow.GetFactorNames(a.dataid) itemname,a.datadate,a.itemvalue1,a.itemvalue2,a.itemvalue3
+    from syscfg_dcitemdata a where a.itemno = 'B012001'
+    and pkg_operatefunc_dcshow.IsMonthDate(a.datadate) = 1 and a.datadate = '2017-10'
+    and pkg_operatefunc_dcshow.CheckFactorList(a.dataid,'P0001:%%,P0006:13') = 1
+    """)[:5]
+    SLA_ops_ser = DcitemdataSer(SLA_ops, many=True)
+    kwargs['js_SLA_ops'] = JSONRenderer().render(SLA_ops_ser.data)
+
+    # SLA_02    总部二线
+    SLA_spt = Dcitemdata.objects.raw("""
+       SELECT a.dataid,pkg_operatefunc_dcshow.GetFactorNames(a.dataid) itemname,a.datadate,a.itemvalue1,a.itemvalue2,a.itemvalue3
+       from syscfg_dcitemdata a where a.itemno = 'B012001'
+       and pkg_operatefunc_dcshow.IsMonthDate(a.datadate) = 1 and a.datadate = '2017-10'
+       and pkg_operatefunc_dcshow.CheckFactorList(a.dataid,'P0001:%%,P0006:14') = 1  """)[:5]
+    SLA_spt_ser = DcitemdataSer(SLA_spt, many=True)
+    kwargs['js_SLA_spt'] = JSONRenderer().render(SLA_spt_ser.data)
+
+
+
+
+
+
     return kwargs
 
 

@@ -385,11 +385,11 @@ var Req_xb = new Array();
 
 /// 承保pr趋势线数值初始化
     for(var i=0;i<js_Pr_nbz.length;i++){
-    Pr_nbz[i]= [gd(js_Pr_nbz[i].datadate), js_Pr_nbz[i].itemvalue2] ;
+    Pr_nbz[i]= [gd(js_Pr_nbz[i].datadate), js_Pr_nbz[i].itemvalue1] ;
 
     console.log('Pr_nbz:',Pr_nbz[i])
 
-//    Pr_clm[i]= [gd(js_Pr_nbz[i].datadate), js_Pr_nbz[i].itemvalue2] ;
+//    Pr_clm[i]= [gd(js_Pr_nbz[i].datadate), js_Pr_nbz[i].itemvalue1] ;
 //    Pr_fin[i]= [gd(js_Pr_nbz[i].datadate), js_Pr_nbz[i].itemvalue3] ;
 
     NBZ_count += js_Pr_nbz[i].itemvalue1
@@ -403,7 +403,7 @@ var Req_xb = new Array();
 
 ///  理赔趋势线数值初始化
     for(var i=0;i<js_Pr_clm.length;i++){
-    Pr_clm[i]= [gd(js_Pr_clm[i].datadate), js_Pr_clm[i].itemvalue2] ;
+    Pr_clm[i]= [gd(js_Pr_clm[i].datadate), js_Pr_clm[i].itemvalue1] ;
     CLM_count += js_Pr_clm[i].itemvalue1
     //var d2 = new Date(JiraSys[i].datadate).getTime();
 //    var d2 = gd(JiraSys[i].datadate)
@@ -416,19 +416,19 @@ var Req_xb = new Array();
 
 /// 财务趋势线数值初始化
     for(var i=0;i<js_Pr_fin.length;i++){
-    Pr_fin[i]= [gd(js_Pr_fin[i].datadate), js_Pr_fin[i].itemvalue2] ;
+    Pr_fin[i]= [gd(js_Pr_fin[i].datadate), js_Pr_fin[i].itemvalue1] ;
     console.log('Pr_fin success');
 //    FIN_count += js_Pr_fin[i].itemvalue1
     }
 
 /// 信保趋势线数值初始化
     for(var i=0;i<js_Pr_xb.length;i++){
-    Pr_xb[i]= [gd(js_Pr_xb[i].datadate), js_Pr_xb[i].itemvalue2] ;
+    Pr_xb[i]= [gd(js_Pr_xb[i].datadate), js_Pr_xb[i].itemvalue1] ;
     }
 
 /// 周边趋势线数值初始化
     for(var i=0;i<js_Pr_zb.length;i++){
-    Pr_zb[i]= [gd(js_Pr_zb[i].datadate), js_Pr_zb[i].itemvalue2] ;
+    Pr_zb[i]= [gd(js_Pr_zb[i].datadate), js_Pr_zb[i].itemvalue1] ;
     }    
     console.log('查看赋值:',Pr_clm)
 
@@ -448,7 +448,7 @@ var Req_xb = new Array();
     }
 /// 财务req趋势线数值初始化
     for(var i=0;i<js_Req_fin.length;i++){
-    Req_fin[i]= [gd(js_Req_fin[i].datadate), js_Req_nbz[i].itemvalue1] ;
+    Req_fin[i]= [gd(js_Req_fin[i].datadate), js_Req_fin[i].itemvalue1] ;
 
     Pub_fin[i]= [gd(js_Pub_fin[i].datadate), js_Pub_fin[i].itemvalue1] ;
     }
@@ -461,8 +461,9 @@ var Req_xb = new Array();
     for(var i=0;i<js_Req_zb.length;i++){
     Req_zb[i]= [gd(js_Req_zb[i].datadate), js_Req_zb[i].itemvalue1] ;
     Pub_zb[i]= [gd(js_Pub_zb[i].datadate), js_Pub_zb[i].itemvalue1] ;
-    }
 
+    //Pub_zb[i]= [gd(js_Pub_zb[i].datadate), js_Pub_zb[i].itemvalue1] ;
+    }
 
 
 
@@ -539,14 +540,14 @@ var Req_xb = new Array();
                 show: true,
                 tension: 0.2,   //平滑度
                 lineWidth: 2,   //线宽
-                fill: 0.2
+                fill: 0
             },
             points: {
-                radius: 0.3,    //点的半径
+                radius: 2,    //点的半径
                 show: true
             },
             shadowSize: 2  ,     //阴影
-            highlightColor: '#e84b3c',  //高亮颜色
+            highlightColor: '#ffffff',  //高亮颜色
 
         },
 
@@ -574,7 +575,7 @@ var Req_xb = new Array();
             color: '#fff',
             clickable: true
         },
-        colors: ["#fbb967","#26b99a", "#3498db" , '#f7cb38', '#5a8022', '#2c7282'],
+        colors: ["#26b99a",'#ff0000',"#fbb967", "#3498db" , '#9b59b6', '#2c7282'],
         xaxis: {
             tickColor: "rgba(51, 51, 51, 0.06)",
             mode: "time",
@@ -805,7 +806,7 @@ var Req_xb = new Array();
 
         var stuff = $("#chart_plot_publish").data('stuff');
 
-        $.plot($("#chart_plot_publish"), [{ href:"sysdetail/nbz",label: "--承保--", data: Pr_nbz,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: Pr_clm } , { label: "--财务--", data: Pr_fin }, { label: "--信保--", data: Pr_xb }, { label: "--周边--", data: Pr_zb } ], chart_plot_01_settings);
+        $.plot($("#chart_plot_publish"), [{ href:"sysdetail/nbz",label: "--承保--", data: Pub_nbz,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: Pub_clm } , { label: "--财务--", data: Pub_fin }, { label: "--信保--", data: Pub_xb }, { label: "--周边--", data: Pub_zb } ], chart_plot_01_settings);
 
 
 		$("<div id='tooltip'></div>").css({
@@ -823,7 +824,7 @@ var Req_xb = new Array();
             var x = item.datapoint[0].toFixed(2),
             y = item.datapoint[1].toFixed(2);
         //$("#tooltip").html(item.series.label + " of " + x + " = " + y)
-            $("#tooltip").html(item.series.label + " jira数量："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
+            $("#tooltip").html(item.series.label + " 版本次数："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
 
             else {
             $("#tooltip").hide();
@@ -837,7 +838,7 @@ var Req_xb = new Array();
 
         var stuff = $("#chart_plot_req").data('stuff');
 
-        $.plot($("#chart_plot_req"), [{ href:"sysdetail/nbz",label: "--承保--", data: Pr_nbz,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: Pr_clm } , { label: "--财务--", data: Pr_fin }, { label: "--信保--", data: Pr_xb }, { label: "--周边--", data: Pr_zb } ], chart_plot_01_settings);
+        $.plot($("#chart_plot_req"), [{ href:"sysdetail/nbz",label: "--承保--", data: Req_nbz,clickable: true } , { href:"project_detail.html", label: "--理赔--", data: Req_clm } , { label: "--财务--", data: Req_fin }, { label: "--信保--", data: Req_xb }, { label: "--周边--", data: Req_zb } ], chart_plot_01_settings);
 
 
 		$("<div id='tooltip'></div>").css({
@@ -855,7 +856,7 @@ var Req_xb = new Array();
             var x = item.datapoint[0].toFixed(2),
             y = item.datapoint[1].toFixed(2);
         //$("#tooltip").html(item.series.label + " of " + x + " = " + y)
-            $("#tooltip").html(item.series.label + " jira数量："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
+            $("#tooltip").html(item.series.label + " REQ数量："  + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);}
 
             else {
             $("#tooltip").hide();
@@ -2764,29 +2765,41 @@ function init_charts() {
 
     if ($('#mybarChart').length) {
 
-        for(var i=0;i<js_Sys_avl.length;i++){
-        js_Pr_time_01[i]= js_Pr_time_01[i].itemvalue1 ;
-        js_Pr_time_02[i]= js_Pr_time_02[i].itemvalue1 ;
+        var SLA_ops = new Array();
+        var SLA_spt = new Array();
+
+        for(var i=0;i<5;i++){
+        console.log('ops:',js_SLA_ops[i]);
+        SLA_ops[i]= js_SLA_ops[i].itemvalue3 ;
              }
+
+        for(var i=0;i<5;i++){
+        console.log('ops:',js_SLA_spt[i]);
+        SLA_spt[i]= js_SLA_spt[i].itemvalue3 ;
+             };
+
+
 
         var ctx = document.getElementById("mybarChart");
         var mybarChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: ["承保", "收付", "理赔", "信保", "周边"],
+//                labels: SLA_ops.itemname,
                 datasets: [{
                     label: '# of Votes',
-                    backgroundColor: "#3498db",
-                    data: js_Pr_time_01
-                }, {
-                    label: '# of Votes',
-                    backgroundColor: "#d43526",
-                    data: js_Pr_time_01
-                }, {
-                    label: '# of Votes',
                     backgroundColor: "#26b99a",
-                    data: [41, 56, 25, 48, 72]
+                    data: SLA_ops
+                }, {
+                    label: '# of Votes',
+                    backgroundColor: "#03586A",
+                    data: SLA_spt
                 }
+//                , {
+//                    label: '# of Votes',
+//                    backgroundColor: "#26b99a",
+//                    data: [41, 56, 25, 48, 72]
+//                }
 
                 ]
             },

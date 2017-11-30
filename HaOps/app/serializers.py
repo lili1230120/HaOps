@@ -26,7 +26,7 @@ class DcitemdataSer(serializers.ModelSerializer):
 	class Meta:
 		model = Dcitemdata
 		#fields = '__all__'
-		fields = ('itemno', 'itemname', 'itemvalue1', 'datadate','itemvalue1','itemvalue2',)
+		fields = ('itemno', 'itemname', 'itemvalue1', 'datadate','itemvalue1','itemvalue2','itemvalue3')
 
 
 class DcitemdataDtltmpSer(serializers.ModelSerializer):
